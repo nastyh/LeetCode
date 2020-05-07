@@ -30,9 +30,8 @@ def isValid(s):
 
     # Testing the function
 
-    isValid('(')
 
-
+python isValid('(')
 
 
 
