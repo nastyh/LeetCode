@@ -90,3 +90,19 @@ t = binTree(4)
 t.insert(2)
 t.insert(7)
 t.printGlobal("PreOrder")
+
+
+# Iterative implementations
+    def preorder_iter(self, root): # pre-order iteratively
+        if not root:
+            return None
+        res, s = [], []
+        s.append(root)
+        while s:
+            t = s.pop()
+            res.append(t.val)
+            if t.right: # key here is to put to the stack in an opposite order. So that left comes last but gets popped first
+                s.append(t.right)
+            if t.left:
+                s.append(t.left)
+        return res
