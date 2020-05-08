@@ -68,6 +68,23 @@ class binTree:
             self._printPostOrder(root.right)
             print(root.value, end="->", sep='\n')
 
+    def printNewLine(self, root): # print values: every level in its own line
+        if not root:
+            print()
+        q = deque()
+
+        q.append(root)
+
+        while q:
+            for _ in range(len(q)):
+                t = q.popleft()
+                print(t.val, end = ' ')
+                if t.left:
+                    q.append(t.left)
+                if t.right:
+                    q.append(t.right)
+            print()
+
 
 t = binTree(4)
 t.insert(2)
