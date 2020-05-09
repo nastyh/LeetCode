@@ -78,7 +78,7 @@ class binTree:
         while q:
             for _ in range(len(q)):
                 t = q.popleft()
-                print(t.val, end = ' ')
+                print(t.val, end = ' ') # key here is to include end so that it won't jump to the next line
                 if t.left:
                     q.append(t.left)
                 if t.right:
