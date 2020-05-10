@@ -114,3 +114,8 @@ class LinkedList:
 
 
 
+if __name__ == '__main__':
+    l = LinkedList(7)
+    l.addItem(6)
+    l.addItem(3)
+    l.print()
