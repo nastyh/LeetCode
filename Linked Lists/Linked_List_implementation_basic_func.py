@@ -31,6 +31,16 @@ class LinkedList:
             curr = curr.next
         return l
 
+
+    def _helper(self, root):
+            if not root:
+                return 0
+            else:
+                return 1 + self._helper(root.next)
+
+    def length_iter(self):
+        return self._helper(self.head)
+
     def print(self):
         curr = self.head
         while curr:
@@ -119,3 +129,5 @@ if __name__ == '__main__':
     l.addItem(6)
     l.addItem(3)
     l.print()
+    print()
+    print("Iterative length is:", l.length_iter())
