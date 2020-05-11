@@ -16,6 +16,26 @@ class TreeNode:
         else:
             return self.sumOfLeftLeaves(root.left) + self.sumOfLeftLeaves(root.right)
 
+
+
+    def sumOfLeftLeaves_bfs(self, root):
+        from collections import deque
+        res = 0
+        if not root:
+            return 0
+        q = deque()
+        q.append(root)
+
+        while q:
+            t = q.popleft()
+            if t.left and (not t.left.left and not t.left.right):
+                res += t.left.val
+            if t.left:
+                q.append(t.left)
+            if t.right:
+                q.append(t.right)
+        return res
+
 if __name__ == '__main__':
     l = TreeNode(3)
     l.left = TreeNode(9)
@@ -23,4 +43,5 @@ if __name__ == '__main__':
     l.right.left = TreeNode(15)
     l.right.right = TreeNode(7)
     print(l.sumOfLeftLeaves(l))
+    print(l.sumOfLeftLeaves_bfs(l))
 
