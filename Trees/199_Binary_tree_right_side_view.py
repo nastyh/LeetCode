@@ -14,8 +14,8 @@ class TreeNode:
         q.append(root)
 
         while q:
+            curr_level = []
             for _ in range(len(q)):
-                curr_level = []
                 t = q.popleft()
                 curr_level.append(t.val)
                 if t.left:
@@ -24,6 +24,7 @@ class TreeNode:
                     q.append(t.right)
             res.append(curr_level)
         return [i[-1] for i in res]
+
 
     def rightSideView_rec(self, root): # a bit different approach
         if not root:
