@@ -24,7 +24,7 @@ class TreeNode:
                     q.append(t.right)
             res.append(curr_level)
         return res[-1][0]
-        # return res
+
 
 
 if __name__ == '__main__':
@@ -35,3 +35,4 @@ if __name__ == '__main__':
     l.left.right = TreeNode(4)
     l.right.right = TreeNode(6)
     print(l.findBottomLeftValue(l))
+    print(l.isleft(l.val, l))
