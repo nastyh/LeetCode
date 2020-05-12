@@ -8,6 +8,17 @@ def productExceptSelf(nums):
     for j in range(len(rl)-2, -1, -1):
         rl[j] = rl[j + 1] * nums[j + 1]
 
+        """
+        or instead of creating rl, we can update ll on the fly:
+        right_prod = 1
+        for j in range(len(ll) -1 , -1, -1):
+            ll[j] = ll[j] * right_prod
+            right_prod *= nums[j]
+
+        return ll
+
+        """
+
     return [x * y for (x, y) in zip(ll, rl)]
 
 if __name__ == '__main__':
