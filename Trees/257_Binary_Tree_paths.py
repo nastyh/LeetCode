@@ -15,7 +15,7 @@ class TreeNode:
 
         return _helper(root, 0)
     
-    def sumOfAllLeaves(self, root):
+    def sumOfAllLeaves(self, root): # just returns a number
         res = 0
         if not root:
             return res
@@ -23,7 +23,7 @@ class TreeNode:
             res += root.val
         return res + self.sumOfAllLeaves(root.left) + self.sumOfAllLeaves(root.right)
     
-    def binaryTreePaths(self, root):  
+    def binaryTreePaths(self, root):  # the main thing
         
         def _allPaths(root, path):
             # res = []
