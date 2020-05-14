@@ -6,14 +6,24 @@ class TreeNode:
         self.right = right
 
     def kthSmallest(self, root, k):
-        res = []
-        if not root:
-            return []
-        res.append(root.val)
-        l = self.kthSmallest(root.left, 0)
+        def _dfs(node):
+            res, l, r = [], [], []
+            if not root:
+                return res
+            res.append(node.val)
+            if node.left:
+                l = _dfs(node.left)
+            if node.right:
+                r = _dfs(node.right)
+            return l + res + r # inorder traversal
 
-        r = self.kthSmallest(root.right, 0)
-        return res + l + r
+        out = _dfs(root)
+        # return sorted(out)[3]
+
+        # return out
+        # if len(out) <= k:
+        return out[k-1] if k <= len(out) else None
+
 
 if __name__ == '__main__':
     l = TreeNode(3)
@@ -21,3 +31,4 @@ if __name__ == '__main__':
     l.right = TreeNode(4)
     l.left.right = TreeNode(2)
     print(l.kthSmallest(l, 0))
+
