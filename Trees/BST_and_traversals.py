@@ -176,6 +176,6 @@ if __name__ == '__main__':
     l.right.right = TreeNode(14)
 
 # print(l.inorder_iter(l))
-print(l.postorder_iter(l))
 # print(l.postorder_iter(l))
-# print(l.inorder_list(l))
+# print(l.postorder_iter(l))
+print(l.inorder_list(l))
