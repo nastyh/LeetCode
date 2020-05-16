@@ -86,13 +86,20 @@ class binTree:
             print()
 
 
-t = binTree(4)
-t.insert(2)
-t.insert(7)
-t.printGlobal("PreOrder")
+        t = binTree(4)
+        t.insert(2)
+        t.insert(7)
+        t.printGlobal("PreOrder")
 
 
-# Iterative implementations
+
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+    # Iterative implementations
     def preorder_iter(self, root): # pre-order iteratively
         if not root:
             return None
@@ -106,3 +113,69 @@ t.printGlobal("PreOrder")
             if t.left:
                 s.append(t.left)
         return res
+
+    def inorder_iter(self, root): # in order iteratively
+        # if not root:
+        #     return []
+        res, s = [], []
+        while s or root:
+            if root:
+                s.append(root)   # keep pushing nodes to Stack s while you can
+                root = root.left # move left
+            else:
+                root = s.pop() # start taking out from the stack
+                res.append(root.val) # save to res
+                root = root.right # switch to the right side
+        return res
+
+    def postorder_iter(self, root):
+        res, s = [], []
+        s.append(root)
+        while s:
+            t = s.pop()
+            res.insert(0, t.val)
+            if t.left:
+                s.append(t.left)
+            if t.right:
+                s.append(t.right)
+        return res
+
+
+#   -----------------SAME THING WITH AND WITHOUT A HELPER FUNCTION--------------
+    # def inorder_list(self, root):
+    #     res = []
+    #     if not root:
+    #         return res
+    #     res.append(root.val)
+    #     return self.inorder_list(root.left) + res + self.inorder_list(root.right)
+
+    def inorder_list(self, root):
+        res = []
+
+        def _helper(node, li):
+            if not node:
+                return
+            _helper(node.left, li)
+            li.append(node.val)
+            _helper(node.right, li)
+            return li
+
+        return _helper(root, res)
+#    ---------------------------------------------------------------------------
+
+
+
+
+if __name__ == '__main__':
+    l = TreeNode(7)
+    l.left = TreeNode(3)
+    l.right = TreeNode(11)
+    l.left.left = TreeNode(1)
+    l.right.left = TreeNode(2)
+    l.right.left = TreeNode(9)
+    l.right.right = TreeNode(14)
+
+# print(l.inorder_iter(l))
+print(l.postorder_iter(l))
+# print(l.postorder_iter(l))
+# print(l.inorder_list(l))
