@@ -31,4 +31,4 @@ class Solution:
                 curr.next = l1
             else:
                 curr.next = l2
-        return res # because we don't want to return -1
+        return res.next # because we don't want to return -1
