@@ -24,6 +24,30 @@ class TreeNode:
 
         return helper(root)
 
+    def flatten_iter(root):
+        from collections import deque
+        from not root:
+            return
+        q = deque()
+        dummy = TreeNode(0)
+        it = dummy
+        q.append(root)
+
+        while q:
+            t = q.popleft()
+            if t.right:
+                q.append(t.right)
+            if t.left:
+                q.append(t.left)
+
+            it.right = t
+            it = it.right
+            it.left = it.right = None
+        return dummy.right
+
+
+
+
 if __name__ == '__main__':
     l = TreeNode(1)
     l.left = TreeNode(2)
