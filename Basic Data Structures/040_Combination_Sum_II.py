@@ -1,21 +1,22 @@
-def combinationSum2(self, candidates, target): # returns a list of lists
-    if not candidates:
-            return []
+def combinationSum2(candidates, target): # returns a list of lists
+    results=[]
+    candidates.sort()
+    def backtrack(target,curcan,partial):
+        if target==0:
+            if partial not in results:
+                results.append(partial)
+            return
+        for item in curcan:
+            if item>target:
+                break
+            elif partial and item<partial[-1]:
+                continue
+            else:
+                renew=copy.copy(curcan)
+                renew.remove(item)
+                backtrack(target-item,renew,partial+[item])
+        backtrack(target,candidates,[])
+        return results
 
-    ret = []
-
-    def fn(nums, tmp):
-        if sum(tmp) > target:
-            return False
-        elif sum(tmp) == target:
-            if tmp not in ret:
-                ret.append(tmp)
-            return True
-        else:   # sum(tmp) < target
-            for i in range(len(nums)):
-                if i>0 and nums[i] == nums[i-1]: continue
-                fn(nums[i+1:],tmp+[nums[i]])
-
-        candidates.sort()
-        fn(candidates,[])
-        return ret
+if __name__ == '__main__':
+    print(combinationSum2([10,1,2,7,6,1,5], 8))
