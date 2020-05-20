@@ -40,7 +40,7 @@ class Solution:
 #             head = head.next
 #         return res.next
 
-    def reverseList(self, head: ListNode) -> ListNode: # recursively
+    def reverseList(self, head): # recursively
         if head is None: #edge cases
             return None
         if head.next is None: # base case
