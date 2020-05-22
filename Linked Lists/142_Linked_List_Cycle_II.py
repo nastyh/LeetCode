@@ -16,3 +16,14 @@ class Solution:
             p1 = p1.next
 
         return p2
+
+    class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        cur = head
+        visited = set()
+        while cur:
+            if cur in visited:
+                return cur
+            visited.add(cur)
+            cur = cur.next
+        return None
