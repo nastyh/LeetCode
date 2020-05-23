@@ -11,7 +11,9 @@ def kClosest(points, K):
     sorted_comb = sorted(comb, key = lambda x: x[1])
     values_back = [a for a, b in sorted_comb]
 
-    return values_back[K]
+   # values_back = [a for a, b in sorted(comb, key = lambda x: x[1])] # one liner
+
+    return values_back[:K]
 
 
 if __name__ == '__main__':
