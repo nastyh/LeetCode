@@ -41,7 +41,7 @@ class Solution:
 #         return res.next
 
     def reverseList(self, head): # recursively
-        if head is None: #edge cases
+        if head is None: #edge cases11
             return None
         if head.next is None: # base case
             return head
