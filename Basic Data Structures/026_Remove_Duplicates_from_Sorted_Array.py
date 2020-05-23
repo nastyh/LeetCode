@@ -12,6 +12,16 @@ def removeDuplicates(nums):
         # we can see the nums[:5] is the unique number list we want
     return j
 
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        head = 0
+        for i in range(1, len(nums)):
+            if nums[i] != nums[head]:
+                head += 1
+                nums[head] = nums[i]
+        return head + 1
+
+
 
 
 if __name__ == '__main__':
