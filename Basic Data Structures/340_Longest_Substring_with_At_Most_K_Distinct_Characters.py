@@ -2,19 +2,44 @@ def lengthLongestSubstring(s, k):
     if len(s) == 0 or not s:
         return 0
 
-    s = list(s)
-    def atMost(k):
-        count = collections.defaultdict(int)
-        left = 0
-        ans = 0
-        for right, x in enumerate(s):
-            count[x] += 1
-            while len(count) > k:
-                count[s[left]] -= 1
-                if count[s[left]] == 0:
-                    del count[s[left]]
-                left += 1
-            ans += right - left + 1
-        return ans
+    count = [0] * 256
+    i, numDistinct, maxLen = 0, 0, 0
+    for j in range(len(s)):
+            # udpate j
+        if count[ord(s[j])] == 0:
+            numDistinct += 1
+        count[ord(s[j])] += 1
+            # udpate i
+        while numDistinct > k:
+            count[ord(s[i])] -= 1
+            if count[ord(s[i])] == 0:
+                numDistinct -= 1
+            i += 1
+        maxLen =  max(j - i + 1, maxLen)
+    return maxLen
 
-    return atMost(k) - atMost(k-1)
+def lengthLongestSubstring_alt(s, k):
+    charMapping, start = {}, 0
+    result = 0
+
+    for end, s in enumerate(s):
+        if s in charMapping:
+            charMapping[s] += 1
+        else:
+            charMapping[s] = 1
+
+        if len(charMapping) <= k:
+                result = max(result, end-start+1)
+        else:
+            while len(charMapping) > k:
+                character = s[start]
+                freq = charMapping[character]
+                if freq == 1:
+                    del charMapping[character]
+                else:
+                    charMapping[character] -= 1
+                start += 1
+    return result
+
+if __name__ == '__main__':
+    print(lengthLongestSubstring_alt("abcadcacacaca", 3))
