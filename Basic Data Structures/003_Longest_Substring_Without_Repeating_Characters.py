@@ -23,5 +23,16 @@ def lengthOfLongestSubstring_dict(self, s):
         res = max(res, i-left)
     return res
 
+def lengthOfLongestSubstring_stack(self, s: str) -> int:
+        stack=[]
+        res=0
+        for i in range(len(s)):
+            if s[i] not in stack:
+                stack.append(s[i])
+                res=max(res,len(stack))
+            elif s[i] in stack:
+                stack=stack[stack.index(s[i])+1:]+[s[i]]
+        return res
+
 if __name__ == '__main__':
     print(lengthOfLongestSubstring('abcabcbb'))
