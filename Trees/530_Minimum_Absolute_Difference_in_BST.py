@@ -6,19 +6,27 @@ class TreeNode:
         self.left = left
         self.right = right
     def getMinimumDifference(self, root):
-        self.min_diff = -math.inf
-        values = []
-        def inorder(node, values=values):
-            if node:
-                inorder(node.left)
-                if values:
-                    self.min_diff = min(self.min_diff, abs(node.val - values[-1]))
+        def get_values(values, root):
+            if root is not None:
+                values.append(root.val)
+                values = get_values(values, root.left)
+                values = get_values(values, root.right)
+            return values
 
-                values.append(node.val)
-                inorder(node.right)
+        values_list = get_values([], root)
 
-        inorder(root)
-        return self.min_diff
+        if len(values_list) != len(set(values_list)):
+            return 0
+
+        values_list.sort()
+        minimum_diff = values_list[1] - values_list[0]
+
+        for i in range(1, len(values_list)):
+            diff = values_list[i] - values_list[i - 1]
+            if diff < minimum_diff:
+                minimum_diff = diff
+
+        return minimum_diff
 
 if __name__ == '__main__':
     l = TreeNode(1)
