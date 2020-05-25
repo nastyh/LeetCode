@@ -7,3 +7,13 @@ class Solution:
             current = max(current, current+nums[i])
             glob = max(current, glob)
         return glob
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        dp = 0
+        maxSum = None
+        for n in nums:
+            dp = max(dp+n, n)
+            if maxSum is None or dp > maxSum:
+                maxSum = dp
+        return maxSum

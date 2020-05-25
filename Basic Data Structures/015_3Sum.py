@@ -1,11 +1,16 @@
-def threeSum(nums):
-    res, curr = [], []
-    for i, num in enumerate(nums):
-        for j, internal in enumerate(nums[:i] + nums[i+1:]):
-            if 0 - internal in nums[:j] + nums[j+1:]:
-                curr.append(internal)
-        res.append(curr)
-    return res
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        l = len(nums)
+        nums.sort()
+        ans = set()
+        for i in range(0,l-2):
+            d = set()
+            s = 0-nums[i]
 
-if __name__ == '__main__':
-    print(threeSum([-1, 0, 1, 2, -1, -4]))
+            for j in range(i+1,l):
+                x = s-nums[j]
+                if x not in d:
+                    d.add(nums[j])
+                else:
+                    ans.add((nums[i],nums[j],x))
+        return list(ans)
