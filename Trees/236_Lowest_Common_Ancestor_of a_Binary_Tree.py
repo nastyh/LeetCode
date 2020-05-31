@@ -5,66 +5,55 @@ class TreeNode:
         self.left = None
         self.right = None
 
-
-    def lowestCommonAncestor(self, root, p, q):
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         if not root:
             return None
-
-        if p.val < root.val and q.val < root.val:
-            return self.lowestCommonAncestor(root.left, p, q)
-        elif p.val > root.val and q.val > root.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-        else:
-        # if (root.left.val == p.val and root.right.val == q.val) or (root.left.val == q.val and root.right.val = p.val):
-            return root
-
-
-"""
-If we have parent pointers for each node we can traverse back from p and q to get their ancestors. The first common node we get during this traversal would be the LCA node. We can save the parent pointers in a dictionary as we traverse the tree.
-
-Algorithm
-
-Start from the root node and traverse the tree.
-Until we find p and q both, keep storing the parent pointers in a dictionary.
-Once we have found both p and q, we get all the ancestors for p using the parent dictionary and add to a set called ancestors.
-Similarly, we traverse through ancestors for node q. If the ancestor is present in the ancestors set for p, this means this is the first ancestor common between p and q (while traversing upwards) and hence this is the LCA node."""
-    def lca(root):
-        if not root:
-            return 0
         if root.val == p.val or root.val == q.val:
             return root
-        left = lca(root.left)
-        right = lca(root.right)
-        if not left and not right:
-            return 0
-        if left and right:
-            return root
-        return left if left else right
-        return lca(root)
+        l = self.lowestCommonAncestor(root.left, p, q)
+        r = self.lowestCommonAncestor(root.right, p, q)
 
-     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if not root:
-            return None
-        stack = [root]
-        parent = {root:None}
-        while stack:
-            cur = stack.pop()
-            if cur.right:
-                stack.append(cur.right)
-                parent[cur.right] = cur
-            if cur.left:
-                stack.append(cur.left)
-                parent[cur.left] = cur
-            if p in parent and q in parent:
-                break
-        # print(parent)
-        ancestor = set()
-        while p:
-            ancestor.add(p)
-            p = parent[p]
-        while q not in ancestor:
-            q = parent[q]
-        return q
+        if l and r:
+            return root
+        if l:
+            return l
+        if r:
+            return r
+        return None
+
+
+    # super slow but straightfoward: create two lists with paths to p and q. The last common element is what we need to return
+    def lowestCommonAncestor_alt(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root: return None
+
+        def _path2Node(node, node_to_find, path):
+            if not node:
+                return []
+            if node.val == node_to_find.val:
+                path.append(node_to_find)
+                return path
+            l = _path2Node(node.left, node_to_find, path + [node])
+            r = _path2Node(node.right, node_to_find, path + [node])
+            if l:
+                return l
+            if r:
+                return r
+
+
+        p_path = _path2Node(root, p, [])
+        q_path = _path2Node(root, q, [])
+
+        if len(p_path) <= len(q_path):
+            longer = q_path
+            shorter = p_path
+        else:
+            longer = p_path
+            shorter = q_path
+
+        matching = [x for x in longer if x in shorter]
+        return matching[-1]
+
+
 
 
 if __name__ == '__main__':
@@ -79,5 +68,6 @@ if __name__ == '__main__':
     l.right.right = TreeNode(8)
 
     print(l.lowestCommonAncestor(l, l.left, l.right)) # returns 3
+    print(l.lowestCommonAncestor_alt(l, l.left, l.right))
 
 
