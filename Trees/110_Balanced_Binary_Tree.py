@@ -19,58 +19,6 @@ class TreeNode:
 
 
 
-
-
-
-
-    def isValidBST(self, root):
-        if not root: return True
-        if root and not root.left and not root.right: return True
-
-        def _helper(node, lo = -math.inf, hi = math.inf):
-            if not node:
-                return True
-            if node.val < lo or node.val > hi:
-                return False
-
-            return _helper(node.left, -math.inf, node.val) and _helper(node.right, node.val, math.inf)
-
-        return _helper(root)
-
-        # another working
-        # if not root: return True
-        # if root and not root.left and not root.right: return True
-
-        # def _helper(node, lo, hi):
-        #     if node:
-        #         if node.val <= lo or node.val >= hi:
-        #             return False
-        #         return _helper(node.left, lo, node.val) and _helper(node.right, node.val, hi)
-        #     return True
-
-        # return _helper(root, -math.inf, math.inf)
-
-
-        # iteratively:
-    def isValidBST_iter(self, root):
-        if not root: return True
-        st = []
-
-        st.append((root, -math.inf, math.inf))
-        while st:
-            node, l, r = st.pop()
-            if node.val < l or node.val > r:
-                return False
-            if node.left:
-                st.append((node.left, l, node.val))
-            if node.right:
-                st.append((node.right, node.val, r))
-        return True
-
-
-
-
-
 if __name__ == '__main__':
     l = TreeNode(7)
     l.left = TreeNode(3)
