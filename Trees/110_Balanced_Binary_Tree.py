@@ -5,7 +5,24 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-    import math
+
+    def isBalanced(self, root):
+        def _helper(node):
+            if not node: return 0
+            return max(1 + _helper(node.left), 1 + _helper(node.right))
+
+        if not root: return True
+        else:
+            l = _helper(root.left)
+            r = _helper(root.right)
+        return self.isBalanced(root.left) and self.isBalanced(root.right) and abs(l - r) <= 1
+
+
+
+
+
+
+
     def isValidBST(self, root):
         if not root: return True
         if root and not root.left and not root.right: return True
@@ -51,18 +68,7 @@ class TreeNode:
         return True
 
 
-    def isBalanced(self, root):
-        if not root: return True
 
-        def _helper(node):
-            if not node: return 0
-            return max(1 + _helper(node.left), 1 + _helper(node.right))
-
-        l = _helper(root.left)
-        r = _helper(root.right)
-
-        return abs(l - r ) <= 1
-        # return r
 
 
 if __name__ == '__main__':
