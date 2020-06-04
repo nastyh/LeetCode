@@ -1,5 +1,4 @@
-class Solution:
-    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+def findDisappearedNumbers(nums):
         # first solution
         # s = set(nums)
         # return [i for i in range(1,len(nums)+1) if i not in s]
@@ -11,3 +10,11 @@ class Solution:
             if num in d:
                 d[num] +=1
         return [k for (k,v) in d.items() if v==0]
+
+def findDisappearedNumbers_fast(nums):
+    return [k for k, v in enumerate(nums, 1) if k not in nums]
+
+
+if __name__ == '__main__':
+    # print(findDisappearedNumbers([4,3,2,7,8,2,3,1]))
+    print(findDisappearedNumbers_fast([4,3,2,7,8,2,3,1]))
