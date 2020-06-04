@@ -14,19 +14,25 @@ def letterCombinations(digits):
     possible = [d[x] for x in digits]
     return [''.join(x) for x in product(*possible) if x]
 
-    def letterCombinations_alt(digits):
-        res = []
-        d = {'2': 'abc',
-         '3': 'def',
-         '4': 'ghi',
-         '5': 'jkl',
-         '6': 'mno',
-         '7': 'pqrs',
-         '8': 'tuv',
-         '9': 'wxyz'
-         }
-
-        return _helper(result, digits, "", 0, d)
+def letterCombinations_alt(digits):
+    def findCombination(currentComb , digit):
+        if not digit:
+            result.append(currentComb)
+        else:
+            for i in phoneDic[digit[0]]:
+                findCombination(currentComb + i , digit[1 : ])
+    result = []
+    phoneDic = {"2" : ["a" , "b" , "c"],
+                "3" : ["d" , "e" , "f"],
+                "4" : ["g" , "h" , "i"],
+                "5" : ["j" , "k" , "l"],
+                "6" : ["m" , "n" , "o"],
+                "7" : ["p" , "q" , "r" , "s"],
+                "8" : ["t" , "u" , "v"],
+                "9" : ["w" , "x" , "y" , "z"]}
+    if digits:
+        findCombination("" , digits)
+    return result
 
 
 
@@ -44,3 +50,4 @@ def letterCombinations(digits):
 
 if __name__ == '__main__':
     print(letterCombinations('23'))
+    print(letterCombinations_alt('23'))
