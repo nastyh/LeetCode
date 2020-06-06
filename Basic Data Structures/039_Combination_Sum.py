@@ -1,4 +1,14 @@
 def combinationSum(candidates, target): # returns a list of list
+"""
+Define dp(i) as all unique combinations whose sum is i.
+We'll get the recursion below for the number candiates[j]:
+dp(i) += [candidates[j]] if i == candidates[j]
+dp(i) += [s + [c] for s in dp(i - candidates[j])] if i - candidates[j] > 0
+
+"""
+
+
+
     dp = [[] for _ in range(target + 1)]
             for c in candidates:
                 for i in range(1, target + 1):
