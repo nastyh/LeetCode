@@ -32,7 +32,6 @@ def myAtoi_alt(str):
         negative = True
         index+=1
 
-
     #now we check the rest of the string for numbers
     res = ''
     while index < len(str):
@@ -61,4 +60,4 @@ def myAtoi_alt(str):
 
 if __name__ == '__main__':
     print(myAtoi('-91283472332'))
-    # print(myAtoi_alt('-91283472332'))
+    print(myAtoi_alt('-91283472332'))
