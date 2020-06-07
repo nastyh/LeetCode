@@ -11,21 +11,45 @@ def topKFrequent(nums, k):
 
 
 #alt
-    if not nums: return []
+    # if not nums: return []
 
-    freq = dict(collections.Counter(nums))
+    # freq = dict(collections.Counter(nums))
 
-    pq = []
-    for i in freq.keys():
-        heapq.heappush(pq, (freq[i], i))
-        if len(pq) > k:
-            heapq.heappop(pq)
+    # pq = []
+    # for i in freq.keys():
+    #     heapq.heappush(pq, (freq[i], i))
+    #     if len(pq) > k:
+    #         heapq.heappop(pq)
 
-    result = list()
-    for i in range(k-1, -1, -1):
-        result.append(pq[i][1])
+    # result = list()
+    # for i in range(k-1, -1, -1):
+    #     result.append(pq[i][1])
 
-    return result
+    # return result
+
+# easier to understand
+
+def topKFrequent_heap(nums, k):
+    d = {}
+    for n in nums:
+        if n not in d:
+            d[n] = 1
+        else:
+            d[n] += 1
+
+
+    hp = []
+    for key,v in d.items():
+        heapq.heappush(hp,(-v,key))
+
+    # Popping out all the number for  value k
+    res = []
+    for _ in range(k):
+        x,y = heapq.heappop(hp)
+        res.append(y)
+    return res
+
 
 if __name__ == '__main__':
-    print(topKFrequent([1,1,1,2,2,3], 2))
+    # print(topKFrequent([1,1,1,2,2,3], 2))
+    print(topKFrequent_heap([-1,-1], 1)) # [1,1,1,2,2,3], 2
