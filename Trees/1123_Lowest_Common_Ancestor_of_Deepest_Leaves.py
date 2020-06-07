@@ -30,3 +30,23 @@ class TreeNode:
 
         return helper(root)[0]
 
+        # easier to understand
+
+    def lcaDeepestLeaves_easy(self, root):
+        def _helper(node):
+            if not node:
+                return (None, 0)
+            l_node, l_depth = _helper(node.left)
+            r_node, r_depth = _helper(node.right)
+
+            if l_depth == r_depth:
+                return (node, l_depth + 1)
+            elif l_depth > r_depth:
+                return (l_node, l_depth + 1)
+            else:
+                return (r_node, r_depth + 1)
+
+        n, d = _helper(root)
+
+        return n
+
