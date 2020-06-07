@@ -15,14 +15,7 @@ def intervalIntersection(A, B):
 
 
 
-
-
-
-
-
-
-
-    # doesn't work with some edge cases
+   # doesn't work with some edge cases
     # res = []
     # combined = sorted(A + B, key = lambda x: x[0])
     # for r in range(len(combined) - 1):
