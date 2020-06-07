@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+from collections import deque
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -30,6 +31,20 @@ class TreeNode:
         else:
             return 1
 
+    def minDepthBFS(self, root):
+        if not root: return 0
+
+        d = deque()
+        d.append([root, 1])
+        while d:
+            t, curr_d = d.popleft()
+
+            if not t.left and not t.right:
+                return curr_d
+            if t.left:
+                d.append([t.left, curr_d + 1])
+            if t.right:
+                d.append([t.right, curr_d + 1])
 
 
 
@@ -41,3 +56,5 @@ if __name__ == '__main__':
     l.right.right = TreeNode(7)
 
     print(l.minDepth(l))
+    print(l.minDepthDFS(l))
+    print(l.minDepthBFS(l))
