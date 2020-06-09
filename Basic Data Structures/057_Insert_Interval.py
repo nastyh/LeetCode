@@ -50,8 +50,20 @@ def insert_alt(intervals, newInterval):
 
     return output
 
+def insert_linear(intervals, newInterval):
+    res = []
+    intervals.sort(key = lambda x: x[0])
 
-
+    for n, interval in enumerate(intervals):
+        if interval[1] < newInterval[0]:
+            res.append(interval)
+        elif not (newInterval[1] < interval[0]):
+            newInterval[0] = min(newInterval[0], interval[0])
+            newInterval[1] = max(newInterval[1], interval[1])
+        else:
+            res.append(newInterval)
+            return res + intervals[n:]
+    return res + [newInterval]
 
     # long and stupid:
     # new_start, new_end = newInterval
@@ -87,3 +99,4 @@ def insert_alt(intervals, newInterval):
 if __name__ == '__main__':
     print(insert([[1,3],[6,9]], [2,5]))
     print(insert_alt([[1,3],[6,9]], [2,5]))
+    print(insert_linear([[1,3],[6,9]], [2,5]))
