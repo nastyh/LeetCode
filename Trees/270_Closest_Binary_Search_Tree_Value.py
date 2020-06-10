@@ -1,11 +1,12 @@
 # Definition for a binary tree node.
 import math
+# assumption: it returns the node's value, not the node itself.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
-    def closestValue(self, root, target):
+    def closestValue(self, root, target):  # creating a list of lists where the first element is node's values, the second is the difference
         st, res = [], []
         st.append(root)
         while st:
@@ -19,11 +20,11 @@ class TreeNode:
             if curr_node.right:
                 st.append(curr_node.right)
             res.append(el)
-        res_sorted = sorted(res, key = lambda x: x[1])
+        res_sorted = sorted(res, key = lambda x: x[1]) # sorting the list of lists by the second value (by the difference) and returning the node value with such difference
         return res_sorted[0][0]
 
 
-    def closestValue_efficient(self, root, target):
+    def closestValue_efficient(self, root, target): # keeping track on the run
         st, glob_diff, glob_node = [], math.inf, None
         st.append(root)
         while st:
