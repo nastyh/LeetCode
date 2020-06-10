@@ -166,7 +166,6 @@ class TreeNode:
 
 
 
-if __name__ == '__main__':
     l = TreeNode(7)
     l.left = TreeNode(3)
     l.right = TreeNode(11)
