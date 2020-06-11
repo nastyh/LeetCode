@@ -53,6 +53,21 @@ class TreeNode:
         _helper(root, target, self.diff, self.res)
         return self.res
 
+    def closestValue_dfs3(self, root, target): # DFS but with outside variables. Avoid if you can
+        # self.diff = math.inf
+        # self.res = 0
+
+        def _helper(root, target, diff = 0, res):
+            if not root: return
+            if diff >= abs(root.val - target):
+                diff = abs(root.val - target)
+                res = root.val
+            _helper(root.left, target, diff, root.left.val)
+            _helper(root.right, target, diff, root.right.val)
+
+        _helper(root, target, 0, 0)
+        return self.res
+
 
     def closestValue_binary(self, root, target):
         ans = float("inf")
