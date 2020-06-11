@@ -1,3 +1,4 @@
+from collections import deque
 # BST
 class Node:
     def __init__(self, value):
@@ -163,18 +164,34 @@ class TreeNode:
         return _helper(root, res)
 #    ---------------------------------------------------------------------------
 
+    def depth_bfs(self, root):
+        if not root: return 0
+        depth = 1
+        d = deque()
+        d.append([root, depth])
+        while d:
+            t, curr_d = d.popleft()
+            if t.left or t.right:
+                curr_d += 1
+            if t.left:
+                d.append([t.left, curr_d])
+            if t.right:
+                d.append([t.right, curr_d])
+        return curr_d
 
 
 
-    l = TreeNode(7)
-    l.left = TreeNode(3)
-    l.right = TreeNode(11)
-    l.left.left = TreeNode(1)
-    l.right.left = TreeNode(2)
-    l.right.left = TreeNode(9)
-    l.right.right = TreeNode(14)
+
+l = TreeNode(7)
+l.left = TreeNode(3)
+l.right = TreeNode(11)
+l.left.left = TreeNode(1)
+l.right.left = TreeNode(2)
+l.right.left = TreeNode(9)
+l.right.right = TreeNode(14)
 
 # print(l.inorder_iter(l))
 # print(l.postorder_iter(l))
 # print(l.postorder_iter(l))
-print(l.inorder_list(l))
+# print(l.inorder_list(l))
+print(l.depth_bfs(l))
