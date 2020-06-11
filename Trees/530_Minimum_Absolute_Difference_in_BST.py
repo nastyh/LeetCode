@@ -13,7 +13,21 @@ class TreeNode:
                 values = get_values(values, root.right)
             return values
 
+        # def get_values_bfs(root): # same as above, but BFS
+        #     d = deque()
+        #     values = []
+        #     d.append(root)
+        #     while d:
+        #         t = d.popleft()
+        #         values.append(t.val)
+        #         if t.left:
+        #             d.append(t.left)
+        #         if t.right:
+        #             d.append(t.right)
+        #     return values
+
         values_list = get_values([], root)
+        # values_list = get_values_bfs(root)
 
         if len(values_list) != len(set(values_list)):
             return 0
