@@ -17,6 +17,21 @@ class TreeNode:
             return self.minDepth(root.left) + 1
         return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
 
+    def minDepth_stupid_DFS(self, root):
+        if not root: return 0
+        def _helper(root):
+            if not root: return 0
+            if root and not root.left and not root.right: return 1
+
+            if root.left and not root.right:
+                return _helper(root.left) + 1
+            if not root.left and root.right:
+                return _helper(root.right) + 1
+            if root.left and root.right:
+                return min(_helper(root.left), _helper(root.right)) + 1
+
+        return _helper(root)
+
     def minDepthDFS(self, root):
         if not root: return 0
         l = self.minDepthDFS(root.left)
@@ -58,3 +73,4 @@ if __name__ == '__main__':
     print(l.minDepth(l))
     print(l.minDepthDFS(l))
     print(l.minDepthBFS(l))
+    print(l.minDepth_stupid_DFS(l))
