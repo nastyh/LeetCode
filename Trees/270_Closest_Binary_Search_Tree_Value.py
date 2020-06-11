@@ -23,8 +23,7 @@ class TreeNode:
         res_sorted = sorted(res, key = lambda x: x[1]) # sorting the list of lists by the second value (by the difference) and returning the node value with such difference
         return res_sorted[0][0]
 
-
-    def closestValue_efficient(self, root, target): # keeping track on the run
+    def closestValue_efficient(self, root, target): # keeping track on the go
         st, glob_diff, glob_node = [], math.inf, None
         st.append(root)
         while st:
@@ -39,12 +38,39 @@ class TreeNode:
                 st.append(curr_node.right)
         return glob_node
 
+    def closestValue_dfs2(self, root, target): # DFS but with outside variables. Avoid if you can
+        self.diff = math.inf
+        self.res = 0
+
+        def _helper(root, target, diff, res):
+            if not root: return
+            if self.diff >= abs(root.val - target):
+                self.diff = abs(root.val - target)
+                self.res = root.val
+            _helper(root.left, target, self.diff, self.res)
+            _helper(root.right, target, self.diff, self.res)
+
+        _helper(root, target, self.diff, self.res)
+        return self.res
+
+
+    def closestValue_binary(self, root, target):
+        ans = float("inf")
+        while root:
+            if root.val == target: return root.val
+            ans = min(ans, root.val, key=lambda x: abs(x-target))
+            if root.val > target: root = root.left
+            else: root = root.right
+        return ans
+
+
 if __name__ == '__main__':
     l = TreeNode(4)
     l.left = TreeNode(2)
     l.right = TreeNode(5)
     l.left.left = TreeNode(1)
     l.left.right = TreeNode(3)
-    print(l.closestValue(l, 3.714286))
-    print(l.closestValue_efficient(l, 3.714286))
-
+    # print(l.closestValue(l, 3.714286))
+    # print(l.closestValue_efficient(l, 3.714286))
+    print(l.closestValue_dfs2(l, 3.714286))
+    # print(l.closestValue_binary(l, 3.714286))
