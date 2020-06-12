@@ -187,7 +187,7 @@ l.left = TreeNode(3)
 l.right = TreeNode(11)
 l.left.left = TreeNode(1)
 l.right.left = TreeNode(2)
-l.right.left = TreeNode(9)
+l.left.right = TreeNode(9)
 l.right.right = TreeNode(14)
 
 # print(l.inorder_iter(l))
