@@ -1,62 +1,69 @@
 # cousing are nodes that have the same depth but different parents
-
+from collections import deque
 #Definition for a binary tree node.
 class TreeNode:
-     def __init__(self, val=0, left=None, right=None):
-         self.val = val
-         self.left = left
-         self.right = right
-from collections import deque
-class Solution:
-    def isCousins(self, root: TreeNode, x: int, y: int) -> bool: # bfs
-        
-        # first we need a function that will return a depth and a parent of a given node
-        
-        def _parent(root, value_to_find, parent_val):
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def isCousins_BFS(self, root, x, y): # bfs
+
+        def _parent(root, value_to_find, parent, level): # returns [level, parent as integer]
             if not root:
                 return None, parent_val
-            
+            res = []
+
             q = deque()
-            q.append([root, parent_val])
-            level = 1
-            
+            q.append([root, value_to_find, None, 0]) # order is root, value_to_find, parent, level
             while q:
-                for _ in range(len(q)):
-                    t = q.popleft()
-                    if t[0].val == value_to_find:
-                        return depth, t[1]
-                    if t[0].left:
-                        q.append([t[0].left, t[0].val])
-                    if t[0].right:
-                        q.append([t[0].right, t[0].val])
-                    level += 1 
-            return level, t[1]
-        
-        x_depth, x_parent = _parent(x, None)
-        y_depth, y_parent = _parent(y, None)
-        
-        if x_depth == y_depth and x_parent != y_parent:
+                t, curr_val, curr_parent, curr_level = q.popleft()
+                if t.val == curr_val:
+                    res.append(curr_level)
+                    res.append(curr_parent.val)
+                if t.left:
+                    q.append([t.left, value_to_find, t, curr_level + 1])
+                if t.right:
+                    q.append([t.right, value_to_find, t, curr_level + 1])
+
+            return res
+
+        x_info = _parent(root, x, None, 0)
+        y_info = _parent(root, y, None, 0)
+
+        if x_info[1] != y_info[1] and x_info[1] != y_info[1]:
             return True
         else:
-            return False 
-                    
-    def isCousins(self, root: TreeNode, x: int, y: int) -> bool: # recursively
-         
-        def _findRec(root, value_to_find, curr_depth, curr_parent):
-            if not root:
-                return False
-            if rpot.val == x:
-                return curr_depth, curr_parent
-            if value_to_find < root.val:
-                return _findRec(root.left, value_to_find, curr_depth + 1, curr_parent)
-            if value_to_find > root.val:
-                return _findRec(root.right, value_to_find, curr_depth + 1, curr_parent)
-            
-        x_depth, x_parent = _findRec(root, x, 0, None)
-        y_depth, y_parent = _findRec(root, y, 0, None)
-        
-        if x_depth == y_depth and x_parent != y_parent:
+            return False
+
+    def isCousins_DFS_alt(self, root, x, y):
+        if not root: return
+
+        def _helper(root, value_to_find, parent, level):
+            if not root: return
+
+            if root.val == value_to_find:
+                return [parent.val, level]
+            else:
+                l =_helper(root.left, value_to_find, root, level + 1)
+                r = _helper(root.right, value_to_find, root, level + 1)
+                if l: return l
+                if r: return r
+
+
+        x_res = _helper(root, x, None, 0)
+        y_res = _helper(root, y, None, 0)
+
+        if x_res[0] != y_res[0] and x_res[1] == y_res[1]:
             return True
         else:
-            return False 
-                   
+            return False
+
+if __name__ == '__main__':
+    l = TreeNode(1)
+    l.left = TreeNode(2)
+    l.right = TreeNode(3)
+    l.left.right = TreeNode(4)
+    l.right.right = TreeNode(5)
+    print(l.isCousins_BFS(l, 4, 5))
+    print(l.isCousins_DFS_alt(l, 4, 5))
