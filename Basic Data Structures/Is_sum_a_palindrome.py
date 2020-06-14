@@ -1,3 +1,7 @@
+"""
+Number 47 has the following property: 47 + 74 = 121. The result is a palindrome.
+Return first 25 numbers with this property so that the sum is > 1000
+"""
 def palindrome_property():
     def is_palindrome_alt(n):
         new_n = ''
