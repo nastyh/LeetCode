@@ -1,6 +1,5 @@
 def customSortString(S, T):
     d = {v:k for k, v in enumerate(S)}
-    # in_both = [i for i in T if i in S]
     the_rest = [i for i in T if i not in S]
     res = [""] * len(S)
 
