@@ -4,7 +4,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-    def lcaDeepestLeaves(self, root: TreeNode) -> TreeNode:
+    def lcaDeepestLeaves(self, root):
         def helper(node):
             if not node:
                 return [node, 0]
@@ -50,3 +50,12 @@ class TreeNode:
 
         return n
 
+if __name__ == '__main__':
+    l = TreeNode(11)
+    l.left = TreeNode(4)
+    l.right = TreeNode(16)
+    l.left.left = TreeNode(2)
+    l.left.right = TreeNode(8)
+    l.left.right.left = TreeNode(6)
+    l.left.right.right = TreeNode(10)
+    print(l.lcaDeepestLeaves_easy(l))
