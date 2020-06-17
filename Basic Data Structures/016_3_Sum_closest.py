@@ -16,9 +16,6 @@ def threeSumClosest(nums, target):
             break
     return target - diff
 
-def threeSumClosest_alt(nums, target):
-
-
 
 
 if __name__ == '__main__':
