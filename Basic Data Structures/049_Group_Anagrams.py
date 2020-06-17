@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from collections import Counter
 def groupAnagrams(strs):
     res = []
@@ -23,3 +24,21 @@ if __name__ == '__main__':
     print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
 
 
+=======
+from collections import defaultdict
+def groupAnagrams(strs):
+	if len(strs) == 0:
+		return []
+	d = defaultdict(list)
+	for word in strs:
+		t = ''.join(sorted(word))
+		if t not in d:
+			d[t] = [word]
+		else:
+			d[t].append(word)
+
+	return d.values()
+
+if __name__ == '__main__':
+	print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+>>>>>>> 6f7dbec22dbf499e2507ba1e2d19b19aaad28fbd
