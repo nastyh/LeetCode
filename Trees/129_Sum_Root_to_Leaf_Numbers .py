@@ -25,8 +25,35 @@ class TreeNode:
                 ans += curr_val
         return ans
 
+    def sumNumbers_BFS(self, root):
+        if not root: return
+        q, res = [], 0
+        q.append((root, 0))
 
-    # def sumNumbers_BFS(self, root):
+        while q:
+            t, curr_num = q.pop()
+            curr_num = curr_num * 10 + t.val
+            if not t.left and not t.right:
+                res += curr_num
+            if t.left:
+                q.append((t.left, curr_num))
+            if t.right:
+                q.append((t.right, curr_num))
+        return res
+
+
+    def sumNumbers_DFS(self, root):
+        if not root: return 0
+
+        def _helper(root, cum_sum):
+            cum_sum = cum_sum * 10 + root.val
+            if root and not root.left and not root.right:
+                return cum_sum              
+            else:
+                return _helper(root.left, cum_sum) + _helper(root.right, cum_sum)
+        return _helper(root, 0)
+
+
 def test(nums):
     ans = 0
     for i in range(len(nums)):
@@ -41,8 +68,10 @@ if __name__ == '__main__':
     l.left.left = TreeNode(5)
     l.left.right = TreeNode(1)
     print(l.sumNumbers(l))
+    print(l.sumNumbers_BFS(l))
+    print(l.sumNumbers_DFS(l))
     m = TreeNode(1)
     m.left = TreeNode(2)
     m.right = TreeNode(3)
-    print(m.sumNumbers(m))
+    # print(m.sumNumbers(m))
     # print(test([4,9,5]))
