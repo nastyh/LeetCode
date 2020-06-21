@@ -26,3 +26,14 @@ def isBipartite(graph):
         Time Complexity: O(N + E)O(N+E), where NN is the number of nodes in the graph, and EE is the number of edges
         Space Complexity: O(N)O(N), the space used to store the color
         """
+
+def isBipartite_recurs(graph):
+    colors = {} #store node and its corresponding color
+        #DFS recursive
+        def dfs(node, color=1): # current node and current color
+            if node in self.colors:
+                return self.colors[node] == color
+            self.colors[node] = color
+            return all(dfs(n,-color) for n in graph[node])
+
+        return all(dfs(node) for node in range(len(graph)) if node not in self.colors)
