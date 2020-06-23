@@ -25,6 +25,24 @@ class TreeNode:
                 ans += curr_val
         return ans
 
+    def sumNumbers_comprehension(self, root):
+        res = []
+
+        def _helper(root, paths):
+            if not root: return []
+            if root and not root.left and not root.right:
+                res.append(paths)
+            else:
+                if root.left: _helper(root.left, paths + [root.left.val])
+                if root.right: _helper(root.right, paths + [root.right.val])
+            return res
+        digits = _helper(root, [root.val]) if root else None
+        s = []
+        if digits:
+            for element in digits:
+                s.append(sum([v * 10 ** k for k, v in enumerate(list(reversed(element)))]))    
+        return sum(s)
+
     def sumNumbers_BFS(self, root):
         if not root: return
         q, res = [], 0
@@ -68,6 +86,7 @@ if __name__ == '__main__':
     l.left.left = TreeNode(5)
     l.left.right = TreeNode(1)
     print(l.sumNumbers(l))
+    print(l.sumNumbers_comprehension(l))
     print(l.sumNumbers_BFS(l))
     print(l.sumNumbers_DFS(l))
     m = TreeNode(1)
