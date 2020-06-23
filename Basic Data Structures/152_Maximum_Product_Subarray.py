@@ -19,3 +19,13 @@ def maxProduct(nums):
             if cur_max > final_max:
                 final_max = cur_max
         return final_max
+
+def maxProduct_brute_force(self, nums: List[int]) -> int:
+        res, curr = -math.inf, 1
+        for i in range(len(nums)):
+            curr = nums[i]
+            res = max(res, curr)
+            for j in range(i + 1, len(nums)):
+                curr = curr * nums[j]
+                res = max(res, curr)
+        return res
