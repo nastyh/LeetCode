@@ -1,5 +1,5 @@
 import math
-def maxVowels(s, k):
+def maxVowels(s, k): # times out
 	vowels = 'aeiou'
 	if len(s) == 0: return
 	if k > len(s): return
@@ -11,7 +11,7 @@ def maxVowels(s, k):
 		l += 1
 	return glob_l
 
-def maxVowels_alt(s, k):
+def maxVowels_alt(s, k): # works 
 	vowels = 'aeiou'
 	if len(s) == 0: return
 	if k > len(s): return
@@ -29,6 +29,18 @@ def maxVowels_alt(s, k):
 			glob_length = max(glob_length, length)
 	return glob_length
 
+def maxVowels_short(s, k):
+	curr_l, glob_l = 0, -math.inf
+	vowels = 'aeiou'
+	for ix, v in enumerate(s):
+		if ix >= k:
+			if s[ix - k] in vowels:
+				curr_l -= 1
+		if v in vowels:
+			curr_l += 1
+		glob_l = max(glob_l, curr_l)
+	return glob_l
+
 
 if __name__ == '__main__':
 	# print(maxVowels('abciiidef', 3))
@@ -36,9 +48,14 @@ if __name__ == '__main__':
 	# print(maxVowels('leetcode', 3))
 	# print(maxVowels('rhytms', 4))
 	# print(maxVowels('tryhard', 4))
-	print(maxVowels_alt('abciiidef', 3))
-	print(maxVowels_alt('aeiou', 2))
-	print(maxVowels_alt('leetcode', 3))
-	print(maxVowels_alt('rhytms', 4))
-	print(maxVowels_alt('tryhard', 4))
-	
+	# print(maxVowels_alt('abciiidef', 3))
+	# print(maxVowels_alt('aeiou', 2))
+	# print(maxVowels_alt('leetcode', 3))
+	# print(maxVowels_alt('rhytms', 4))
+	# print(maxVowels_alt('tryhard', 4))
+	print(maxVowels_short('abciiidef', 3))
+	print(maxVowels_short('aeiou', 2))
+	print(maxVowels_short('leetcode', 3))
+	print(maxVowels_short('rhytms', 4))
+	print(maxVowels_short('tryhard', 4))
+
