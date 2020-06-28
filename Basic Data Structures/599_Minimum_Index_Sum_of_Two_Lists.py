@@ -11,7 +11,6 @@ def findRestaurant(list1, list2):
         if key in longer_d:
             combined_d[key] = shorter_d[key] + longer_d[key]
 
-    # return min(combined_d.items(), key = lambda x: x[1])[0]
     return [k for k, v in combined_d.items() if v == min(combined_d.values())][0]
 
 
