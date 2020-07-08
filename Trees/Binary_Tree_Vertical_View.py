@@ -23,6 +23,21 @@ class TreeNode:
     	res.extend([v[-1] for k,v in sorted(d.items(), key = lambda x: x[0])])
     	return res 
 
+    def vertView_just_dict(self, root): # rewrite a value every time for every key if it's already in the dictionary  
+    	if not root: return []
+    	res, q, hor, d = [], deque(), 0, {}
+    	q.append((root, hor))
+    	while q:
+    		t, h = q.popleft()
+    		d[h] = t.val
+    		if t.left:
+    			q.append((t.left, h - 1))
+    		if t.right:
+    			q.append((t.right, h + 1))
+    	# res.extend([v[-1] for k,v in sorted(d.items(), key = lambda x: x[0])])
+    	res.extend([v for k, v in sorted(d.items(), key = lambda x: x[0])])
+    	return res 
+
 if __name__ == '__main__':
 	l = TreeNode(1)
 	l.left = TreeNode(2)
@@ -37,3 +52,5 @@ if __name__ == '__main__':
 	m.right.left = TreeNode(5)
 	print(l.vertView(l))
 	print(m.vertView(m))
+	print(l.vertView_just_dict(l))
+	print(m.vertView_just_dict(m))
