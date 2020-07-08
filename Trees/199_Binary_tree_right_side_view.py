@@ -1,9 +1,28 @@
 # Definition for a binary tree node.
+from collections import deque
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
+    def rightSideView_efficient(self, root): # bit less space than the variant below, b/c it doesn't save everything in res. Space complexity is probably O(d), where d
+    # is a diameter of a tree
+        if not root: return []
+        res = []
+        d = deque()
+        d.append(root)
+        while d:
+            curr = []
+            for _ in range(len(d)):
+                t = d.popleft()
+                curr.append(t.val)
+                if t.left:
+                    d.append(t.left)
+                if t.right:
+                    d.append(t.right)
+            res.append(curr[-1])
+        return res
 
     def rightSideView(self, root): # bfs
         from collections import deque
@@ -51,6 +70,7 @@ if __name__ == '__main__':
     l.right = TreeNode(3)
     l.left.right = TreeNode(5)
     l.right.right = TreeNode(4)
+    print(l.rightSideView_efficient(l))
     print(l.rightSideView(l))
     print(l.rightSideView_rec(l))
 
