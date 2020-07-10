@@ -12,16 +12,18 @@ def coinchange(nums, target):
 		res += target // nums[i]
 		target = target % nums[i]
 		i -= 1
-	return res 
+	return res
+
 
 def coinchange_naive(nums, target):
 	if len(nums) == 0: return -1
-	res, curr = 0, 0
+	res = 0
 	for coin in nums:
 		while target >= coin:
 			target -= coin
 			res += 1
 	return res
+
 
 if __name__ == '__main__':
 	# print(coinchange([1,2,5], 11))

@@ -23,7 +23,7 @@ class TreeNode:
     	res.extend([v[-1] for k,v in sorted(d.items(), key = lambda x: x[0])])
     	return res 
 
-    def vertView_just_dict(self, root): # rewrite a value every time for every key if it's already in the dictionary  
+    def vertView_just_dict(self, root):  # rewrite a value every time for every key if it's already in the dictionary  
     	if not root: return []
     	res, q, hor, d = [], deque(), 0, {}
     	q.append((root, hor))
@@ -34,7 +34,7 @@ class TreeNode:
     			q.append((t.left, h - 1))
     		if t.right:
     			q.append((t.right, h + 1))
-    	# res.extend([v[-1] for k,v in sorted(d.items(), key = lambda x: x[0])])
+	# res.extend([v[-1] for k,v in sorted(d.items(), key = lambda x: x[0])])
     	res.extend([v for k, v in sorted(d.items(), key = lambda x: x[0])])
     	return res 
 
