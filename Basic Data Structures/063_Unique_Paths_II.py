@@ -35,6 +35,22 @@ def uniquePathsWithObstacles_another(obstacleGrid): # with filling out the corne
 			    obstacleGrid[i][j] = 0
 	return obstacleGrid[-1][-1]
 
+def test(grid):
+    col, row = len(grid[0]), len(grid)
+    dp = [[None] * col for i in range(row)]
+    for i in range(col):
+        if grid[0][i] == 0:
+            dp[0][i] = 1
+        else:
+            dp[0][i] = 0
+    for j in range(row):
+        if grid[j][0] == 0:
+            dp[j][0] = 1
+        else:
+            dp[j][0] = 0
+    return dp
+
 if __name__ == '__main__':
     print(uniquePathsWithObstacles([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
     print(uniquePathsWithObstacles_another([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
+    print(test([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
