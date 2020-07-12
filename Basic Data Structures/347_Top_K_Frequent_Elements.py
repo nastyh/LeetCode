@@ -45,11 +45,13 @@ def topKFrequent_heap(nums, k):
     # Popping out all the number for  value k
     res = []
     for _ in range(k):
-        x,y = heapq.heappop(hp)
+        x, y = heapq.heappop(hp)
         res.append(y)
     return res
 
 
 if __name__ == '__main__':
     # print(topKFrequent([1,1,1,2,2,3], 2))
-    print(topKFrequent_heap([-1,-1], 1)) # [1,1,1,2,2,3], 2
+    # print(topKFrequent_heap([-1,-1], 1)) # [1,1,1,2,2,3], 2
+    print(topKFrequent_heap([1, 1, 1, 2, 2, 3], 2))
+    print(topKFrequent([1, 1, 1, 2, 2, 3], 2))
