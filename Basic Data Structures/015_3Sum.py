@@ -42,28 +42,6 @@ def Sum3_with_helper(nums): # with pointers, easier to comprehend
     return res
 
 
-def three_sum_helper(nums):
-    if len(nums) == 0: return []
-    res = []
-    nums.sort()
-    def _helper(lst, target):
-        r, d = [], {}
-        for i in range(len(lst)):
-            if target - lst[i] not in d:
-                d[lst[i]] = i
-            else:
-                r.append(lst[i])
-                r.append(target - lst[i])
-        return r
-    for j in range(len(nums) - 2):
-        if j > 0 and nums[j - 1] == nums[j]:
-            continue
-        curr = _helper(nums[j + 1:], -nums[j])
-        curr.append(nums[j])
-        res.append(curr)
-    return res
-
-
 # def test(array, target):
 #     l, r = 0, len(array) - 1
 #     res, curr = [], []
@@ -93,7 +71,7 @@ if __name__ == '__main__':
     # print(test([-4, -1, -1, 1, 2], 0))
     # print(test([-4, -1, -1, 0, 2], -1))
     # print(test([0, 1, 1, 2], 2))
-    # print(Sum3_with_helper([-1, 0, 1, 2, -1, -4]))
-    print(three_sum_helper([-1, 0, 1, 2, -1, -4]))
+    print(Sum3_with_helper([-1, 0, 1, 2, -1, -4]))
+
 
 
