@@ -16,6 +16,22 @@ def minSubArrayLen(s, nums):
 
     return glob if glob != math.inf else 0
 
+def minSubArrayLen_alt(s, nums): # pretty much the same but list slicing looks more Pythonic; way slower, though
+    l, r, curr_s, curr_l, glob_l = 0, 0, 0, 0, math.inf
+    while r < len(nums):
+        curr_s = sum(nums[l:r + 1])
+        while curr_s >= s:
+            curr_l = r - l + 1        
+            glob_l = min(glob_l, curr_l)
+            l += 1
+            curr_s = sum(nums[l:r + 1])
+            
+        r += 1
+    return glob if glob != math.inf else 0
+
 if __name__ == '__main__':
-    # print(minSubArrayLen(7, [2,3,1,2,4,3]))
+    print(minSubArrayLen(7, [2,3,1,2,4,3]))
     print(minSubArrayLen(11, [1,2,3,4,5]))
+    print(minSubArrayLen_alt(11, [1,2,3,4,5]))
+    print(minSubArrayLen_alt(7, [2, 3, 1, 2, 4, 3]))
+
