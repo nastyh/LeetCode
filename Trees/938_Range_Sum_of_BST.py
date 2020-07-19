@@ -7,7 +7,7 @@ class TreeNode:
 
     def rangeSumBST(self, root, L, R):
 
-        def _helper(node): # main solution
+        def _helper(node): # main solution, takes O(n) extra space
             res = []
             if not node:
                 return res
@@ -43,7 +43,19 @@ class TreeNode:
         return _helper(root, L, R)
 
 
+    def rangeSumBST_recur_another(self, root, L, R):
+        self.res = 0
+        def _helper(root, L, R):
+            if not root: return
+            if root.val >= L and root.val <= R:
+                self.res += root.val
+            if root.val > L:
+                _helper(root.left, L, R)
+            if root.val < R:
+                _helper(root.right, L, R)
 
+        _helper(root, L, R)
+        return self.res
 
 if __name__ == '__main__':
     l = TreeNode(10)
@@ -55,3 +67,4 @@ if __name__ == '__main__':
 
     print(l.rangeSumBST(l, 7, 15))
     print(l.rangeSumBST_recurs(l, 7, 15))
+    print(l.rangeSumBST_recur_another(l, 7, 15))
