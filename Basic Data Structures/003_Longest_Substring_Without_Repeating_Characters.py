@@ -1,3 +1,19 @@
+import math
+def lengthOfLongestSubstring_optimal(s):
+    if len(s) <= 1: return len(s)
+    if len(set(s)) == 1: return 1
+    l, r, storage, res = 0, 0, set(), -math.inf
+    while r < len(s):
+        if s[r] not in storage:
+            storage.add(s[r])
+            res = max(res, r - l + 1)
+            r += 1
+        else:
+            storage.remove(s[l])
+            l += 1
+    return res
+
+
 def lengthOfLongestSubstring(s):
     m = set()
     res, l, i = 0, 0, 0
@@ -12,6 +28,7 @@ def lengthOfLongestSubstring(s):
             l += 1
     return res
 
+
 def lengthOfLongestSubstring_dict(s):
     dic = {}
     res = 0
@@ -23,6 +40,7 @@ def lengthOfLongestSubstring_dict(s):
         res = max(res, i-left)
     return res
 
+
 def lengthOfLongestSubstring_dict_alt(s):
     d, l, res = {}, 0, 0
     for k, v in enumerate(s):
@@ -32,6 +50,7 @@ def lengthOfLongestSubstring_dict_alt(s):
             res = max(res, k - l + 1)
         d[v] = k
     return res
+
 
 def lengthOfLongestSubstring_set(s):
     storage, curr, glob, l = set(), 0, 0, 0
@@ -47,6 +66,7 @@ def lengthOfLongestSubstring_set(s):
             l += 1
     return glob
 
+
 def lengthOfLongestSubstring_stack(self, s: str) -> int:
         stack=[]
         res=0
@@ -59,6 +79,8 @@ def lengthOfLongestSubstring_stack(self, s: str) -> int:
         return res
 
 if __name__ == '__main__':
+    print(lengthOfLongestSubstring_optimal('abcabcbb'))
+    print(lengthOfLongestSubstring_optimal('au'))
     print(lengthOfLongestSubstring('abcabcbb'))
     print(lengthOfLongestSubstring_dict('abcabcbb'))
     print(lengthOfLongestSubstring_dict_alt('au')) #pwwkew
