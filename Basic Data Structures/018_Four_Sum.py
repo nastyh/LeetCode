@@ -23,6 +23,7 @@ def fourSum(nums, target):
                 else:
                     j = j-1
     return [list(r) for r in res]
+    
 
 if __name__ == '__main__':
     print(fourSum([1, 0, -1, 0, -2, 2], 0))
@@ -31,5 +32,7 @@ if __name__ == '__main__':
 def test(arr, k):
     arr.sort()
     return sum(arr[k:])
+
+
 if __name__ == '__main__':
-    print(test([-4,-2,1,-3], 2))
+    print(test([-4, -2, 1, -3], 2))
