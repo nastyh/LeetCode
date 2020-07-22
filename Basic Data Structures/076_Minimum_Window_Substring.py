@@ -1,3 +1,5 @@
+from collections import Counter
+import math
 def minWindow(self, s, t):
     d = {}
     for c in t:
@@ -36,3 +38,30 @@ use a dictionary d to store the number of each character we need to find. (negat
 
 
     """
+
+def minWindow_alt(s,  t):
+    l, r, curr_ans, curr_l, glob_ans, glob_l = 0, 0, '', 0, '', math.inf
+    d = Counter(t)
+    l_d = len(t)
+    while r < len(s):
+        while l_d != 0:
+            if s[r] in d:
+                d[s[r]] -= 1
+            if d[s[r]] == 0:
+                l_d -= 1
+            r += 1
+            curr_ans = s[l: r + 1]
+            curr_l = r - l + 1
+            if curr_l < glob_l:
+                glob_l = curr_l
+                glob_ans = curr_ans
+            if l_d == 0:
+                while l < r and d[s[l]] < 0:
+                    d[s[l]] += 1
+                    l_d += 1
+                    i += 1
+    return glob_ans
+
+if __name__ == '__main__':
+    print(minWindow_alt("ADOBECODEBANC","ABC"))
+                
