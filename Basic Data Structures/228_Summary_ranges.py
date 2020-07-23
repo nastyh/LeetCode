@@ -44,6 +44,25 @@ def summaryRanges_alt(nums):
         res.append(str(start) + '->' + str(prev))
     return res
 
+def summaryRanges_indices(nums):
+    if len(nums) == 0: return []
+    if len(nums) == 1: return [str(nums[0])]
+    l, r, res = 0, 0, []
+    for ix in range(1, len(nums)):
+        if nums[ix] != nums[r] + 1:
+            if nums[r] == nums[l]:
+                res.append(str(nums[l]))
+            else:
+                res.append(str(nums[l]) + '->' + str(nums[r]))
+            l = ix
+        r = ix
+    if nums[r] == nums[l]:
+        res.append(str(nums[l]))
+    else:
+        res.append(str(nums[l]) + '->' + str(nums[r]))
+    return res
+
 if __name__ == '__main__':
     print(summaryRanges([0,2,3,4,6,8,9]))
     print(summaryRanges_alt([0,2,3,4,6,8,9]))
+    print(summaryRanges_indices([0,2,3,4,6,8,9]))
