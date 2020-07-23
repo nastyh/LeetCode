@@ -1,14 +1,11 @@
 import math
 def findMaxConsecutiveOnes(nums):
     l, r = 0, 0
-    curr, glob = 0, -math.inf
     max_zeroes = 1
 
     while r < len(nums):
         if nums[r] == 0:
             max_zeroes -= 1
-        curr = r - l
-        glob = max(glob, curr)
         if max_zeroes < 0:
             if nums[l] == 0:
                 max_zeroes += 1
