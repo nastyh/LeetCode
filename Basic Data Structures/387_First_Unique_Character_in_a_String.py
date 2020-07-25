@@ -1,4 +1,4 @@
-from collections import OrderedDict 
+from collections import OrderedDict, defaultdict
 def firstUniqChar(s):   # loveleetcode
     if len(s) == 0:
         return -1
@@ -37,7 +37,17 @@ def firstUniqChar_alt(s):
     return -1
 
 
+def firstUniqChar_ordered(s):
+    d = defaultdict(list)
+    for k, v in enumerate(s):
+        d[v].append(k)
+    return [v if len(v) == 1 else -1 for v in d.values() ][0][0]    
+    return [v for v in d.values() if len(v) == 1][0][0]
+    return d 
+
+
 if __name__ == '__main__':
     print(firstUniqChar('loveleetcode'))
     print(firstUniqChar_alt('loveleetcode'))
+    print(firstUniqChar_ordered('loveleetcode'))
     # leetcode loveleetcode aadadaad
