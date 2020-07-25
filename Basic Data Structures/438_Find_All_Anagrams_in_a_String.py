@@ -36,6 +36,7 @@ from collections import Counter
 
 #     return res
 
+
 def findAnagrams_sorted(s, p):
     len_p = len(p)
     target = Counter(p)
@@ -56,18 +57,40 @@ def findAnagrams_dicts(s, p):
     s_count = Counter()
 
     res = []
-    for i in range(len_s): # going element by element through the long string s
+    for i in range(len_s):  # going element by element through the long string s
         s_count[s[i]] += 1
         if i >= len_p: # if we past three elements:
-            if s_count[s[i - len_p]] == 1: # if it's the last element, remove
+            if s_count[s[i - len_p]] == 1:  # if it's the last element, remove
                 del s_count[s[i - len_p]]
             else:
-                s_count[s[i - len_p]] -= 1 # otherwise, decrement
+                s_count[s[i - len_p]] -= 1  # otherwise, decrement
         if p_count == s_count:
             res.append(i - len_p + 1)
     return res
 
+
+def findAnagrams_another(s, p):
+    l, r, res, d, l_p = 0, 0, [], Counter(p), len(p)
+    while r < len(s):
+        if d[s[r]] == 1:
+            d[s[r]] -= 1
+            if d[s[r]] == 0:
+                l_p -= 1
+            r += 1
+        while l_p == 0:
+            if r - l == len(p):
+                res.append(l)
+            if d[s[l]] == 1:
+                d[s[l]] += 1
+                if d[s[l]] > 0:
+                    l_p += 1
+                l += 1
+            # r += 1
+    return res
+
+
 if __name__ == '__main__':
     # print(findAnagrams('cbaebabacd', 'abc'))
-    print(findAnagrams_dicts('cbaebabacd', 'abc'))
-    print(findAnagrams_sorted('cbaebabacd', 'abc'))
+    # print(findAnagrams_dicts('cbaebabacd', 'abc'))
+    # print(findAnagrams_sorted('cbaebabacd', 'abc'))
+    print(findAnagrams_another('cbaebabacd', 'abc'))

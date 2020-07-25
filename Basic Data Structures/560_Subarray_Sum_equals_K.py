@@ -12,6 +12,18 @@ def subarraySum_d(nums, k):
 
 # a bit simpler to follow
 
+def subarraySum_dp(nums, k):
+    dp = [None] * len(nums)
+    res = 0
+    dp[0] = 0
+    for ix in range(1, len(nums)):
+        dp[ix] = dp[ix - 1] + nums[ix]
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if dp[j] - dp[i] == k:
+                res += 1
+    return res + 1
+
 def subarraySum_dict(nums, k):
     d, curr_sum, res = {0:1}, 0, 0
     for num in nums:
@@ -36,6 +48,10 @@ def subarraySum_another(nums, k):
 
 
 if __name__ == '__main__':
-    print(subarraySum_d([1,2,3], 3))
-    print(subarraySum_dict([3,4,7,2,-3,1,4,2], 7))
+    print(subarraySum_d([1, 2, 3], 3))
+    print(subarraySum_dict([3, 4, 7, 2, -3, 1, 4, 2], 7))
+    print(subarraySum_dp([3, 4, 7, 2, -3, 1, 4, 2], 7))
+    print(subarraySum_dp([1, 1, 1], 2))
+    print(subarraySum_dp([1, -1, 5 ,-2, 3], 3))
+    print(subarraySum_another([1, 1, 1], 2))
     print(subarraySum_another([1, 1, 1, 2], 2)) # [1,2,3], 3
