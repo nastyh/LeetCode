@@ -1,25 +1,22 @@
 from collections import defaultdict
 def validTree(n, edges):
-    if n <= 0 or len(edges) != n - 1: 
-        return False 
-    adj_l = defaultdict(list)
-    for el_ix in range(len(edges)):
-        adj_l[edges[el_ix][0]].append(edges[el_ix][1])
-        adj_l[edges[el_ix][1]].append(edges[el_ix][0])
-    visited = set()
-
-    def _helper(node, visited, parent):
+    def detect_cycle(node, visited, parent):
         visited.add(node)
-        for n in adj_l[node]:
-            if n == parent:
-                continue
-            if (n in visited or _helper(n, visited, parent)):
+        for child in graph[node]:
+            if(child == parent): continue
+            if(child in visited or detect_cycle(child, visited, node)):        
                 return True
-        return False
+        return False       
 
-    if _helper(0, visited, -1):
-        return False
-    return len(visited) == n
+    if(n <= 0 or len(edges) != n - 1): return False
+    graph = defaultdict(list)
+    for u, v in edges:
+        graph[u].append(v)              
+        graph[v].append(u)           
+    visited = set()
+    if(detect_cycle(0, visited, -1)):      
+        return False                       
+    return len(visited) == n    
 
 
 if __name__ == '__main__':
