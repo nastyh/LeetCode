@@ -115,6 +115,23 @@ class TreeNode:
                 s.append(t.left)
         return res
 
+    
+    def preorder_iter_alt(self, root):
+        if not root: return
+        st, res = [], []
+        curr = root
+        while st or curr:
+            while curr:
+                res.append(curr.val)
+                if curr.right:
+                    st.append(curr.right)
+                curr = curr.left
+            if st:
+                curr = st[-1]
+                st.pop()
+        return res
+
+
     def inorder_iter(self, root): # in order iteratively
         # if not root:
         #     return []
@@ -162,6 +179,15 @@ class TreeNode:
             return li
 
         return _helper(root, res)
+
+
+    def inorder_list_helper(self, root):  # like above but with a different helper function
+        if not root: return 
+        def _helper(root, res):
+            if not root: return res
+            res.append(root.val)
+            return _helper(root.left, []) + res + _helper(root.right, [])
+        return _helper(root, [])
 #    ---------------------------------------------------------------------------
 
     def depth_bfs(self, root):
@@ -191,7 +217,10 @@ l.left.right = TreeNode(9)
 l.right.right = TreeNode(14)
 
 # print(l.inorder_iter(l))
+print(l.preorder_iter(l))
+print(l.preorder_iter_alt(l))
 # print(l.postorder_iter(l))
 # print(l.postorder_iter(l))
-print(l.inorder_list(l))
+# print(l.inorder_list(l))
+# print(l.inorder_list_helper(l))
 # print(l.depth_bfs(l))

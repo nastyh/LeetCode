@@ -1,5 +1,4 @@
 def reverseWords(s):
-
     def _rev_word(s, st, end): # helper: reverses the string between elements st and end
         while st < end:
             s[st], s[end] = s[end], s[st]
@@ -19,5 +18,23 @@ def reverseWords(s):
         en_ix += 1
     return res[0]
 
+
+def reverseWords_alt(s):
+    s.reverse()
+    i, j, k = 0, 0, 0
+    while j < len(s):
+        while j < len(s) and s[j] != ' ':
+            j += 1
+        k = j - 1
+        while i < k:
+            s[i], s[k] = s[k], s[i]
+            i += 1
+            k -= 1
+        j += 1
+        i = j
+    return s
+
+
 if __name__ == '__main__':
     print(reverseWords(["t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"]))
+    print(reverseWords_alt(["t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"]))
