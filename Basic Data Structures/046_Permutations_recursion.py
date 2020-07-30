@@ -26,6 +26,18 @@ def permute_alt(nums):
         return tmp
     return _helper(nums)
 
+
+def permute_dfs(nums):
+    res = []
+    def _helper(res, nums, path):
+        if len(nums) <= 1:
+            res.append(path + nums)
+            return
+        for k, v in enumerate(nums):
+            _helper(res, nums[:k] + nums[k + 1:], path + [v])
+    _helper(res, nums, [])
+    return res
 if __name__ == '__main__':
     print(permute([1,2,3]))
     print(permute_alt([1,2,3]))
+    print(permute_dfs([1,2,3]))
