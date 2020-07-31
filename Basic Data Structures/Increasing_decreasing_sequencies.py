@@ -36,6 +36,16 @@ def NGE_alt(nums):
     return res
 
 
+def NSE_alt(nums):
+    res = [-1] * len(nums)
+    st = []
+    for i in range(len(nums)):
+        while st and nums[i] < nums[st[-1]]:
+            res[st.pop()] = nums[i]
+        st.append(i)
+    return res
+
+
 def non_decreasing(nums):
     if len(nums) == 0: return []
     if len(nums) == 1: return nums
@@ -56,6 +66,7 @@ if __name__ == '__main__':
     print(NGE_brute_force([6, 10, 8, 5, 2, 11, 12, 4, 20]))
     print(NGE([6, 10, 8, 5, 2, 11, 12, 4, 20]))
     print(NGE_alt([6, 10, 8, 5, 2, 11, 12, 4, 20]))
+    print(NSE_alt([6, 10, 8, 5, 2, 11, 12, 4, 20]))
     # print(non_decreasing([6, 10, 8, 5, 2]))
     # print(non_decreasing([6, 10, 8, 5, 2, 11, 12, 4, 20]))
     # print(non_decreasing([10, 9, 8, 7]))
