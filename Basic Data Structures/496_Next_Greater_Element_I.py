@@ -12,7 +12,7 @@ def nextGreaterElement_alt(nums1, nums2):
     d = {}
     st = []
     for n in nums2:
-        if st and st[-1] < n:
+        while st and st[-1] < n:
             d[st.pop()] = n 
         st.append(n)
     for i in range(len(nums1)):
