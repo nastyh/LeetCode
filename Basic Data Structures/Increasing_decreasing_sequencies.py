@@ -67,6 +67,7 @@ if __name__ == '__main__':
     print(NGE([6, 10, 8, 5, 2, 11, 12, 4, 20]))
     print(NGE_alt([6, 10, 8, 5, 2, 11, 12, 4, 20]))
     print(NSE_alt([6, 10, 8, 5, 2, 11, 12, 4, 20]))
+    print(NGE_alt([6, 1, 4, 8]))
     # print(non_decreasing([6, 10, 8, 5, 2]))
     # print(non_decreasing([6, 10, 8, 5, 2, 11, 12, 4, 20]))
     # print(non_decreasing([10, 9, 8, 7]))
