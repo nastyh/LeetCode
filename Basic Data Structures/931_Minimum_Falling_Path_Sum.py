@@ -1,4 +1,4 @@
-def minFallingPathSum(A):
+def minFallingPathSum(A): # falling edge cases
     dp = A
     for i in range(1, len(A)):
         # dp[i][0] = min(A[i][0], A[i][1]) + min(dp[i - 1][0], dp[i - 1][1])
@@ -9,7 +9,6 @@ def minFallingPathSum(A):
         for m in range(1, len(A[0])):
             dp[m][n] = min(A[m][n - 1], A[m][n], A[m][n + 1]) + min(dp[m - 1][n - 1], dp[m - 1][n], dp[m - 1][n + 1])
     return min(dp[-1])
-    # return dp
 
 
 def minFallingPathSum_alt(arr):
@@ -25,9 +24,9 @@ def minFallingPathSum_alt(arr):
 
 
 if __name__ == '__main__':
-    print(minFallingPathSum([[1, 2, 3],[4, 5, 6],[7, 8, 9]]))
-    print(minFallingPathSum([[-19, 57],[-40, -5]])) # doesn't work with this one
-    # print(minFallingPathSum_alt([[1, 2, 3],[4, 5, 6],[7, 8, 9]]))
-    # print(minFallingPathSum_alt([[-19, 57],[-40, -5]]))
+    # print(minFallingPathSum([[1, 2, 3],[4, 5, 6],[7, 8, 9]]))
+    # print(minFallingPathSum([[-19, 57],[-40, -5]])) # doesn't work with this one
+    print(minFallingPathSum_alt([[1, 2, 3],[4, 5, 6],[7, 8, 9]]))
+    print(minFallingPathSum_alt([[-19, 57],[-40, -5]]))
 
 
