@@ -8,7 +8,7 @@ def numIslands(grid):
 	## SPACE COMPLEXITY : O(1) ##
 
     def convertLandToWater(grid,i,j):
-        if(i<0 or j<0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1'):
+        if(i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1'):
             return
         grid[i][j] = '0'
         for x,y in directions:
@@ -22,4 +22,28 @@ def numIslands(grid):
             if grid[i][j] == '1':
                 isLandCount += 1
                 convertLandToWater(grid, i, j)
-    return isLandCount        
+    return isLandCount
+
+
+def numIslands_easy(grid):
+    if len(grid) == 0: return 0
+    res = 0
+    def _helper(grid, i, j):
+        if i < 0 or j < 0 or i  >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1':  # edge case: to avoid falling out of the index range + don't consider zeroes
+            return
+        grid[i][j] = '3'  # mark visited. Can mark anyting but 1 
+        _helper(grid, i - 1, j)
+        _helper(grid, i + 1, j)
+        _helper(grid, i, j - 1)
+        _helper(grid, i, j + 1)
+    for rows in range(len(grid)):
+        for cols in range(len(grid[0])):
+            if grid[rows][cols] == '1':
+                _helper(grid, rows, cols)
+                res += 1
+    return res
+
+
+if __name__ == '__main__':
+    print(numIslands([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))
+    print(numIslands_easy([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))       
