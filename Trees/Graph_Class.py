@@ -35,6 +35,20 @@ class Graph:
     def degree(self, node):  # return the number of edges that a given node has
         return len(self.adj_list[node])
 
+    
+    def num_of_connected_components(self):
+        res, visited = 0, set()
+        def _helper(node, seen):
+            seen.add(node)
+            for n in self.adj_list[node]:
+                if n not in seen:
+                    _helper(n, seen)
+        for node in self.adj_list:
+            if node not in visited:
+                _helper(node, visited)
+                res += 1
+        return res
+
 
 class Vertex:   # Not really necessary here
     def __init__(self, key):
@@ -61,6 +75,7 @@ if __name__ == '__main__':
     # g.create_connections('E', 'C')
     g.print_graph()
     print(g.degree('D'))
+    print(g.num_of_connected_components())
     # v = Vertex('A')
     # v.addNeighbor('B')
     # v.getConnections()
