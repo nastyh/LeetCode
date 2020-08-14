@@ -24,6 +24,11 @@ class TreeNode:
                 curr_val = int(''.join([str(i) for i in l]))
                 ans += curr_val
         return ans
+        # alternative that is slightly more Pythonic
+        # if vals:
+        #     for element in vals:
+        #         ans += sum([v * 10 ** k for k, v in enumerate(list(reversed(element)))])
+        # return ans
 
     def sumNumbers_comprehension(self, root):
         res = []
