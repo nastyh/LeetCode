@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+from collections import deque
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -73,6 +74,22 @@ class TreeNode:
             return res
         return _helper(root, L, R)
 
+    def rangeSum_BFS(self, root, L, R):
+        res = 0
+        if not root: return res
+        d = deque()
+        d.append(root)
+        while d:
+            t = d.popleft()
+            if L <= t.val <= R:
+                res += t.val
+            if t.left and t.val > L:
+                d.append(t.left)
+            if t.right and t.val < R:
+                d.append(t.right)
+        return res
+
+
 if __name__ == '__main__':
     l = TreeNode(10)
     l.left = TreeNode(5)
@@ -85,3 +102,4 @@ if __name__ == '__main__':
     print(l.rangeSumBST_recurs(l, 7, 15))
     print(l.rangeSumBST_recur_another(l, 7, 15))
     print(l.rangeSum_DFS_rec(l, 7, 15))
+    print(l.rangeSum_BFS(l, 7, 15))
