@@ -57,6 +57,22 @@ class TreeNode:
         _helper(root, L, R)
         return self.res
 
+    def rangeSum_DFS_rec(self, root, L, R):
+        if not root: return 0
+        def _helper(root, L, R):
+            res = 0
+            if not root: return res
+            if L <= root.val <= R:
+                res += root.val
+            if root.val > L:
+                res += _helper(root.left, L, R)
+            if root.val < R:
+                res += _helper(root.right, L, R)
+            _helper(root.left, L, R)
+            _helper(root.right, L, R)
+            return res
+        return _helper(root, L, R)
+
 if __name__ == '__main__':
     l = TreeNode(10)
     l.left = TreeNode(5)
@@ -68,3 +84,4 @@ if __name__ == '__main__':
     print(l.rangeSumBST(l, 7, 15))
     print(l.rangeSumBST_recurs(l, 7, 15))
     print(l.rangeSumBST_recur_another(l, 7, 15))
+    print(l.rangeSum_DFS_rec(l, 7, 15))
