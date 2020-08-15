@@ -25,7 +25,6 @@ class TreeNode:
         return res
 
     def rightSideView(self, root): # bfs
-        from collections import deque
         res = []
         if not root:
             return []
