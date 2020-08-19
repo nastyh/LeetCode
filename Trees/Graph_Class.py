@@ -49,7 +49,7 @@ class Graph:
                 res += 1
         return res
 
-
+ 
 class Vertex:   # Not really necessary here
     def __init__(self, key):
         self.id = key
