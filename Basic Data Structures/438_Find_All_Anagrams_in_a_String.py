@@ -89,8 +89,25 @@ def findAnagrams_another(s, p):
     return res
 
 
+def findAnagrams_counter(s, p): # times out but works
+    res = []
+    def _isAn(s1, s2):
+        return Counter(s1) == Counter(s2)
+    l, r = 0, len(p) - 1
+    while r < len(s):
+        if _isAn(s[l:r + 1], p):
+            res.append(l)
+            l += 1
+            r += 1
+        else:
+            l += 1
+            r += 1
+    return res
+
+
 if __name__ == '__main__':
     # print(findAnagrams('cbaebabacd', 'abc'))
     # print(findAnagrams_dicts('cbaebabacd', 'abc'))
     # print(findAnagrams_sorted('cbaebabacd', 'abc'))
-    print(findAnagrams_another('cbaebabacd', 'abc'))
+    # print(findAnagrams_another('cbaebabacd', 'abc'))
+    print(findAnagrams_counter('cbaebabacd', 'abc'))
