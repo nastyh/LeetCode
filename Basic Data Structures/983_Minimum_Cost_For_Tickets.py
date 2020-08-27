@@ -2,8 +2,7 @@ from collections import Counter
 def mincostTickets(days, cost):
     last = days[-1]
     dp = [0 for i in range(last + 1)]
-    traveldays = Counter(days)
-    
+    traveldays = Counter(days)   
     for i in range(last + 1):
         if i not in traveldays:
             dp[i] = dp[i-1]
@@ -27,6 +26,7 @@ def mincostTickets_alt(days, costs):
                                  dp_cost[max(day_i - 7, 0)]  + costs[1],\
                                  dp_cost[max(day_i - 30, 0)] + costs[2])
     return dp_cost[-1]
+    
 
 if __name__ == '__main__':
     print(mincostTickets([1, 4, 6, 7, 8, 20], [2, 7, 15]))
