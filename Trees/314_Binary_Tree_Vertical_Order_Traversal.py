@@ -27,6 +27,21 @@ class TreeNode:
                 q.append([t.right, col + 1])
         return [d[x] for x in range(min_col, max_col + 1)]
 
+    
+    def verticalOrder_d_clean(self, root):  # the best one; without min_col and max_col. Solved with sorted in the return statement
+        if not root: return None
+        d = defaultdict(list)
+        q = deque()
+        q.append([root, 0])
+        while q:
+            t, col = q.popleft()
+            d[col].append(t.val)
+            if t.left:
+                q.append([t.left, col - 1])
+            if t.right:
+                q.append([t.right, col + 1])
+        return [v for k, v in sorted(d.items())]
+
 
     def verticalOrder_dfs(self, root): # DFS with a dictionary
         if root is None:
@@ -92,6 +107,7 @@ if __name__ == '__main__':
     l.left.right = TreeNode(9)
     l.right.right = TreeNode(14)
     print(l.verticalOrder_d(l))
+    print(l.verticalOrder_d_clean(l))
     print(l.verticalOrder_dfs(l))
     # print(l.verticalOrder(l))
 
