@@ -6,7 +6,7 @@ class TreeNode:
         self.left = None
         self.right = None
 
-    def maxDepth(self, root):
+    def maxDepth(self, root):  # DFS
         def _helper(root):
             if not root: return 0
             if root and not root.left and not root.right: return 1
@@ -20,7 +20,8 @@ class TreeNode:
 
         return _helper(root)
 
-    def maxDepthBFS(self, root):
+
+    def maxDepthBFS(self, root):  # BFS
         if not root: return 0
         d, levels = deque(), 0
         d.append([root, 1])
@@ -35,6 +36,15 @@ class TreeNode:
         return levels
 
 
+    def maxDepth_helper(self, root):  # DFS but more elegant
+        def _helper(root, res):
+            if not root: return res
+            l = _helper(root.left, res + 1)
+            r = _helper(root.right, res + 1)
+            return max(l, r)
+        return _helper(root, 0)
+
+
 if __name__ == '__main__':
     l = TreeNode(3)
     l.left = TreeNode(9)
@@ -44,3 +54,4 @@ if __name__ == '__main__':
 
     print(l.maxDepth(l))
     print(l.maxDepthBFS(l))
+    print(l.maxDepth_helper(l))
