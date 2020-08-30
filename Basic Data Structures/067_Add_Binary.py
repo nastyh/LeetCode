@@ -1,6 +1,6 @@
 def addBinary(a, b):
     def binToDec(n):  # n is a string
-        return sum([2**k if v=='1' else 0 for k,v in enumerate(n[::-1])])
+        return sum([2**k if v=='1' else 0 for k, v in enumerate(n[::-1])])
     def decToBin_alt(n):  # n is a string
         res = []
         n = int(n)
@@ -9,7 +9,6 @@ def addBinary(a, b):
             res.append(n % 2)
             n = n // 2
         return ''.join(str(i) for i in res[::-1])
-    
     def decToBin(n): # n is an integer
         if n == 0:
             return 0
