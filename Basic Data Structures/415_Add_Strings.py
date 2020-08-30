@@ -1,12 +1,6 @@
-
-# def addStrings(self, num1: str, num2: str) -> str:
-#     return chr(ord(num1) + ord(num2))
-
-
-def addStrings(num1: str, num2: str):
+def addStrings(num1, num2):
     # Grab the length of longest one
     max_length = max(len(num1), len(num2))
-
     result = []
     carry = 0
     for index in range (1, max_length + 1):
@@ -27,8 +21,8 @@ def addStrings(num1: str, num2: str):
     # Special case of a carry on last addition
     if carry:
         result.insert(0, "1")
-
     return "".join(result)
+
 
 if __name__ == '__main__':
     print(addStrings('31','29'))
