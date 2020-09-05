@@ -15,11 +15,9 @@ def threeSum(nums):
     return list(ans)
 
 
-
 def Sum3_with_helper(nums): # with pointers, easier to comprehend
     nums.sort()
     res = []
-
     def _helper(array, ix, res):
         l, r = ix + 1, len(array) - 1
         while l < r:
@@ -32,8 +30,6 @@ def Sum3_with_helper(nums): # with pointers, easier to comprehend
                 res.append([nums[ix], nums[l], nums[r]])
                 l += 1
                 r -= 1
-
-
     for ix in range(len(nums)):
         if nums[ix] > 0:
             break
@@ -72,6 +68,3 @@ if __name__ == '__main__':
     # print(test([-4, -1, -1, 0, 2], -1))
     # print(test([0, 1, 1, 2], 2))
     print(Sum3_with_helper([-1, 0, 1, 2, -1, -4]))
-
-
-
