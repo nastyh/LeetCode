@@ -16,6 +16,10 @@ def minMeetingRooms(intervals):
 
 
 def minMeetingRooms_heap(intervals):
+    """
+    maintain a min heap with end times as a key. The top element is the room that will be free the earliest.
+    len(heap) shows how many meetings are taking place. This is how many rooms we need
+    """
     if len(intervals) <= 1: return len(intervals)
     res, heap = 0, []
     intervals.sort()
@@ -27,20 +31,6 @@ def minMeetingRooms_heap(intervals):
     return res
 
 
-def minMeetingRooms_another(intervals):
-    if len(intervals) <= 1: return len(intervals)
-    intervals.sort(key = lambda x: x[0])
-    intervals = sorted(intervals, key = lambda x: x[1], reverse = True)
-    res, curr = 0, intervals[0]
-    for interval in intervals[1:]:
-        if interval[1] < curr[1]:
-            res += 1
-            curr = interval
-        else:
-            curr = interval
-    return res
-
 if __name__ == '__main__':
     print(minMeetingRooms([[9, 10], [4, 9], [4, 17]]))
     print(minMeetingRooms_heap([[9, 10], [4, 9], [4, 17]]))
-    print(minMeetingRooms_another([[9, 10], [4, 9], [4, 17]]))
