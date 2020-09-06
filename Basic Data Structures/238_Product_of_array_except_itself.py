@@ -20,6 +20,11 @@ def productExceptSelf(nums):
         """
 
     return [x * y for (x, y) in zip(ll, rl)]
+    """
+    instead of zipping, we can generate the result as such (by default it returns a generator, so have to turn it into a list of lists and return the first element)
+    res.append(list(ll[i] * rl[i] for i in range(len(nums))))
+    return res[0]
+    """
 
 if __name__ == '__main__':
     print(productExceptSelf([1,2,3,4]))
