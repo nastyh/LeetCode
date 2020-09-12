@@ -107,7 +107,7 @@ def findAnagrams_counter(s, p): # times out but works
 
 if __name__ == '__main__':
     # print(findAnagrams('cbaebabacd', 'abc'))
-    # print(findAnagrams_dicts('cbaebabacd', 'abc'))
-    # print(findAnagrams_sorted('cbaebabacd', 'abc'))
+    print(findAnagrams_dicts('cbaebabacd', 'abc'))
+    print(findAnagrams_sorted('cbaebabacd', 'abc'))
     # print(findAnagrams_another('cbaebabacd', 'abc'))
     print(findAnagrams_counter('cbaebabacd', 'abc'))
