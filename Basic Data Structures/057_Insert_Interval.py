@@ -96,7 +96,31 @@ def insert_linear(intervals, newInterval):
     #         output[-1][1] = max(output[-1][1], end)
     # return output
 
+def insert_another(intervals, newInterval):
+    """"
+    Possible to understand:
+    add everything that doesn't overlap with newInterval from the left. It's done in if.
+    add everything that doesn't overlap with newInterval from the right and make newInterval equal to the current interval
+    in all other cases, there is an overlap and you need to choose min for the start and max for the end
+    """"
+    res = []
+    if len(intervals) == 0:
+        return [newInterval]
+    for i in range(len(intervals)):
+        if intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+        elif intervals[i][0] > newInterval[1]:
+            res.append(newInterval)
+            newInterval = intervals[i]
+        else:
+            newInterval[0] = min(intervals[i][0], newInterval[0])
+            newInterval[1] = max(intervals[i][1], newInterval[1])
+    res.append(newInterval)
+    return res
+
 if __name__ == '__main__':
     print(insert([[1,3],[6,9]], [2,5]))
     print(insert_alt([[1,3],[6,9]], [2,5]))
     print(insert_linear([[1,3],[6,9]], [2,5]))
+    print(insert_another([[1,3],[6,9]], [2,5]))
+    print(insert_another([[1,2],[3,5],[6,7],[8,10],[12,16]], [4,8]))

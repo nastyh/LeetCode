@@ -37,6 +37,10 @@ def isAlienSorted_naive(words, order):
                 continue
     return True if len(words[w_ix]) < len(words[w_ix + 1]) else False
 
+
+def isAlienSorted_lambda(words, order):
+    return words == sorted(words, key = lambda x: [order.index(c) for c in x])
+
 if __name__ == '__main__':
     print(isAlienSorted(["hello","leetcode"], 'hlabcdefgijkmnopqrstuvwxyz'))
     print(isAlienSorted(["word", "world", "row"], 'worldabcefghijkmnpqstuvxyz'))
@@ -46,3 +50,6 @@ if __name__ == '__main__':
     print(isAlienSorted_naive(["word", "world", "row"], 'worldabcefghijkmnpqstuvxyz'))
     print(isAlienSorted_naive(["apple","app"], "abcdefghijklmnopqrstuvwxyz"))
     print(isAlienSorted_naive(["fxasxpc","dfbdrifhp","nwzgs","cmwqriv","ebulyfyve","miracx","sxckdwzv","dtijzluhts","wwbmnge","qmjwymmyox"], "zkgwaverfimqxbnctdplsjyohu"))
+    print(isAlienSorted_lambda(["fxasxpc","dfbdrifhp","nwzgs","cmwqriv","ebulyfyve","miracx","sxckdwzv","dtijzluhts","wwbmnge","qmjwymmyox"], "zkgwaverfimqxbnctdplsjyohu"))
+    print(isAlienSorted_lambda(["apple","app"], "abcdefghijklmnopqrstuvwxyz"))
+    print(isAlienSorted_lambda(["hello","leetcode"], 'hlabcdefgijkmnopqrstuvwxyz'))
