@@ -20,7 +20,6 @@ def lengthOfLastWord_alt(s):
             break
     return len(res)
 
-
 if __name__ == '__main__':
     print(lengthOfLastWord('Hello World'))
     print(lengthOfLastWord_alt('Hello World'))
