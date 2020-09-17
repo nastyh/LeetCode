@@ -80,6 +80,7 @@ def lengthOfLongestSubstring_stack(self, s: str) -> int:
 
 if __name__ == '__main__':
     print(lengthOfLongestSubstring_optimal('abcabcbb'))
+    print(lengthOfLongestSubstring_optimal('abcbbcbb'))
     print(lengthOfLongestSubstring_optimal('au'))
     print(lengthOfLongestSubstring('abcabcbb'))
     print(lengthOfLongestSubstring_dict('abcabcbb'))

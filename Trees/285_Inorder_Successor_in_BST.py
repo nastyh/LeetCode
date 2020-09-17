@@ -27,21 +27,18 @@ class TreeNode:
         res = None
         if not root: return
         if p.right:
-            t = p.right
-            while t.left:
-                t = t.left
-            return t.val
-
+            p = p.right
+            while p.left:
+                p = p.left
+            return p.val
         node = root
         while node.val != p.val:
-            if p.val <= node.val:
-                res = node
+            if p.val <= node.val:  # if the given value is smaller than the value kept in the helper node
+                res = node  # we will need to go left. But we need to save a node from which we turned left
                 node = node.left
-            else:
+            else:  # otherwise just turn right
                 node = node.right
         return res.val if res else None
-
-
 
 
 if __name__ == '__main__':
