@@ -4,25 +4,42 @@
 #         self.val = x
 #         self.next = None
 
-class Solution:
-    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
-        ix = 0
+
+def removeNthFromEnd(head, n):
+    ix = 0
+    curr = head
+    while curr:
+        curr = curr.next
+        ix +=1
+    k = ix - n
+
+    prev, curr = None, head
+    while k !=0:
+        prev = curr
+        curr = curr.next # current points to the element that we need to remove
+        k -=1
+
+    if prev == None: # means we're removing the first element in the list
+        return head.next
+    else:
+        prev.next = curr.next
+        curr.next= None
+    return head
+
+
+def removeNthFromEnd_pythonic(head, n):  # a bit cleaner
+        l = 0
         curr = head
         while curr:
             curr = curr.next
-            ix +=1
-        k = ix - n
-
+            l += 1
         prev, curr = None, head
-        while k !=0:
+        for _ in range(l - n):
             prev = curr
-            curr = curr.next # current points to the element that we need to remove
-            k -=1
-
-        if prev == None: # means we're removing the first element in the list
+            curr = curr.next 
+        if prev == None:
             return head.next
         else:
             prev.next = curr.next
-            curr.next= None
-        return head
-
+            curr.next = None
+        return head   
