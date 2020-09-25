@@ -23,21 +23,10 @@ def findTheDifference_dict_optimized(s, t):  # slight modification, uses only on
     return [k for (k, v) in t_d.items() if v == 1][0]
 
 
-def test(s, t):
-    res = 0
-    for letter in s:
-        res ^= ord(letter)
-        print(chr(res))
-    return chr(res)
-    # return 32 ^ 32
-    # return 0 ^ ord(s), ord(s), ord(t), ord(s) ^ ord(t), chr((ord(s) ^ ord(t)))
-
-
 if __name__ == '__main__':
-    # print(findTheDifference('abcd', 'abcde'))
-    # print(findTheDifference('a', 'aa'))
-    # print(findTheDifference_dict('abcd', 'abcde'))
-    # print(findTheDifference_dict('a', 'aa'))
-    # print(findTheDifference_dict_optimized('abcd', 'abcde'))
-    # print(findTheDifference_dict_optimized('a', 'aa'))
-    print(test('atb', 'b'))
+    print(findTheDifference('abcd', 'abcde'))
+    print(findTheDifference('a', 'aa'))
+    print(findTheDifference_dict('abcd', 'abcde'))
+    print(findTheDifference_dict('a', 'aa'))
+    print(findTheDifference_dict_optimized('abcd', 'abcde'))
+    print(findTheDifference_dict_optimized('a', 'aa'))
