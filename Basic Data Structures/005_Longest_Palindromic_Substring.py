@@ -16,17 +16,20 @@ def longest(s):
 
 
 def longest_bf(s):  # brute force
-    glob_l, curr_res = -math.inf, ''
-    def _helper(s):
-        return s == s[::-1]
-    for i in range(len(s) - 1):
-        for j in range(i + 1, len(s)):
-            if _helper(s[i:j + 1]):
-                if len(s[i:j + 1]) > glob_l:
-                    glob_l = len(s[i:j + 1])
-                    curr_res = s[i:j + 1]
-    return curr_res
-
+    if len(s) <= 1: return s
+    if len(s) == len(set(s)): return s[0]
+    def _helper(st):
+        return st == st[::-1]
+    gl_res = -math.inf
+    res = ''
+    for l in range(len(s) - 1):
+        for r in range(l + 1, len(s)):
+            if _helper(s[l:r + 1]):
+                if len(s[l:r + 1]) > gl_res:
+                    gl_res = len(s[l:r + 1])
+                    res = s[l:r + 1]
+    return res if res != '' else s[0]
+                        
 
 def longest_center(s):  # going wide from the center
     def _helper(s, l, r):
@@ -63,6 +66,7 @@ def longest_dp(s):
 
 if __name__ == '__main__':
     print(longest('abababa'))
+    print(longest('ab'))
     print(longest_bf('abababa'))
     print(longest_center('abababa'))
     print(longest_dp('abababa'))
