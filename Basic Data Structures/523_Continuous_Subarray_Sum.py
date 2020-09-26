@@ -2,10 +2,8 @@ def checkSubarraySum(nums, k):
     for i in range(len(nums)):
         if nums[i:i + 2] == [0,0]:
             return True
-
     if k == 0 or len(nums) < 2:
         return False
-
     sum_mod_dict = {}
     for i in range(len(nums) + 1):
         sum_mod = sum(nums[:i]) % k
@@ -32,10 +30,29 @@ def checkSubarraySum_alt(nums, k):
             # if prefix_sum doesn't exists, then add its index, otherwise don't update it, i would always prefer to keep the
             # oldest index, so that I can get length of atleast 2
             mp[prefix_sum] = i
-
     return False
+
+
+def checkSubarraySum_scan(nums, k):  # brute force 
+    if len(nums) < 2: return False
+    if all(i == 0 for i in nums) and k == 0: return True 
+    window = 2
+    while window < len(nums):
+        l = 0
+        r = l + window - 1
+        while r < len(nums):
+            try:
+                if sum(nums[l: r + 1]) % k == 0:
+                    return True
+            except ZeroDivisionError:
+                return False 
+            r += 1
+        window += 1
+    return False 
 
 
 if __name__ == '__main__':
     print(checkSubarraySum([23, 2, 4, 6, 7], 6))
     print(checkSubarraySum_alt([23, 2, 4, 6, 7], 6))
+    print(checkSubarraySum_scan([23, 2, 4, 6, 7], 6))
+    print(checkSubarraySum_scan([23, 2, 6, 4, 7], 6))
