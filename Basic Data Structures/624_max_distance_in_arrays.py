@@ -16,6 +16,7 @@ def maxDistance(arrays):  # two passes
         if val[0] < arrays[twominidx][0]: twominidx = i
         if val[-1] > arrays[twomaxidx][-1]: twomaxidx = i
     return max(abs(arrays[twomaxidx][-1] - arrays[minidx][0]), abs(arrays[maxidx][-1] - arrays[twominidx][0]))
+    
 
 def maxDistance_dict(arrays):
     min_d, max_d = defaultdict(list), defaultdict(list)
