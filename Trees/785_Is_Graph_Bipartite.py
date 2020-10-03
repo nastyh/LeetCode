@@ -8,7 +8,7 @@ def isBipartite(graph):
     To perform the depth-first search, we use a stack. For each uncolored neighbor in graph[node], we'll color it and add it to our stack, which acts as a sort of "todo list" of nodes to visit next.
     """
     color = {}
-    for node in xrange(len(graph)):
+    for node in range(len(graph)):
         if node not in color:
             stack = [node]
             color[node] = 0
@@ -30,10 +30,15 @@ def isBipartite(graph):
 def isBipartite_recurs(graph):
     colors = {} #store node and its corresponding color
         #DFS recursive
-        def dfs(node, color=1): # current node and current color
-            if node in self.colors:
-                return self.colors[node] == color
-            self.colors[node] = color
-            return all(dfs(n,-color) for n in graph[node])
+    def dfs(node, color=1): # current node and current color
+        if node in self.colors:
+            return self.colors[node] == color
+        self.colors[node] = color
+        return all(dfs(n,-color) for n in graph[node])
 
-        return all(dfs(node) for node in range(len(graph)) if node not in self.colors)
+    return all(dfs(node) for node in range(len(graph)) if node not in self.colors)
+
+
+if __name__ == '__main__':
+    print(isBipartite([[1, 3], [0, 2], [1, 3], [0, 2]]))
+    print(isBipartite([[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]]))

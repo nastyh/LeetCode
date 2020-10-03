@@ -34,5 +34,4 @@ if __name__ == '__main__':
     print(numberOfSteps(14))  
     print(numberOfSteps(8))    
     print(numberOfSteps_binary(14))  
-    print(numberOfSteps_binary(8))   
-    
+    print(numberOfSteps_binary(8))
