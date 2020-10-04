@@ -8,18 +8,19 @@ def subsets(nums): # O(n*2**n), same space complexity
 
 
 def subsets_another(nums):
-	def _helper(nums, curr_ix, curr_res, res):
-		res.append(curr_res.copy())
-		for i in range(curr_ix, len(nums)):
-			curr_res.append(nums[i])
-			_helper(nums, curr_ix + 1, curr_res, res)
-			curr_res.pop()
-		return  res
-	return _helper(nums, 0, [], [])
+	result = []
+	def helper(nums, start_index, subset):
+		result.append(subset[:])        
+		for i in range(start_index, len(nums)):
+			subset.append(nums[i])         
+			helper(nums, i + 1, subset)        
+			subset.pop() 
+	helper(nums, 0, [])  
+	return result
 
 
 def subsets_backtr(nums): # O(n*2**n), same space complexity
-	def backtrack(first = 0, curr = []):
+	def backtrack(first, curr):
 	    # if the combination is done
 	    if len(curr) == k:  
 	        output.append(curr[:])
@@ -33,11 +34,11 @@ def subsets_backtr(nums): # O(n*2**n), same space complexity
 	output = []
 	n = len(nums)
 	for k in range(n + 1):
-	    backtrack()
+	    backtrack(0, [])
 	return output
 
 
 if __name__ == '__main__':
 	# print(subsets([1, 2, 3]))
 	print(subsets_another([1, 2, 3]))
-	# print(subsets_backtr([1, 2, 3]))
+	print(subsets_backtr([1, 2, 3]))
