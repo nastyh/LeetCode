@@ -1,17 +1,41 @@
-class Solution:
-    def findLengthOfLCIS(self, nums: List[int]) -> int:
-        if len(nums) == 0:
-            return 0
+import math
+def findLengthOfLCIS(nums):
+    if len(nums) == 0:
+        return 0
+    if len(nums) == 1:
+        return 1
+    if len(set(nums)) == 1:
+        return 1
+    counter, gl_m = 1, 0
+    for n_ix in range(len(nums) - 1):
+        if nums[n_ix] < nums[n_ix + 1]:
+            counter += 1
+            gl_m = max(gl_m, counter)
+        else:
+            counter = 1
+            gl_m = max(gl_m, counter)
+    return gl_m
+
+
+def findLengthOfLCIS_another(nums):
+    if len(nums) == 0:
+        return 0
         if len(nums) == 1:
             return 1
         if len(set(nums)) == 1:
             return 1
-        counter, gl_m = 1, 0
-        for n_ix in range(len(nums)-1):
-            if nums[n_ix] < nums[n_ix + 1]:
-                counter +=1
-                gl_m = max(gl_m, counter)
-            else:
-                counter = 1
-                gl_m = max(gl_m, counter)
-        return gl_m
+    l, r = 0, 1 
+    gl_res = -math.inf
+    while r < len(nums):
+        if nums[r] > nums[r - 1]:
+            curr_res = r - l + 1
+            gl_res = max(gl_res, curr_res)
+        else:
+            l = r 
+        r += 1 
+    return gl_res if gl_res != -math.inf else 1
+
+if __name__ == '__main__':
+    print(findLengthOfLCIS([1, 3, 5, 4, 7]))
+    print(findLengthOfLCIS_another([1, 3, 5, 4, 7]))
+
