@@ -10,6 +10,13 @@ def maxProduct(nums):
         maxval=max(maxval,imax)
     return maxval
 
+def maxProduct_Kadane(nums):
+    dp = [None] * len(nums)
+    dp[0] = nums[0]
+    for i in range(1, len(nums)):
+        dp[i] = max(nums[i], nums[i] * dp[i - 1])
+    return max(dp)
+
 
 def maxProduct_alt(nums):
     if not nums: return 0

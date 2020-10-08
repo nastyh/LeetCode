@@ -17,7 +17,6 @@ def threeSumClosest(nums, target):
     return target - diff
 
 
-
 if __name__ == '__main__':
     print(threeSumClosest([-1,2,1,-4], 1))
     print(threeSumClosest_alt([-1,2,1,-4], 1))
