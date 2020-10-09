@@ -30,7 +30,7 @@ class TreeNode:
         #         ans += sum([v * 10 ** k for k, v in enumerate(list(reversed(element)))])
         # return ans
 
-    def sumNumbers_comprehension(self, root):
+    def sumNumbers_comprehension(self, root):  # takes O(n) space. Create a list of lists, enumerate and iterate calculating the total sum
         res = []
 
         def _helper(root, paths):
@@ -48,11 +48,11 @@ class TreeNode:
                 s.append(sum([v * 10 ** k for k, v in enumerate(list(reversed(element)))]))    
         return sum(s)
 
+
     def sumNumbers_BFS(self, root):
         if not root: return
         q, res = [], 0
         q.append((root, 0))
-
         while q:
             t, curr_num = q.pop()
             curr_num = curr_num * 10 + t.val
@@ -77,11 +77,17 @@ class TreeNode:
         return _helper(root, 0)
 
 
-def test(nums):
-    ans = 0
-    for i in range(len(nums)):
-        ans += list(reversed(nums))[i] * 10**i
-    return ans
+    def sumNumbers_DFS_another(self, root):
+        if not root: return 0
+        def _helper(root, cum_sum):
+            if not root: return cum_sum
+            cum_sum = cum_sum * 10 + root.val
+            if root and not root.left and not root.right:
+                return cum_sum
+            if root.left: l = _helper(root.left, cum_sum)
+            if root.right: r = _helper(root.right, cum_sum)
+            return l + r
+        return _helper(root, 0)
 
 
 if __name__ == '__main__':
@@ -94,8 +100,8 @@ if __name__ == '__main__':
     print(l.sumNumbers_comprehension(l))
     print(l.sumNumbers_BFS(l))
     print(l.sumNumbers_DFS(l))
+    print(l.sumNumbers_DFS_another(l))
     m = TreeNode(1)
     m.left = TreeNode(2)
     m.right = TreeNode(3)
     # print(m.sumNumbers(m))
-    # print(test([4,9,5]))
