@@ -30,11 +30,11 @@ def isBipartite(graph):
 def isBipartite_recurs(graph):
     colors = {} #store node and its corresponding color
         #DFS recursive
-    def dfs(node, color=1): # current node and current color
+    def dfs(node, color = 1): # current node and current color
         if node in self.colors:
             return self.colors[node] == color
         self.colors[node] = color
-        return all(dfs(n,-color) for n in graph[node])
+        return all(dfs(n, -color) for n in graph[node])
 
     return all(dfs(node) for node in range(len(graph)) if node not in self.colors)
 

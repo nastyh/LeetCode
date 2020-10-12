@@ -6,8 +6,8 @@ def subarraySum_d(nums, k):
     for i in range(len(nums)):
         s += nums[i]
         if s - k in Map:
-            count += Map.get(s-k)
-        Map[s] = Map.get(s,0) +1
+            count += Map.get(s - k)
+        Map[s] = Map.get(s, 0) + 1
     return count
 
 # a bit simpler to follow
@@ -37,7 +37,7 @@ def subarraySum_dict(nums, k):
     return res
 
 
-def subarraySum_n2(nums, k):  # O(n*2). Two loops. B/c r starts at the same position as l, we account for one-element situations 
+def subarraySum_n2(nums, k):  # O(n**2). Two loops. B/c r starts at the same position as l, we account for one-element situations 
     res = 0
     for l in range(len(nums)):
         curr_sum = 0
@@ -75,14 +75,38 @@ def subarraySum_another(nums, k):  # doesn't work for [-1, -1, 1], 0
     return res
 
 
+def subarraySum_squared(nums, k):  # times out 
+    """
+    Time: O(n^2)
+    Space: O(n)
+    create a dp list with the running sums. Add one extra first element with 0.
+    Calculate all possible differences among elements next to each other. Second - First; Third - First; Fourth - First... 
+    Third - Second, Fourth - Second, etc.
+    If the difference == k, it means that the sum of the original list between nums[l] and nums[r] (excl. l and including r) is k.
+    Increment the res and keep doing it.
+    """
+    res = 0
+    dp = [0] * (len(nums) + 1)
+    for i in range(1, len(nums) + 1):  # building a list with running sums. One extra element: the first 0
+        dp[i] = dp[i - 1] + nums[i - 1]
+    for l in range(len(dp) - 1):
+        for r in range(l + 1, len(dp)):
+            if dp[r] - dp[l] == k:
+                res += 1
+    return res 
+
+
 if __name__ == '__main__':
-    print(subarraySum_d([1, 2, 3], 3))
-    print(subarraySum_dict([3, 4, 7, 2, -3, 1, 4, 2], 7))
-    print(subarraySum_dp([3, 4, 7, 2, -3, 1, 4, 2], 7))
-    print(subarraySum_dp([1, 1, 1], 2))
-    print(subarraySum_dp([1, -1, 5, -2, 3], 3))
-    print(subarraySum_another([1, 1, 1], 2))
-    print(subarraySum_another([1, 1, 1, 2], 2)) # [1,2,3], 3
-    print(subarraySum_another([1, 2, 3], 3))
-    print(subarraySum_n2([1, 2, 3], 3))
-    print(subarraySum_n2([-1, -1, 1], 0))
+    # print(subarraySum_d([1, 2, 3], 3))
+    # print(subarraySum_dict([3, 4, 7, 2, -3, 1, 4, 2], 7))
+    # print(subarraySum_dp([3, 4, 7, 2, -3, 1, 4, 2], 7))
+    # print(subarraySum_dp([1, 1, 1], 2))
+    # print(subarraySum_dp([1, -1, 5, -2, 3], 3))
+    # print(subarraySum_another([1, 1, 1], 2))
+    # print(subarraySum_another([1, 1, 1, 2], 2)) # [1,2,3], 3
+    # print(subarraySum_another([1, 2, 3], 3))
+    # print(subarraySum_n2([1, 2, 3], 3))
+    # print(subarraySum_n2([-1, -1, 1], 0))
+    print(subarraySum_squared([-1, -1, 1], 0))
+    print(subarraySum_squared([1, 2, 3], 3))
+    print(subarraySum_squared([1, 1, 1], 2))
