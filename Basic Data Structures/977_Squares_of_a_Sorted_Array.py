@@ -1,6 +1,20 @@
 def sortedSquares(nums): # pythonic
     return sorted([i**2 for i in nums])
 
+
+def sortedSquares_list(nums):
+    res = [None] * len(nums)
+    l, r = 0, len(nums) - 1
+    for i in range(len(nums) - 1, -1, -1):
+        if abs(nums[l]) > abs(nums[r]):
+            res[i] = nums[l]**2
+            l += 1
+        else:
+            res[i] = nums[r]**2
+            r -= 1
+    return res
+
+
 def sortedSquares_efficient(nums):
     if len(nums) == 0: return
     if len(nums) == 1: return [x**2 for x in nums]
@@ -21,8 +35,7 @@ def sortedSquares_efficient(nums):
         else:
            res.append(nums[r]**2)
            r += 1
-
-    while l >=0: # because we might start not in the middle of the list, we can have elements left on one of the sides
+    while l >= 0: # because we might start not in the middle of the list, we can have elements left on one of the sides
         res.append(nums[l]**2)
         l -= 1
     while r < len(nums):
