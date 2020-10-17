@@ -14,8 +14,8 @@ def nextPermutation(nums):
         #Swap the element with the larger element and sort the rest of the array.
         just_large = min(temp)
         ind = nums[i:].index(just_large) + i
-        nums[i] , nums[ind] = nums[ind], nums[i]
-        nums[:] = nums[:i+1] + sorted(nums[i+1:])
+        nums[i], nums[ind] = nums[ind], nums[i]
+        nums[:] = nums[:i + 1] + sorted(nums[i + 1:])
     return nums
 
 
