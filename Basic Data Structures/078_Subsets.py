@@ -7,7 +7,7 @@ def subsets(nums): # O(n*2**n), same space complexity
     return output
 
 
-def subsets_another(nums):
+def subsets_another(nums):  # N * 2**N for both time and space b/c every element can be present or absent 
 	result = []
 	def helper(nums, start_index, subset):
 		result.append(subset[:])        
