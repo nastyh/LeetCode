@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-from collections import Counter
+from collections import Counter, defaultdict
 def groupAnagrams(strs):
     res = []
     if len(strs) == 0:
@@ -19,14 +18,11 @@ def groupAnagrams(strs):
         res.append(curr)
     return res
 
-
-if __name__ == '__main__':
-    print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
-
-
-=======
-from collections import defaultdict
-def groupAnagrams(strs):
+def groupAnagrams_alt(strs):
+    """
+    Idea is that the key is the strings in the sorted order (eat becomes aet).
+    And then keys' values are actual words that can be formed from these keys
+    """
 	if len(strs) == 0:
 		return []
 	d = defaultdict(list)
@@ -36,9 +32,9 @@ def groupAnagrams(strs):
 			d[t] = [word]
 		else:
 			d[t].append(word)
-
 	return d.values()
 
+
 if __name__ == '__main__':
-	print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
->>>>>>> 6f7dbec22dbf499e2507ba1e2d19b19aaad28fbd
+    print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+    print(groupAnagrams_alt(["eat", "tea", "tan", "ate", "nat", "bat"]))
