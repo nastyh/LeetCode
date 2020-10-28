@@ -24,5 +24,24 @@ class ListNode:
             return curr
 
 
+    def middleNode_2_pointers(self, head):
+        if not head: return None
+        if head and not head.next: return head
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+    
+
+    def middleNode_recur(head):
+        def _helper(head, curr):
+            if head:
+                total, node = _helper(head.next, curr + 1)
+                return total, node if total // 2 != curr else head
+            return curr, None
+        return _helper(head, 0)[1]
+
+
 
 

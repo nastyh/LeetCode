@@ -8,12 +8,19 @@ def findDiagonalOrder(nums):  # if to sum up elements' indices on a given diagon
             else:
                 d[r + c].append(nums[r][c])
     res = []
-    for k, v in d.items():  # because the go as a snake
-        if k % 2 == 1:
-            res.append(v)
+    # for k, v in d.items():  # because the go as a snake
+    #     if k % 2 == 1:
+    #         res.append(v)
+    #     else:
+    #         res.append(v[::-1])
+    # return [item for sublist in res for item in sublist]  # flattening the list of lists 
+    
+    for k, v in d.items():  # another way to unpack the dictionary into a list
+        if k % 2 == 0:
+            res.extend(reversed([i for i in v]))
         else:
-            res.append(v[::-1])
-    return [item for sublist in res for item in sublist]  # flattening the list of lists 
+            res.extend([j for j in v])
+    return res
 
 
 if __name__ == '__main__':
