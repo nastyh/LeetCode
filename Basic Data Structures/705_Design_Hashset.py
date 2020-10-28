@@ -7,7 +7,7 @@ class MyHashSet:
         self.size = 10000
         self.table = [None] * self.size
 
-    
+
     def calculate_hash_values(self, key):
         return key % self.size
 
@@ -26,7 +26,7 @@ class MyHashSet:
         if self.table[hv]:
             while key in self.table[hv]:
                 self.table[hv].remove(key)
-   
+
 
     def contains(self, key: int) -> bool:
         """
