@@ -39,6 +39,6 @@ def subsets_backtr(nums): # O(n*2**n), same space complexity
 
 
 if __name__ == '__main__':
-	# print(subsets([1, 2, 3]))
+	print(subsets([1, 2, 3]))
 	print(subsets_another([1, 2, 3]))
 	print(subsets_backtr([1, 2, 3]))

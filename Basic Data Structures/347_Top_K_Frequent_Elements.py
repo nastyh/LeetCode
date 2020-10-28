@@ -1,5 +1,5 @@
 import heapq
-def topKFrequent(nums, k):
+def topKFrequent(nums, k):  # O(Nlog(N)) where n is the length of nums
     d = {}
     for n in nums:
         if n not in d:
@@ -29,19 +29,25 @@ def topKFrequent(nums, k):
 
 # easier to understand
 
-def topKFrequent_heap(nums, k):
+def topKFrequent_heap(nums, k): 
+    """
+    Build a dictionary, start adding elements with frequencies to a heap.
+    Because the heap is the min heap by default, add frequencies with an opposite sign
+    Then start popping out elements till you have k elements and return them
+    O(n) space
+    To add k elements to the heap takes O(k) on average, and KlogK in the worst case
+    Heap push/pop is O(logK) and we do it N - K times --> O((N - K)logK)
+    Overall end up with O(KlogK) in time complexity
+    """
     d = {}
     for n in nums:
         if n not in d:
             d[n] = 1
         else:
             d[n] += 1
-
-
     hp = []
     for key,v in d.items():
         heapq.heappush(hp,(-v,key))
-
     # Popping out all the number for  value k
     res = []
     for _ in range(k):
