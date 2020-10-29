@@ -1,6 +1,6 @@
 def cherryPickup(grid): # both O(N^3)
     N = len(grid)
-    memo = [[[None] * N for _1 in xrange(N)] for _2 in xrange(N)]
+    memo = [[[None] * N for _1 in range(N)] for _2 in range(N)]
     def dp(r1, c1, c2):
         r2 = r1 + c1 - c2
         if (N == r1 or N == r2 or N == c1 or N == c2 or
@@ -23,18 +23,18 @@ def cherryPickup(grid): # both O(N^3)
 
 def cherryPickup_bottomup(grid):  # O(N^3) and O(N^2) in space
     N = len(grid)
-    dp = [[float('-inf')] * N for _ in xrange(N)]
+    dp = [[float('-inf')] * N for _ in range(N)]
     dp[0][0] = grid[0][0]
-    for t in xrange(1, 2*N - 1):
-        dp2 = [[float('-inf')] * N for _ in xrange(N)]
-        for i in xrange(max(0, t-(N-1)), min(N-1, t) + 1):
-            for j in xrange(max(0, t-(N-1)), min(N-1, t) + 1):
-                if grid[i][t-i] == -1 or grid[j][t-j] == -1:
+    for t in range(1, 2 * N - 1):
+        dp2 = [[float('-inf')] * N for _ in range(N)]
+        for i in xrange(max(0, t - (N - 1)), min(N - 1, t) + 1):
+            for j in xrange(max(0, t - (N - 1)), min(N - 1, t) + 1):
+                if grid[i][t - i] == -1 or grid[j][t - j] == -1:
                     continue
                 val = grid[i][t-i]
                 if i != j: val += grid[j][t-j]
                 dp2[i][j] = max(dp[pi][pj] + val
-                                for pi in (i-1, i) for pj in (j-1, j)
+                                for pi in (i - 1, i) for pj in (j - 1, j)
                                 if pi >= 0 and pj >= 0)
         dp = dp2
-    return max(0, dp[N-1][N-1])
+    return max(0, dp[N - 1][N - 1]) 
