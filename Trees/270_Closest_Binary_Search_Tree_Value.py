@@ -38,38 +38,12 @@ class TreeNode:
                 st.append(curr_node.right)
         return glob_node
 
-    def closestValue_dfs2(self, root, target): # DFS but with outside variables. Avoid if you can
-        self.diff = math.inf
-        self.res = 0
 
-        def _helper(root, target, diff, res):
-            if not root: return
-            if self.diff >= abs(root.val - target):
-                self.diff = abs(root.val - target)
-                self.res = root.val
-            _helper(root.left, target, self.diff, self.res)
-            _helper(root.right, target, self.diff, self.res)
-
-        _helper(root, target, self.diff, self.res)
-        return self.res
-
-    def closestValue_dfs3(self, root, target): # DFS but with outside variables. Avoid if you can
-        # self.diff = math.inf
-        # self.res = 0
-
-        def _helper(root, target, diff = 0, res):
-            if not root: return
-            if diff >= abs(root.val - target):
-                diff = abs(root.val - target)
-                res = root.val
-            _helper(root.left, target, diff, root.left.val)
-            _helper(root.right, target, diff, root.right.val)
-
-        _helper(root, target, 0, 0)
-        return self.res
-
-
-    def closestValue_binary(self, root, target):
+    def closestValue_binary(self, root, target):  # binary search in a recursive manner
+        """
+        go left if target is smaller than current root value, and go right otherwise.
+        Choose the closest to target value at each step.
+        """
         ans = float("inf")
         while root:
             if root.val == target: return root.val
@@ -87,5 +61,4 @@ if __name__ == '__main__':
     l.left.right = TreeNode(3)
     # print(l.closestValue(l, 3.714286))
     # print(l.closestValue_efficient(l, 3.714286))
-    print(l.closestValue_dfs2(l, 3.714286))
-    # print(l.closestValue_binary(l, 3.714286))
+    print(l.closestValue_binary(l, 3.714286))
