@@ -34,3 +34,79 @@ for i in range(n_iter):
     W0_new = W0 - a * np.sum(error)  # updating 
     W1_new = W1 - a * np.sum(error_x)  # updating
 
+
+class LinearRegression:
+    def __init__(self, learning_rate = 1e-3, max_iters = 250):
+        self.learning_rate = learning_rate
+        self.max_iters = max_iters
+        self.weights = None
+
+    def fit(self, X_train, y_train):
+        X_train = self._fit_intercept(X_train)
+        self.weights = np.random.rand(X_train.shape[1])
+
+        for iter in range(self.max_iters):
+            self.weights = self.weights - self.learning_rate * \
+                self._grad(X_train, y_train, self.weights)
+            cost = self._cost(X_train, y_train, self.weights)
+            print_result(iter, cost)
+
+    def predict(self, X_predict):
+        """ This method predicts responses for new data.
+
+        This method will be used for end-users to predict responses
+        for future data.
+
+        Arguments:
+            X_predict: new data
+
+        Returns: a vector of responses            
+        """
+        return X_predict @ self.weights
+
+    @staticmethod
+    def _cost(X_train, y_train, weights):
+        """Calculates the cost w.r.t. weights
+
+        This helper method calculates the cost w.r.t. weights
+
+        Arguments:
+            X_train: training features
+            y_train: training labels.
+            weights: weights vector of the model
+        
+        Returns: scalar value which represents the cost
+        """
+        dif = (y_train - X_train @ weights)
+        return (dif.T @ dif) / X_train.shape[0]
+
+    @staticmethod
+    def _fit_intercept(X_train):
+        """Add the intercepting term to the training dataset
+
+        This simple helper method adds the intercepting term to the 
+        training dataset.
+
+        Arguments:
+            X_train: training dataset
+
+        Returns: training dataset with the interceptor
+        """
+        return np.column_stack((np.ones(X_train.shape[0]), X_train))
+
+    @staticmethod
+    def _grad(X_train, y_train, weights):
+        """Calculates the gradient of the cost function w.r.t. weight vector
+
+        This methods calculated the gradient of the cost function w.r.t. 
+        weight vector.
+
+        Arguments:
+            X_train: training features
+            y_train: training labels.
+            weights: weights vector of the model
+        
+        Returns: scalar value which represents the cost
+        """
+        return 2 * (X_train.T @ (X_train @ weights - y_train)) / X_train.shape[0]
+
