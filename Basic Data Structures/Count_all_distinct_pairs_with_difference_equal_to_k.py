@@ -7,7 +7,7 @@ def countPairs_bf(nums, k):  # O(n^2)
     return res
 
 
-def countPairs_sort(nums, k):
+def countPairs_sort(nums, k):  # O(nlog(n))
     res = 0
     nums.sort()
     l, r = 0, 0
