@@ -23,8 +23,26 @@ def majorityElement_fast(nums):
             count2 += 1
         else:
             count1, count2 = count1 - 1, count2 - 1
-    
     return [x for x in (cand1, cand2) if nums.count(x) > len(nums) // 3]
+    
+
+def majorityElement_generalized(nums):
+    candidates = {}
+    k = 3
+    for num in nums:
+        if num in candidates:
+            candidates[num] += 1
+        elif len(candidates) < k:
+            candidates[num] = 1
+        else:
+            temp={}
+            for c in candidates:
+                candidates[c]-=1
+                if candidates[c] >= 1:
+                    temp[c] = candidates[c]
+            candidates = temp
+    res = [k for k in candidates if nums.count(k) > len(nums) // 3]          
+    return res
 
 
 if __name__ == '__main__':
@@ -34,3 +52,6 @@ if __name__ == '__main__':
     print(majorityElement_fast([3, 2, 3]))
     print(majorityElement_fast([1]))
     print(majorityElement_fast([1, 2]))
+    print(majorityElement_generalized([3, 2, 3]))
+    print(majorityElement_generalized([1]))
+    print(majorityElement_generalized([1, 2]))
