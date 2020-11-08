@@ -36,77 +36,52 @@ for i in range(n_iter):
 
 
 class LinearRegression:
-    def __init__(self, learning_rate = 1e-3, max_iters = 250):
-        self.learning_rate = learning_rate
-        self.max_iters = max_iters
-        self.weights = None
+    
+    def __init__(self):
+        pass
 
-    def fit(self, X_train, y_train):
-        X_train = self._fit_intercept(X_train)
-        self.weights = np.random.rand(X_train.shape[1])
-
-        for iter in range(self.max_iters):
-            self.weights = self.weights - self.learning_rate * \
-                self._grad(X_train, y_train, self.weights)
-            cost = self._cost(X_train, y_train, self.weights)
-            print_result(iter, cost)
-
-    def predict(self, X_predict):
-        """ This method predicts responses for new data.
-
-        This method will be used for end-users to predict responses
-        for future data.
-
-        Arguments:
-            X_predict: new data
-
-        Returns: a vector of responses            
+    def train_gradient_descent(self, X, y, learning_rate=0.01, n_iters=100):
         """
-        return X_predict @ self.weights
-
-    @staticmethod
-    def _cost(X_train, y_train, weights):
-        """Calculates the cost w.r.t. weights
-
-        This helper method calculates the cost w.r.t. weights
-
-        Arguments:
-            X_train: training features
-            y_train: training labels.
-            weights: weights vector of the model
-        
-        Returns: scalar value which represents the cost
+        Trains a linear regression model using gradient descent
         """
-        dif = (y_train - X_train @ weights)
-        return (dif.T @ dif) / X_train.shape[0]
+        # Step 0: Initialize the parameters
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(shape=(n_features,1))
+        self.bias = 0
+        costs = []
 
-    @staticmethod
-    def _fit_intercept(X_train):
-        """Add the intercepting term to the training dataset
+        for i in range(n_iters):
+            # Step 1: Compute a linear combination of the input features and weights
+            y_predict = np.dot(X, self.weights) + self.bias
 
-        This simple helper method adds the intercepting term to the 
-        training dataset.
+            # Step 2: Compute cost over training set
+            cost = (1 / n_samples) * np.sum((y_predict - y)**2)
+            costs.append(cost)
 
-        Arguments:
-            X_train: training dataset
+            if i % 100 == 0:
+                print(f"Cost at iteration {i}: {cost}")
 
-        Returns: training dataset with the interceptor
+            # Step 3: Compute the gradients
+            dJ_dw = (2 / n_samples) * np.dot(X.T, (y_predict - y))  # wrt to coefficients w
+            dJ_db = (2 / n_samples) * np.sum((y_predict - y))   # wrt to b, an intercept 
+            
+            # Step 4: Update the parameters
+            self.weights = self.weights - learning_rate * dJ_dw
+            self.bias = self.bias - learning_rate * dJ_db
+
+        return self.weights, self.bias, costs
+
+    def train_normal_equation(self, X, y):
         """
-        return np.column_stack((np.ones(X_train.shape[0]), X_train))
-
-    @staticmethod
-    def _grad(X_train, y_train, weights):
-        """Calculates the gradient of the cost function w.r.t. weight vector
-
-        This methods calculated the gradient of the cost function w.r.t. 
-        weight vector.
-
-        Arguments:
-            X_train: training features
-            y_train: training labels.
-            weights: weights vector of the model
-        
-        Returns: scalar value which represents the cost
+        Trains a linear regression model using the normal equation
         """
-        return 2 * (X_train.T @ (X_train @ weights - y_train)) / X_train.shape[0]
+        self.weights = np.dot(np.dot(np.linalg.inv(np.dot(X.T, X)), X.T), y)
+        self.bias = 0
+        return self.weights, self.bias
 
+    def predict(self, X):
+        return np.dot(X, self.weights) + self.bias
+
+
+regressor = LinearRegression()
+w_trained, b_trained, costs = regressor.train_gradient_descent(X_train, y_train, learning_rate=0.005, n_iters=600)
