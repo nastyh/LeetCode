@@ -25,19 +25,17 @@ class TreeNode:
         return True
 
     def isValidVST_recursively(self, root):  # recursive approach
-        def _helper(node, l = -math.inf, r = math.inf):
+        def _helper(node, l, r):
             if not node:
                 return True
-            if node.val < l or node.val > r:
+            if node.val <= l or node.val >= r:
                 return False
-
             if not _helper(node.left, l, node.val):
                 return False
             if not _helper(node.right, node.val, r):
                 return False
             return True
-
-        return _helper(root)
+        return _helper(root, -math.inf, math.inf)
 
 
 if __name__ == '__main__':
@@ -47,8 +45,8 @@ if __name__ == '__main__':
     l.right.left = TreeNode(6)
     l.right.right = TreeNode(9)
     # print(l.isValidBST(l))
-    # print(l.isValidVST_recursively(l))
-    print(l.isValidBST_inorder(l))
+    print(l.isValidVST_recursively(l))
+    # print(l.isValidBST_inorder(l))
 
 
 
