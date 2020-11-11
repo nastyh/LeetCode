@@ -89,6 +89,21 @@ class TreeNode:
             return l + r
         return _helper(root, 0)
 
+    
+    def sumNumbers_global(self, root):  # another DFS, this time with a global variable 
+        if not root: return 0
+        if root and not root.left and not root.right: return root.val
+        res = 0
+        def _helper(root, curr_path_val):
+            nonlocal res
+            if not root: return
+            if root and not root.left and not root.right:
+                res += curr_path_val
+            if root.left: _helper(root.left, curr_path_val * 10 + root.left.val)
+            if root.right: _helper(root.right, curr_path_val * 10 + root.right.val)
+        _helper(root, root.val)
+        return res       
+
 
 if __name__ == '__main__':
     l = TreeNode(4)
@@ -101,6 +116,7 @@ if __name__ == '__main__':
     print(l.sumNumbers_BFS(l))
     print(l.sumNumbers_DFS(l))
     print(l.sumNumbers_DFS_another(l))
+    print(l.sumNumbers_global(l))
     m = TreeNode(1)
     m.left = TreeNode(2)
     m.right = TreeNode(3)
