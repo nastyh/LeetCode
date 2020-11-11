@@ -40,6 +40,32 @@ class TreeNode:
         _allPaths(root, str(root.val))
         return self.res
 
+
+    def binaryTreePaths_alt(self, root):
+        """
+        More straigthforward:
+        create a list of lists with values
+        Then turn it into a lish with strings as the question asks 
+        """
+        if not root: return None
+        if root and not root.left and not root.right: return [str(root.val)]
+        values = []
+        def _helper(node, lists):
+            if not node: return
+            if node and not node.left and not node.right:
+                lists.append(node.val)
+                values.append(lists)
+            if node.left: _helper(node.left, lists + [node.val])
+            if node.right: _helper(node.right, lists +  [node.val])
+        _helper(root, [])
+        res = []
+        for el in values:
+            ans = ''
+            for num in el:
+                ans += str(num)
+                ans += '->'
+            res.append(ans[:-2])
+        return res
       
 
 if __name__ == '__main__': 
@@ -52,5 +78,5 @@ if __name__ == '__main__':
     l.left.right = TreeNode(5)  
     # l.right.left = TreeNode(11)  
     # l.right.right = TreeNode(13)
-
-    print(l.binaryTreePaths(l))  
+    # print(l.binaryTreePaths(l))  
+    print(l.binaryTreePaths_alt(l))  
