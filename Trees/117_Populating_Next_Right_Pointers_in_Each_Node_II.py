@@ -8,7 +8,7 @@ class Node:
         self.next = next
 from collections import deque
 class Solution:
-    def connect(self, root: 'Node') -> 'Node':
+    def connect(self, root):
         if root ==  None:
             return None
         q = deque([root])
@@ -25,3 +25,26 @@ class Solution:
                 if node.right:
                     q.append(node.right)
         return root
+    
+
+    def connect_prev(self, root):  # easier to comprehend
+        """
+        Maintain prev as a node. If it exists, then point prev.next to the current node.
+        Otherwise, do nothing
+        """
+        if not root: return
+        d = deque()
+        d.append(root) 
+        while d:
+            prev = None
+            for _ in range(len(d)):
+                t = d.popleft()
+                if prev:
+                    prev.next = t
+                prev = t
+                if t.left:
+                    d.append(t.left)
+                if t.right:
+                    d.append(t.right)
+        return root
+

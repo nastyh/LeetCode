@@ -43,6 +43,28 @@ class TreeNode:
             res.append(curr_level)
         return [i[-1] for i in res]
 
+    
+    def rightSideView_optimal(self, root):
+        """
+        When you loop through elements at a given level, if you hit the last element 
+        at this level, add it to res
+        """
+        if not root: return []
+        d = deque()
+        res = []
+        d.append(root)
+        while d:
+            l = len(d)
+            for i in range(len(d)):
+                t = d.popleft()
+                if i == l - 1:
+                    res.append(t.val)
+                if t.left:
+                    d.append(t.left)
+                if t.right:
+                    d.append(t.right)
+        return res
+
 
     def rightSideView_rec(self, root): # a bit different approach
         if not root:
@@ -72,5 +94,6 @@ if __name__ == '__main__':
     print(l.rightSideView_efficient(l))
     print(l.rightSideView(l))
     print(l.rightSideView_rec(l))
+    print(l.rightSideView_optimal(l))
 
 

@@ -21,6 +21,11 @@ class Node:
         return _helper(root)
 
     def connect_BFS(self, root):
+        """
+        Keep track of the previous (on this level node)
+        If the previous node exists, connect it to the current node
+        Otherwise, connect the current node to None 
+        """
         if not root: return
         q = deque([root])
         while q:
