@@ -18,6 +18,7 @@ def uniquePathsWithObstacles(obstacleGrid):
             else:
                 obstacleGrid[r][c] = obstacleGrid[r - 1][c] + obstacleGrid[r][c - 1]
     return obstacleGrid[-1][-1]
+    
 
 def uniquePathsWithObstacles_another(obstacleGrid): # with filling out the corner rows/cols first:
 	col, row = len(obstacleGrid[0]), len(obstacleGrid)
@@ -36,50 +37,48 @@ def uniquePathsWithObstacles_another(obstacleGrid): # with filling out the corne
 	return obstacleGrid[-1][-1]
 
 
-def uniquePathsWithObstacles_easy(obstacleGrid): # doesn't work with some edge cases
-    if obstacleGrid[0][0] == 1: return 0
-    dp = [[None for _ in range(len(obstacleGrid[0]))] for _ in range(len(obstacleGrid))]
-    dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0
-    for i in range(1, len(dp[0])):
-        if (obstacleGrid[0][i] == 0 and obstacleGrid[0][i - 1] == 0):
-            dp[0][i] = 1
-        else:
-             dp[0][i] = 0
-    for j in range(1, len(dp)):
-        if (obstacleGrid[j][0] == 0 and obstacleGrid[j - 1][0] == 0):
-            dp[j][0] = 1
-        else:
-            dp[j][0] = 0
-        # if obstacleGrid[j - 1][0] == 0:
-        #     dp[j][0] = 1
-        # else:
-        #     dp[j][0] = 0
-    for p in range(1, len(obstacleGrid)):
-        for q in range(1, len(obstacleGrid[0])):
-            dp[p][q] = dp[p - 1][q] + dp[p][q - 1] if obstacleGrid[p][q] == 0 else 0
-    return dp[-1][-1]
+def uniquePathsWithObstacles_recursion(obstacleGrid):
+    """
+    brute force, bottom-up recursively with memorization
+    - intuitively go through all the path with i+1 OR j+1
+    - count the path which reaches to the destination coordinate (m, n)
+    - cache the count of the coordinates which we have calculated before
+    - if the current grid, grid[i][j], is blocked, tell its parent that this way is blocked by return 0
+    - sum up all the coordinates' count
 
-def test(grid):
-    col, row = len(grid[0]), len(grid)
-    dp = [[None] * col for i in range(row)]
-    for i in range(col):
-        if grid[0][i] == 0:
-            dp[0][i] = 1
-        else:
-            dp[0][i] = 0
-    for j in range(row):
-        if grid[j][0] == 0:
-            dp[j][0] = 1
-        else:
-            dp[j][0] = 0
-    return dp
+    Time    O(row*col) since we cache the intermediate coordinates, we wont go through the visited coordinates again
+    Space   O(row*col) depth of recursions
+    """
+    def dfs(grid, i, j, m, n, seen):
+        key = str(i)+","+str(j)
+        if key in seen:
+            return seen[key]
+        if i == m and j == n:
+            if grid[i][j] == 1:
+                return 0
+            return 1
+        elif i > m or j > n:
+            return 0
+        if grid[i][j] == 1:
+            seen[key] = 0
+            return 0
+        left = dfs(grid, i + 1, j, m, n, seen)
+        right = dfs(grid, i, j + 1, m, n, seen)
+        seen[key] = left + right
+        return left + right
+    if len(obstacleGrid) == 0 or len(obstacleGrid[0]) == 0:
+        return 0
+    seen = {}
+    return dfs(obstacleGrid, 0, 0, len(obstacleGrid) - 1, len(obstacleGrid[0]) - 1, seen)
+    
 
 if __name__ == '__main__':
     # print(uniquePathsWithObstacles([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
     print(uniquePathsWithObstacles_another([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
-    print(uniquePathsWithObstacles_easy([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
-    print(uniquePathsWithObstacles_easy([[1, 0]]))
-    print(uniquePathsWithObstacles_easy([[0, 1]]))
-    print(uniquePathsWithObstacles_easy([[1]]))
-    print(uniquePathsWithObstacles_easy([[0, 0]]))
+    print(uniquePathsWithObstacles([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
+    print(uniquePathsWithObstacles_recursion([[1, 0]]))
+    print(uniquePathsWithObstacles_recursion([[0, 1]]))
+    print(uniquePathsWithObstacles_recursion([[1]]))
+    print(uniquePathsWithObstacles_recursion([[0, 0]]))
+    print(uniquePathsWithObstacles_recursion([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
     # print(test([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
