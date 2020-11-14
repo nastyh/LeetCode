@@ -2,7 +2,8 @@ import math
 def maxSubArray_1(nums):
     if all(x >= 0 for x in nums):
         return sum(nums)
-
+    if all(x < 0 for x in nums):
+        return max(nums)
     current, glob = nums[0], nums[0]
     for i in range(1, len(nums)):
         current = max(nums[i], current + nums[i])
@@ -20,6 +21,17 @@ def maxSubArray_2(nums):
     return maxSum
 
 
+def maxSubArray_another_dp(nums):
+    if len(nums) <= 1: return sum(nums)
+    if all(i < 0 for i in nums): return max(nums)
+    if all(i >= 0 for i in nums): return sum(nums)
+    dp = [None] * len(nums)
+    dp[0] = nums[0]
+    for i in range(1, len(nums)):
+        dp[i] = max(nums[i], nums[i] + dp[i - 1])
+    return max(dp)
+
+
 def maxSubarray_decision(nums):
     if len(nums) == 0: return 0
     if len(nums) == 1: return nums[0]
@@ -34,7 +46,9 @@ def maxSubarray_decision(nums):
 
 
 if __name__ == '__main__':
-    print(maxSubArray_1([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
-    print(maxSubArray_2([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
-    print(maxSubarray_decision([-2, 1, -3, 4, -1, 2, 1,-5 ,4]))
-    print(maxSubarray_decision([-2, 1]))
+    # print(maxSubArray_1([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
+    # print(maxSubArray_2([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
+    # print(maxSubarray_decision([-2, 1, -3, 4, -1, 2, 1,-5 ,4]))
+    # print(maxSubarray_decision([-2, 1]))
+    print(maxSubArray_another_dp([-2, 1]))
+    print(maxSubArray_another_dp([-1, 0, -2, 2]))

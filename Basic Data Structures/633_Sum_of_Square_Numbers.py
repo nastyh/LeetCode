@@ -24,7 +24,8 @@ def judgeSquareSum_another(c):
         return True
     for i in range(1, int(math.sqrt(c) + 1)):
         j = c - i ** 2
-        if int(math.sqrt(j)) ** 2 == j:
+        if math.sqrt(j) == int(math.sqrt(j)):
+        # if int(math.sqrt(j)) ** 2 == j:
             return True
     return False
 
@@ -32,3 +33,4 @@ def judgeSquareSum_another(c):
 if __name__ == '__main__':
     print(judgeSquareSum(3))
     print(judgeSquareSum_bin_search(3))
+    print(judgeSquareSum_another(5))
