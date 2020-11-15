@@ -11,24 +11,39 @@ def isSubsequence(s, t):
     return False
 
 
+def isSubsequence_dict(s, t):
+    if len(s) == 0: return True
+    for k, v in enumerate(s):
+        if t.index(v) >= k:
+            continue
+        else:
+            return False
+    return True
+    # d_s, d_t = {}, {}
+    # for k, v in enumerate(s):
+    #     d_s[v] = k
+    # for k, v in enumerate(t):
+    #     d_t[v] = k
+    # if len(d_s) > len(d_t):
+    #     return False
+    # # if any(k not in d_t.keys() for k in d_s.keys()): return False
+    # for k, v in enumerate(d_s):
+    #     if d_s[]
 
 
 
 
-    # s_ix = 0
-    # for el in t:
-    #     if el == s[s_ix]:
-    #         s_ix += 1
-    # return s_ix == len(s)
-
-    # for el in t:
-    #     while s:
-    #         if el in s:
-    #             s = s[:s.index(el)] + s[s.index(el) + 1:]
-    #     return True
-    # return False
+    # for k, v in d_s.items():
+    #     if v > d_t[k]:
+    #         return False
+    #     else:
+    #         continue
+    # return True
 
 if __name__ == '__main__':
     # print(isSubsequence('abc','anbgdc'))
-    print(isSubsequence('axc','ahbgdc'))
+    # print(isSubsequence('axc','ahbgdc'))
+    # print(isSubsequence_dict('axc','ahbgdc'))
+    print(isSubsequence_dict('abc','ahbgdc'))
+    print(isSubsequence_dict('acb','ahbgdc'))
 
