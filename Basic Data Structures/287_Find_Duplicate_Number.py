@@ -1,3 +1,16 @@
+def findDuplicate_best(nums):
+    """
+    Go through elements. They will serve as indices to other elements in this list
+    Every time multiply nums[num] by -1.
+    If you hit a number than is already negative, return it. 
+    The logic is that if it's negative, it means you've already seen a number that served as an index
+    and brought you to this number, and you multiplied it by -1. Hence, it's a duplicate
+    """
+    for k, num in enumerate(nums):
+        if nums[abs(num)] < 0: 
+            return abs(nums[k])
+        nums[abs(num)] *= - 1
+
 def findDuplicate(nums): # using sort, nlog(n)
     nums.sort()
     for i in range(len(nums) - 1):
