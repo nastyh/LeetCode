@@ -51,7 +51,6 @@ def romanToInt_prev_curr(s): # easiest to follow
     return res
 
 
-
 if __name__ == '__main__':
     print(romanToInt('LVIII'))
     print(romanToInt_alt('LVIII'))
