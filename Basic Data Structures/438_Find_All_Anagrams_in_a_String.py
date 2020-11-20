@@ -48,6 +48,20 @@ def findAnagrams_sorted(s, p):
     return res
 
 
+def findAnagrams_another_sorting(s, p):  # very slow but works
+    """
+    Start the loop from the index equal to the length of p
+    slice the s by subtracting the length of p and adding 1, all the way to the current index
+    if sorted lines are equal, append the left border
+    """
+    p = sorted(p)
+    res = []
+    for i in range(len(p) - 1, len(s)):
+        if sorted(s[i - len(p) + 1:i + 1]) == p:
+            res.append(i - len(p) + 1)
+    return res
+
+
 def findAnagrams_dicts(s, p):
     len_s, len_p = len(s), len(p)
     if len_s < len_p:
