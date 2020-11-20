@@ -66,7 +66,6 @@ def findAnagrams_dicts(s, p):
     len_s, len_p = len(s), len(p)
     if len_s < len_p:
         return []
-
     p_count = Counter(p)
     s_count = Counter()
 
