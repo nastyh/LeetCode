@@ -24,6 +24,29 @@ def firstUniqChar(s):   # loveleetcode
 
     return min(indices)
 
+
+def firstUniqChar_defaultdict(s):
+    """
+    Not efficient but create a dictionary where keys are characters
+    and values are lists where the first element is the frequency of the character and the second element is the 
+    last index at which this characted was seen
+    So we return the last index where the first list's element is 1
+    Need to take care of the edge cases: when there are no unique elements 
+    """
+    if len(s) == 0: return -1
+    if len(s) == 1: return 0
+    if len(set(s)) == 1: return -1
+    d = defaultdict(list)
+    for k, v in enumerate(s):
+        if v not in d:
+            d[v].append([1, k])
+        else:
+            d[v][0][0] += 1
+            d[v][0][1] = k
+    if all(d[v][0][0] != 1 for v in d.keys()): return -1
+    return min(d[k][0][1] for k in d.keys() if d[k][0][0] == 1)
+
+
 def firstUniqChar_alt(s):  # the straightforward one
     d = OrderedDict()
     for ch in s:
@@ -71,8 +94,11 @@ def firstUniqChar_another(s):
 
 if __name__ == '__main__':
     # print(firstUniqChar('loveleetcode'))
+    print(firstUniqChar_defaultdict('leetcode'))
+    print(firstUniqChar_defaultdict('loveleetcode'))
+    print(firstUniqChar_defaultdict('aadadaad'))
     # print(firstUniqChar_alt('loveleetcode'))
     # print(firstUniqChar_ordered('loveleetcode'))
-    print(firstUniqChar_another('leetcode'))
-    print(firstUniqChar_another('loveleetcode'))
+    # print(firstUniqChar_another('leetcode'))
+    # print(firstUniqChar_another('loveleetcode'))
     # leetcode loveleetcode aadadaad
