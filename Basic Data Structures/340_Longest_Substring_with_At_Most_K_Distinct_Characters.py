@@ -18,6 +18,38 @@ def lengthLongestSubstring(s, k):
         maxLen =  max(j - i + 1, maxLen)
     return maxLen
 
+
+def lengthLongestSubstring_another(s, k):
+    """
+    Bunch of edge cases for strings with length of 1 and 0
+    Then the same thing as below:
+    start building a dictionary. If it has more than k elements, start shrinking it by moving the left pointer and removing keys once the values become 0
+    """
+       if len(s) == 0:
+        if k == 0:
+            return 0
+    if len(s) == 1:
+        if k == 0:
+            return 0
+        else:
+            return 1
+    res = 0
+    l, r, d = 0, 0, {}
+    while r < len(s):
+        if s[r] not in d:
+            d[s[r]] = 1
+        else:
+            d[s[r]] += 1
+        while len(d) > k:
+            d[s[l]] -= 1
+            if d[s[l]] == 0:
+                del d[s[l]]
+            l += 1
+        res = max(res, r  - l + 1)
+        r += 1
+    return res
+                     
+
 def lengthLongestSubstring_alt(s, k):
     charMapping, start = {}, 0
     result = 0
@@ -29,7 +61,7 @@ def lengthLongestSubstring_alt(s, k):
             charMapping[s] = 1
 
         if len(charMapping) <= k:
-                result = max(result, end-start+1)
+                result = max(result, end - start + 1)
         else:
             while len(charMapping) > k:
                 character = s[start]
