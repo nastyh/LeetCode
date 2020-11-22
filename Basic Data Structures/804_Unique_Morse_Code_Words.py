@@ -12,6 +12,19 @@ def uniqueMorseRepresentations(words):
     return len(res)  
 
 
+def uniqueMorseRepresentations_alt(words):  # same idea, slighty different implementation
+    letters = [i for i in string.ascii_lowercase]
+    symbols = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    d = dict(zip(letters, symbols))
+    res = []
+    for word in words:
+        current = ''
+        for ch in word:
+            current += d[ch]
+        res.append(current)
+    return len(set(res))
+
+
 if __name__ == '__main__':
     print(uniqueMorseRepresentations(["gin", "zen", "gig", "msg"]))
 
