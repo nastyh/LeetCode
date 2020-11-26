@@ -26,6 +26,16 @@ def missingNumber_naive(nums):
             return n
 
 
+def missingNumber_sorting(nums):
+    nums.sort()
+    for i in range(len(nums) - 1):
+        if nums[i] + 1 != nums[i + 1]:
+            return nums[i] + 1
+    if nums[-1] != len(nums):  # edge cases
+        return len(nums)
+    else:
+        return 0
+
 if __name__ == '__main__':
     print(missingNumber([3, 0, 1]))
     print(missingNumber([0]))
