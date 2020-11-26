@@ -32,7 +32,7 @@ class TreeNode:
         return self.res
 
     
-    def sumOfLeftLeaves_dfs_helper(self, root):
+    def sumOfLeftLeaves_dfs_helper(self, root):  # probably the best and the fastest
         if not root: return 0
         self.res = 0
         def _helper(root, isLeft):
@@ -44,6 +44,27 @@ class TreeNode:
         _helper(root, False)
         return self.res
 
+
+    def sumOfLeftLeaves_bfs_optimal(self, root):
+        """
+        In the deck, keep the node and whether it's left. It's left, if it came to the deque
+        from the earlier t.left statement.
+        If it's left and no more children, add its value to res 
+        """
+        if not root: return 0
+        d = deque()
+        d.append((root, False))
+        res = 0
+        while d:
+            for _ in range(len(d)):
+                t, isLeft = d.popleft()
+                if not t.left and not t.right and isLeft:
+                    res += t.val
+                if t.left:
+                    d.append((t.left, True))
+                if t.right:
+                    d.append((t.right, False))
+        return res
 
     def sumOfLeftLeaves_bfs(self, root):
         res = 0
