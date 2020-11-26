@@ -23,6 +23,32 @@ def findTheDifference_dict_optimized(s, t):  # slight modification, uses only on
     return [k for (k, v) in t_d.items() if v == 1][0]
 
 
+def findTheDifference_traversal(s, t):
+    """
+    Slow solution uses no extra space
+    Go through t. 
+    If you find a match, you need to exclude this letter from further consideration in s.
+    Otherwise, it will fail for s = 'a' and t = 'aa'
+    If there is no match, return it immediately
+    """
+    for ch in t:
+        if ch in s:
+            s = s[:s.index(ch)] + s[s.index(ch) + 1:]
+        else:
+            return ch
+
+
+def findTheDifference_sort(s, t):
+    sorted_s = sorted(s)
+    sorted_t = sorted(t)
+    i = 0
+    while i < len(s):
+        if sorted_s[i] != sorted_t[i]:
+            return sorted_t[i]
+        i += 1
+    return sorted_t[i]
+
+
 if __name__ == '__main__':
     print(findTheDifference('abcd', 'abcde'))
     print(findTheDifference('a', 'aa'))
