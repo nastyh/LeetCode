@@ -21,6 +21,20 @@ def longestOnes_simple(A, K):
     return r - l
 
 
+def longestOnes_alt(nums, K):
+    res = 0
+    l, num_of_zeros = 0, 0
+    for r in range(len(nums)):
+        if nums[r] == 0:
+            num_of_zeros += 1
+        while num_of_zeros > K:
+            if nums[l] == 0:
+                num_of_zeros -= 1
+            l += 1
+        res = max(res, r - l + 1)
+    return res
+
+
 def test(A, K):
     left = right = 0
     
