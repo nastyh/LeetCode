@@ -27,7 +27,7 @@ class NaiveBayesClassifier(BaseEstimator):
             self._priors[c] = X_c.shape[0] / float(X.shape[0])
 
     
-    def _predict(self, X=None):
+    def _predict(self, X = None):
         # Apply _predict_proba for each row
         predictions = np.apply_along_axis(self._predict_row, 1, X)
 
