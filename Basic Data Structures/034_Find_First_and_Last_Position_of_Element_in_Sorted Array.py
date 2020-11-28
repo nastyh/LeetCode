@@ -24,6 +24,7 @@ def searchRange_binary(nums, target): # log(n) time; binary search
 		return [-1, -1]
 	return [l_ix, _helper(nums, target, False) - 1]
 
+
 def searchRange_another_binary(nums, target):  # the longest but easiest to comprehend
 	if not nums: return [-1, -1]
 	def _left_helper(nums, l, r, target):
@@ -46,6 +47,7 @@ def searchRange_another_binary(nums, target):  # the longest but easiest to comp
 			else:
 				l = m_ix + 1
 		return r
+		
 	l, r = 0, len(nums) - 1
 	while l <= r:
 		m = l + (r - l) // 2
