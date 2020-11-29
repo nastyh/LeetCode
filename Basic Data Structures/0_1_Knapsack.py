@@ -48,7 +48,7 @@ def knapsack_memo_bottom_up(profits, weights, capacity):
             prof1, prof2 = 0, 0
             if weights[i] <= c:
                 prof1 = profits[i] + dp[i - 1][c - weights[i]]
-            prof2 = dp[i - 1][c]
+            prof2 = dp[i - 1][c]  # not taking the current element but going with what is already in the knapsack (one row above)
             dp[i][c] = max(prof1, prof2)
     return dp[-1][-1]  # the very last cell
 
