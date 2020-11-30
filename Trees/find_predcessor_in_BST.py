@@ -4,7 +4,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
-    def findPredcessor(self, root, elToFind): # elToFind is given as a root, I guess
+    def findPredcessor(self, root, elToFind): # elToFind is the node which predcessor's we're looking for 
         res = None
         if not root:
             return
@@ -25,6 +25,34 @@ class TreeNode:
             except UnboundLocalError:
                 return None
         return res
+
+
+    def findPredcessor_alt(self, root, target):
+        """
+        if a target has a left child, the answer sits in the very right element of the left subtree
+        If a target has a right child, start doing a binary search and choosing where to go. 
+        If target > root, then go right, and keep track of prev as the last element from which you went right
+        If target < root, then go left 
+        Need to cover an edge case when we return a predcessor of the very first element. It's done in the second to last line 
+        """
+        if not root: return 
+        res = None
+        if target.left:
+            t = target.left 
+            while t.right:
+                t = t.right
+            return t.val
+        else:
+            while root.val != target.val:
+                prev = None
+                if target.val > root.val:
+                    prev = root
+                    root = root.right
+                else:
+                    root = root.left
+                res = prev.val if prev else None
+        return res
+
 
 
     def findPred_rec(self, root, elToFind):
@@ -55,6 +83,9 @@ if __name__ == '__main__':
     l.right.left = TreeNode(78)
     l.right.right = TreeNode(100)
     f = l.left.left
+    o = l.right.right
+    h = l
 
-print(l.findPredcessor(l, f))
+print(l.findPredcessor(l, o))
+print(l.findPredcessor_alt(l, o))
 # print(l.findPred_rec(l, f))
