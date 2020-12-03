@@ -74,6 +74,22 @@ def subarraySum_another(nums, k):  # doesn't work for [-1, -1, 1], 0
                 l += 1
     return res
 
+def subarraySum_another_brute_force(nums, k):  # times out but works for all edge cases
+    l, r = 0, 0
+    res = 0
+    while l < len(nums) - 1:
+        curr_sum = nums[l]
+        if curr_sum == k:  # accounts for cases when an element is equal to k itself
+            res += 1
+        for r in range(l + 1, len(nums)):
+            curr_sum += nums[r]
+            if curr_sum == k:
+                res += 1
+        l += 1
+    if nums[-1] == k:  # accounts for a situation when the last element equals to itself. The above portion doesn't cover it b/c l never gets to the last element
+        res += 1
+    return res
+
 
 def subarraySum_squared(nums, k):  # times out 
     """
@@ -107,6 +123,10 @@ if __name__ == '__main__':
     # print(subarraySum_another([1, 2, 3], 3))
     # print(subarraySum_n2([1, 2, 3], 3))
     # print(subarraySum_n2([-1, -1, 1], 0))
-    print(subarraySum_squared([-1, -1, 1], 0))
-    print(subarraySum_squared([1, 2, 3], 3))
-    print(subarraySum_squared([1, 1, 1], 2))
+    # print(subarraySum_squared([-1, -1, 1], 0))
+    # print(subarraySum_squared([1, 2, 3], 3))
+    # print(subarraySum_squared([1, 1, 1], 2))
+    print(subarraySum_another_brute_force([-1, -1, 1], 0))
+    print(subarraySum_another_brute_force([1, 2, 3], 3))
+    print(subarraySum_another_brute_force([1, 1, 1], 2))
+    print(subarraySum_another_brute_force([3, 4, 7, 2, -3, 1, 4, 2], 7))
