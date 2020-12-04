@@ -30,9 +30,6 @@ def kthFactor_alt(n, k):  # O(n//2) and O(1)
     else:
         return res
 
-    
-
-
 
 if __name__ == '__main__':
     # print(kthFactor(12, 3))
