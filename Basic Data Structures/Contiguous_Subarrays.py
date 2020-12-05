@@ -1,5 +1,4 @@
 def count_subarrays(arr):
-  # Write your code here
   n = len(arr)
   result = [n] * n
   st = []
