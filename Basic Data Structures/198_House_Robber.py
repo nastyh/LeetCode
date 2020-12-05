@@ -6,6 +6,18 @@ def rob(nums):
         prev = temp
     return curr
 
+
+def rob_linear(nums):
+    """
+    no need for the whole dp list. Need to keep track of the second house from the left
+    and from the first house to the left. Then make updates
+    """
+    max_from_second_left_house = max_from_first_left_house = 0
+    for num in nums:
+        max_from_second_left_house, max_from_first_left_house = max_from_first_left_house, max(max_from_first_left_house, max_from_second_left_house + num)
+    return max_from_first_left_house
+
+
 def rob_dp(nums):
     # if nothing is given, return 0. If only one element, return it. If two -- return max
     # Inititate a list dp with None. Every element contains a max number that you can get if you rob all houses up to this point including this house
@@ -21,9 +33,12 @@ def rob_dp(nums):
     for i in range(2, len(nums)):
         dp[i] = max(dp[i -1], nums[i] + dp[i - 2])
     return dp[-1]
+    
 
 if __name__ == '__main__':
-    print(rob([1,2,3,1]))
-    print(rob_dp([1,2,3,1]))
-    print(rob([2,7,9,3,1]))
-    print(rob_dp([2,7,9,3,1]))
+    print(rob([1, 2, 3, 1]))
+    print(rob_dp([1, 2, 3, 1]))
+    print(rob_linear([1, 2, 3, 1]))
+    print(rob([2, 7, 9, 3, 1]))
+    print(rob_dp([2, 7, 9, 3, 1]))
+    print(rob_linear([2, 7, 9, 3, 1]))

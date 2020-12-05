@@ -19,6 +19,22 @@ class TreeNode:
         return max(helper(root))
 
     
+    def rob_alt(self, root):  # works but exceeds the time limit without @lru_cache(None)
+        if not root: return 0
+        if root and not root.left and not root.right: return root.val
+        @lru_cache(None)
+        def _helper(node, parent_robbed):
+            if not node: return 0
+            if parent_robbed:
+                return _helper(node.left, False) + _helper(node.right, False)
+            else:
+                stealing = node.val + _helper(node.left, True) + _helper(node.right, True)
+                not_stealing = _helper(node.left, False) + _helper(node.right, False)
+            return max(stealing, not_stealing)
+        return _helper(root, False)
+
+
+    
     def rob_memo(self, root):  # O(n) and O(n)
         rob_saved = {}
         not_rob_saved = {}
