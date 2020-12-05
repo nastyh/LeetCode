@@ -9,7 +9,8 @@ class TreeNode:
         d, res = deque(), []
         d.append(root)
         while d:
-            curr_level, curr_avg, nodes_in_level = 0, 0, 0
+            # curr_level, curr_avg, nodes_in_level = 0, 0, 0
+            curr_level, nodes_in_level = 0, 0
             for _ in range(len(d)):
                 t = d.popleft()
                 curr_level += t.val
@@ -18,8 +19,8 @@ class TreeNode:
                     d.append(t.left)
                 if t.right:
                     d.append(t.right)
-                curr_avg = curr_level / nodes_in_level
-            res.append(curr_avg)
+                # curr_avg = curr_level / nodes_in_level
+            res.append(curr_level / nodes_in_level)
         return res
 
 
