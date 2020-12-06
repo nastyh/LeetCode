@@ -1,3 +1,4 @@
+import math
 def maxProfit_dp(self, prices, fee):
     cash, hold = 0, -prices[0]
     for i in range(1, len(prices)):
@@ -6,7 +7,7 @@ def maxProfit_dp(self, prices, fee):
     return cash
 
 def maxProfit(prices, fee):
-    profit, hold = 0, float('-inf')
+    profit, hold = 0, -math.inf
     for p in prices:
-        hold, profit = max(hold, profit - p), max(profit, hold + p -fee)
+        hold, profit = max(hold, profit - p), max(profit, hold + p - fee)
     return profit
