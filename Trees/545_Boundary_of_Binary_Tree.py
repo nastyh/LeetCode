@@ -42,19 +42,12 @@ class TreeNode:
         return left_boundary + leaves + right_boundary[::-1]
 
 
-    def boundaryOfBinaryTree(self, root):  # don't work for edge cases
+    def boundaryOfBinaryTree(self, root):  # had to write a weird return statement to make it work
+        if not root: return []
         left_res = []
         right_res = []
         leaves_res = []
-        def _left_helper(node): 
-            # d = deque()
-            # d.append(node)
-            # while d:
-            #     t = d.popleft()
-            #     if not t.left and not t.right:
-            #         return
-            #     left_res.append(t.val)
-
+        def _left_helper(node):  # helper to get the left boundary (without the leaves)
             nonlocal left_res
             if node:
                 if node.left:
@@ -63,7 +56,7 @@ class TreeNode:
                 elif node.right:
                     left_res.append(node.val)
                     _left_helper(node.right)
-        def _right_helper(node):
+        def _right_helper(node):  # helper to get the right boundary (without the leaves)
             nonlocal right_res
             if node:
                 if node.right:
@@ -72,7 +65,7 @@ class TreeNode:
                 elif node.left:
                     right_res.append(node.val)
                     _right_helper(node.left)
-        def _leaves_helper(node):
+        def _leaves_helper(node):  # just the leaves 
             nonlocal leaves_res
             if node:
                 if not node.left and not node.right:
@@ -81,12 +74,12 @@ class TreeNode:
                     _leaves_helper(node.left)
                 if node.right:
                     _leaves_helper(node.right)
-        if root.left: _left_helper(root)
+        
+        if root.left: _left_helper(root)  # without if statements, won't work for some edge cases
         if root.left or root.right: _leaves_helper(root)
         if root.right: _right_helper(root)
-        
+        # right_res should be reversed and the first element (head) should be excluded in order to avoid doublecounting 
         return [root.val] + left_res + leaves_res + right_res[1:][::-1] if not root.left else left_res + leaves_res + right_res[1:][::-1]
-        # return leaves_res
 
 
 if __name__ == '__main__':
