@@ -36,7 +36,6 @@ def longestCommonSubsequence_alt(text1, text2):
                 dp[row][col] = dp[row - 1][col - 1] + 1
             else:
                 dp[row][col] = max(dp[row - 1][col], dp[row][col - 1])
-    print(dp)
     return dp[-1][-1]
 
 
