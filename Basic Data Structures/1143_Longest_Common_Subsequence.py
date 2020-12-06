@@ -39,6 +39,20 @@ def longestCommonSubsequence_alt(text1, text2):
     return dp[-1][-1]
 
 
+def longestCommonSubsequence_return_string(text1, text2):
+    res = ''
+    dp = [[0] * (len(text1) + 1) for _ in range((len(text2) + 1))]  # text1 is along the cols; text2 is along the rows
+    for col in range(1, len(text1) + 1):
+        for row in range(1, len(text2) + 1):
+            if text1[col - 1] == text2[row - 1]:
+                dp[row][col] = dp[row - 1][col - 1] + 1
+                if len(res) > 0 and res[-1] != text1[col - 1]: res += text1[col - 1]
+            else:
+                dp[row][col] = max(dp[row - 1][col], dp[row][col - 1])
+    return res
+
+
 if __name__ == '__main__':
     print(longestCommonSubsequence('aab', 'azb'))
     print(longestCommonSubsequence('abcde', 'ace'))
+    print(longestCommonSubsequence_return_string('aab', 'azb'))
