@@ -4,13 +4,12 @@ def wordBreak(s, wordDict):
     #   otherwise it would exceed the time limit for certain test cases.
     if set(Counter(s).keys()) > set(Counter("".join(wordDict)).keys()):
         return []
-
     wordSet = set(wordDict)
 
-    dp = [[]] * (len(s)+1)
+    dp = [[]] * (len(s) + 1)
     dp[0] = [""]
 
-    for endIndex in range(1, len(s)+1):
+    for endIndex in range(1, len(s) + 1):
         sublist = []
         # fill up the values in the dp array.
         for startIndex in range(0, endIndex):
@@ -28,7 +27,7 @@ def wordBreak_another(s, wordDict):
         return [s] if s in wordDict else []
     
     parents = defaultdict(list)
-    mem = [False for i in range(len(s)+1)]
+    mem = [False for i in range(len(s) + 1)]
     mem[0] = True
     wordDict = set(wordDict)
     
@@ -39,7 +38,7 @@ def wordBreak_another(s, wordDict):
                     mem[j+1] = True
                     parents[j].append(i)
                     
-    def build(k=len(s)-1):
+    def build(k=len(s) - 1):
         if k < 0: return [""]
         res = []
         for i in parents[k]:
