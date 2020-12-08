@@ -25,6 +25,39 @@ def searchRange_binary(nums, target): # log(n) time; binary search
 	return [l_ix, _helper(nums, target, False) - 1]
 
 
+def searchRange_2_bin_searches(nums, target):
+	"""
+	make two binary searches.
+	First, look for the most right element.
+	Once we found nums[m] == target, don't return anything, but save most_right = m and move the left pointer to the right half,
+	to keep searching for the most right element
+	When we look for the most left element, the idea is similar:
+	once we found nums[m] == target, don't return anything yet, but move r to m - 1 (to the left half) and keep searching for the most left element
+	"""
+	l, r, most_right = 0, len(nums) - 1, -1
+	while l <= r:
+		m = l + (r - l) // 2
+		if nums[m] == target:
+			most_right = m
+			l = m + 1
+		elif nums[m] < target:
+			l = m + 1 
+		else:
+			r = m - 1
+	l, r, most_left = 0, len(nums) - 1, -1
+	while l <= r:
+		m = l + (r - l) // 2
+		if nums[m] == target:
+			most_left = m
+			r = m - 1
+		elif nums[m] < target:
+			l = m + 1
+		else:
+			r = m - 1
+	return [most_left, most_right]
+
+
+
 def searchRange_another_binary(nums, target):  # the longest but easiest to comprehend
 	if not nums: return [-1, -1]
 	def _left_helper(nums, l, r, target):
