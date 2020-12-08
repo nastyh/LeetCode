@@ -1,3 +1,4 @@
+from collections import deque
 """
 a graph is bipartite if we can split it's set of nodes into two independent subsets A and B such that every edge in the graph has one node in A and another node in B.
 """
@@ -39,6 +40,49 @@ def isBipartite_recurs(graph):
     return all(dfs(node) for node in range(len(graph)) if node not in self.colors)
 
 
+def isBipartite_stack(graph):
+    colors = {}
+    for from_node in range(len(graph)):
+        if from_node in colors:
+            continue
+
+        stack = [from_node]
+        colors[from_node] = 1  # 1 is just starting color
+        while stack:
+            from_node = stack.pop()
+
+            for to_node in graph[from_node]:
+                if to_node in colors:
+                    if colors[to_node] == colors[from_node]:
+                        return False
+                else:
+                    stack.append(to_node)                        
+                    colors[to_node] = colors[from_node] * -1
+    return True
+
+
+def isBipartite_queue(graph):
+    def bfs(graph, node, colors):
+        queue = deque([node])
+        colors[node] = 1
+        while queue:
+            node_from = queue.popleft()
+            for node_to in graph[node_from]:
+                if node_to in colors:
+                    if colors[node_to] == colors[node_from]:
+                        return False
+                else:
+                    colors[node_to] = colors[node_from] * -1
+                    queue.append(node_to)
+        return True
+    colors = {}
+    for node_from in range(len(graph)):
+        if node_from not in colors and not bfs(graph, node_from, colors):
+            return False
+    return True
+
+
 if __name__ == '__main__':
     print(isBipartite([[1, 3], [0, 2], [1, 3], [0, 2]]))
     print(isBipartite([[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]]))
+    print(isBipartite_queue([[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]]))
