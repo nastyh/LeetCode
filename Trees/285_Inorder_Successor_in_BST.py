@@ -40,6 +40,20 @@ class TreeNode:
                 node = node.right
         return res.val if res else None
 
+    
+    def inorderSuccessor_stack(self, root, p):
+        stack, prev, curr = [], None, None
+        while root or stack:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            prev = curr
+            curr = root
+            if prev and prev.val == p.val:
+                return curr
+            root = root.right
+
 
 if __name__ == '__main__':
     l = TreeNode(12)
@@ -49,6 +63,13 @@ if __name__ == '__main__':
     l.left.right = TreeNode(8)
     l.right.left = TreeNode(17)
     l.right.right = TreeNode(23)
-    print(l.inorderSuccessor(l, l.right.left))
-    print(l.inorderSuccessor_BST_property(l, l.right.left))
+    m = TreeNode(5)
+    m.left = TreeNode(3)
+    m.right = TreeNode(6)
+    m.left.left = TreeNode(2)
+    m.left.right = TreeNode(4)
+    m.left.left.left = TreeNode(1)
+    # print(l.inorderSuccessor(l, l.right.left))
+    # print(l.inorderSuccessor_BST_property(l, l.right.left))
+    print(m.inorderSuccessor_BST_property(m, m.right))
 
