@@ -1,18 +1,19 @@
-def combinationSum2_another(candidates, target):  # DOESN"T WORK, IDK WHY
+def combinationSum2_another(candidates, target):
     res = []
-    def _helper(nums, curr_res, curr_ix, left):
-        nums.sort()
+    candidates.sort()
+    def _helper(nums, curr_res, curr_ix, left): 
         if left == 0:
-            res.append(curr_res[:])
-            return
+            res.append(curr_res)
         if left < 0:
             return
         for i in range(curr_ix, len(nums)):
-            if i > 0 and nums[i] == nums[i - 1]:
+            if i > curr_ix and nums[i] == nums[i - 1]:
                 continue
-            _helper(nums, curr_res + [nums[i]], curr_ix + 1, left - nums[i])
+            if nums[i] > target: return
+            _helper(nums, curr_res + [nums[i]], i + 1, left - nums[i])
     _helper(candidates, [], 0, target)
     return res
+    
 
 def combinationSum2_working(candidates, target):
     def backtrack(nums, targetLeft, path):
@@ -25,7 +26,7 @@ def combinationSum2_working(candidates, target):
             if nums[i] > targetLeft:
                 break
             backtrack(nums[i + 1:],targetLeft - nums[i],path + [nums[i]])    
-    res=[]
+    res = []
     backtrack(sorted(candidates), target, [])
     return res
     
