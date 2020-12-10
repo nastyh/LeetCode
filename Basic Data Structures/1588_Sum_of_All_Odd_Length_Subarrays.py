@@ -1,4 +1,4 @@
-def sumOddLengthSubarrays(arr):
+def sumOddLengthSubarrays(arr):  # brute force but works
     res = 0
     if len(arr) <= 2: return sum(arr)
     l = 0
