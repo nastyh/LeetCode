@@ -21,7 +21,7 @@ def findMissingRanges_alt(nums, lower, upper):
         if lower == upper:
             return [str(lower)]
         else:
-            return [str(lower)+'->'+str(upper)]
+            return [str(lower) + '->' + str(upper)]
         
     for i in range(len(nums)):
         if nums[i] < lower:
@@ -43,6 +43,22 @@ def findMissingRanges_alt(nums, lower, upper):
         else:
             ans.append(str(nums[-1] + 1)+'->' + str(upper))
     return ans
+
+
+def findMissingRanges_another(nums, lower, upper):
+    def addRange(self, res, low, high):
+    if low + 2 == high:
+        res.append(str(low + 1))
+    else:
+        res.append(str(low + 1) + '->' + str(high - 1))
+    
+    res = []
+    nums = [lower - 1] + nums + [upper + 1]
+    for i in range(1, len(nums)):
+        curr, prev = nums[i], nums[i - 1]
+        if curr - prev > 1:
+            addRange(res, prev, curr)
+    return res
 
 if __name__ == '__main__':
     print(findMissingRanges([0,1,3,50,75], 0, 99))

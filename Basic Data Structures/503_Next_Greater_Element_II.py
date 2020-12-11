@@ -1,4 +1,4 @@
-def nextGreaterElements(nums):
+def nextGreaterElements(nums):  # brute force
     if len(nums) == 0: return []
     if len(nums) == 1: return [-1]
     res = [-1] * len(nums)
@@ -10,7 +10,10 @@ def nextGreaterElements(nums):
 
 
 def nextGreaterElements_stack(nums):
-    stack, res, n = [], [-1]*len(nums), len(nums)
+    """
+    stack contains indices
+    """
+    stack, res, n = [], [-1] * len(nums), len(nums)
     for i in range(0, 2 * n):
         while stack and nums[i % n] > nums[stack[-1]]:
             top = stack.pop()
