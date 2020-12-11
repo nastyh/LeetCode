@@ -1,4 +1,4 @@
- def divide(dividend, divisor_:
+ def divide(dividend, divisor):
     if dividend == 0:
         return 0
     sign = 1
