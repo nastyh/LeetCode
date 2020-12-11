@@ -25,7 +25,7 @@ def isBipartite(graph):
 
         """
         Time Complexity: O(N + E)O(N+E), where NN is the number of nodes in the graph, and EE is the number of edges
-        Space Complexity: O(N)O(N), the space used to store the color
+        Space Complexity: O(N); O(N), the space used to store the color
         """
 
 
