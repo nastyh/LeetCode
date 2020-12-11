@@ -15,3 +15,12 @@ def canMakeArithmeticProgression_alt(arr):  # also brute force but without an ex
             return False
     return True
 
+
+def canMakeArithmeticProgression_math(arr):
+    d = (max(arr) - min(arr)) / (len(arr) - 1)
+    return d
+
+
+if __name__ == '__main__':
+    print(canMakeArithmeticProgression_alt([3, 5, 1]))
+    print(canMakeArithmeticProgression_math([3, 5, 1]))
