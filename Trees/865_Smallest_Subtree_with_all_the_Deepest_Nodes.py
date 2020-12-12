@@ -38,10 +38,10 @@ class TreeNode:
             ln, ld = _helper(root.left, d + 1)
             rn, rd = _helper(root.right, d + 1)
             if ld > rd:
-                return ln, ld
+                return ln, ld + 1
             if rd > ld:
-                return rn, rd
-            return root, ld
+                return rn, rd + 1
+            return root, ld + 1
 
         return _helper(root, 0)[0]
 

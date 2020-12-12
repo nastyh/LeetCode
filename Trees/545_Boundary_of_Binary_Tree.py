@@ -39,7 +39,7 @@ class TreeNode:
             _leaves(root.left)
             _leaves(root.right)
         _leaves(root)
-        return left_boundary + leaves + right_boundary[::-1]
+        return left_boundary + leaves + right_boundary[::-1]  
 
 
     def boundaryOfBinaryTree(self, root):  # had to write a weird return statement to make it work
