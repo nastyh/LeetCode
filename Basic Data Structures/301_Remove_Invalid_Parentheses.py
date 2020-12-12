@@ -1,10 +1,8 @@
-def removeInvalidParentheses(s):
+def removeInvalidParentheses(s):  # O(2^n) and O(n)
     left = 0
     right = 0
-
     # First, we find out the number of misplaced left and right parentheses.
     for char in s:
-
         # Simply record the left one.
         if char == '(':
             left += 1
@@ -15,7 +13,6 @@ def removeInvalidParentheses(s):
             # Decrement count of left parentheses because we have found a right
             # which CAN be a matching one for a left.
             left = left - 1 if left > 0 else left
-
     result = {}
     def recurse(s, index, left_count, right_count, left_rem, right_rem, expr):
         # If we reached the end of the string, just check if the resulting expression is
@@ -99,6 +96,60 @@ def removeInvalidParentheses_alt(s):
 
     dfs(0, 0, 0, left, right, "")
     return list(ans)
+
+
+def removeInvalidParentheses_another(s):
+    def backtrack(s, index, current, currentStack, result):
+        if index >= len(s):
+            if len(currentStack) == 0:
+                key = len(current)
+                if key in result: result[key].add(current)
+                else: result[key] = {current}
+            return result
+        #Excluding
+        if len(currentStack)>=0: self.backtrack(s, index+1, current, currentStack[:], result)
+        #Including
+        start, bracket = {'(': ')', '{': '}', '[': ']'}, {'(', ')', '{', '}', '[',']'}
+        if s[index] in bracket:
+            if s[index] in start:
+                currentStack.append(s[index])
+            elif len(currentStack)==0 or start[currentStack.pop()]!=s[index]:
+                return result
+        if len(currentStack) >= 0:
+            self.backtrack(s, index + 1, current + s[index], currentStack[:], result)
+        return result
+
+    dic, maxKey = self.backtrack(s, 0, "", [], {}), 0
+        for k in dic:
+            if k>maxKey: maxKey = k
+        return list(dic[maxKey])
+
+
+def removeInvalidParentheses_short(s):
+    # define when a combination of parenthesis is still valid
+    def valid(candidate):
+        counter = 0
+        for char in candidate:
+            if char == "(": counter += 1
+            elif char == ")": counter -= 1
+            if counter < 0: return False
+        # balanced?
+        return counter == 0
+    # the actual BFS, we return the minimum of removals, so we stop as soon as we have something
+    res, frontier = set() , set([s])
+    while not res:
+        _next = set()
+        for candidate in frontier:
+            if valid(candidate):
+                res.add(candidate)
+                continue
+            # generate more candidates based on this candidate
+            for i, letter in enumerate(candidate):
+                if letter not in "()": continue
+                _next.add(candidate[:i] + candidate[i+1:])
+        frontier = _next
+    return res
+
 
 if __name__ == '__main__':
     print(removeInvalidParentheses('()())()'))

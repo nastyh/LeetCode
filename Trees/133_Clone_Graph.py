@@ -7,16 +7,13 @@ class Node(object):
     def cloneGraph(self, node):
         if not node:
             return node
-
         # Dictionary to save the visited node and it's respective clone
         # as key and value respectively. This helps to avoid cycles.
         visited = {}
-
         # Put the first node in the queue
         queue = deque([node])
         # Clone the node and put it in the visited dictionary.
         visited[node] = Node(node.val, [])
-
         # Start BFS traversal
         while queue:
             # Pop a node say "n" from the from the front of the queue.
@@ -34,13 +31,12 @@ class Node(object):
         # Return the clone of the node from visited.
         return visited[node]
 
+
     def cloneGraph_recur(self, node):
-        if not node: return node
-        
+        if not node: return node  
         cur_val = node.val
         if cur_val in self.new_nodes:
             return self.new_nodes[cur_val]
-                
         cloned_node = Node(cur_val)
         self.new_nodes[cur_val] = cloned_node
         for nei in node.neighbors:
@@ -51,3 +47,18 @@ class Node(object):
                 self.new_nodes[cur_val].neighbors.append(cloned_child)
         
         return self.new_nodes[cur_val]
+
+
+    def cloneGraph_dict(self, node):
+        def dfs(map, node):
+            if node is None:
+                return None
+            if node.val in map:
+                return map[node.val]
+            newNode = Node(node.val, [])
+            map[node.val] = newNode
+            for neighbor in node.neighbors:
+                newNode.neighbors.append(dfs(map, neighbor))
+            return newNode
+        d = {}
+        return dfs(d, node)

@@ -25,8 +25,32 @@ def isBipartite(graph):
 
         """
         Time Complexity: O(N + E)O(N+E), where NN is the number of nodes in the graph, and EE is the number of edges
-        Space Complexity: O(N)O(N), the space used to store the color
+        Space Complexity: O(N); O(N), the space used to store the color
         """
+
+
+def isBipartite_alt(graph):
+    """
+    Dictionary starts with graph_value : 0. Everything is unvisited
+    _helper checks if a given node is unvisited. If it's visited, check if it's of the color that we're passing
+    Otherwise, color it using a color that we're passing
+    Then process this node's neighbors. If you can't color it in a different color, return False. Otherwise it's True for this neighbor.
+    """
+    d = {i : 0 for i in range(len(graph))}
+    def _helper(graph, d, color, node):
+        if d[node] != 0:
+            return d[node] == color
+        else:
+            d[node] = color
+            for neighbor in graph[node]:
+                if not _helper(graph, d, -color, neighbor):
+                    return False
+        return True
+    for i in range(len(graph)):
+        if d[i] == 0 and not _helper(graph, d, 1, i):  # if a node is unvisited and we can't color everything appropriately
+            return False
+    return True
+
 
 def isBipartite_recurs(graph):
     colors = {} #store node and its corresponding color
