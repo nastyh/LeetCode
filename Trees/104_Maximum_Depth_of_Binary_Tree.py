@@ -44,6 +44,20 @@ class TreeNode:
             return max(l, r)
         return _helper(root, 0)
 
+    
+    def maxDepth_stack(self, root):
+        st = []
+        if root:
+            st.append((1, root))
+        depth = 0
+        while st:
+            curr_depth, root = st.pop()
+            if root:
+                depth = max(depth, curr_depth)
+                st.append((curr_depth + 1, root.left))
+                st.append((curr_depth + 1, root.right))
+        return depth 
+
 
 if __name__ == '__main__':
     l = TreeNode(3)
@@ -55,3 +69,4 @@ if __name__ == '__main__':
     print(l.maxDepth(l))
     print(l.maxDepthBFS(l))
     print(l.maxDepth_helper(l))
+    print(l.maxDepth_stack(l))
