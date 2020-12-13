@@ -1,4 +1,4 @@
-
+from collections import defaultdict
 def subarraySum_d(nums, k):
     count = s = 0
     Map = {}
@@ -9,6 +9,18 @@ def subarraySum_d(nums, k):
             count += Map.get(s - k)
         Map[s] = Map.get(s, 0) + 1
     return count
+
+
+def subarraySum_d_alt2(nums, k):  # O(n) and O(n)
+    d = defaultdict(int)
+    d[0] += 1
+    temp = 0
+    res = 0
+    for i, num in enumerate(nums):
+        temp += num
+        res += d[temp - k]
+        d[temp] += 1
+    return res
 
 # a bit simpler to follow
 
@@ -23,6 +35,24 @@ def subarraySum_dp(nums, k):
             if dp[j] - dp[i] == k:
                 res += 1
     return res + 1
+
+
+def subarraySum_running_sum(nums, k):  #  O(n^2) and O(1). TLE
+    """
+    Rewrite nums into the running sum 
+    Do two loops: for every element check the difference between right elements and this element.
+    If it's == k, increment res
+    In the return statement, take care of the cases when numbers themselves == k
+    """
+    res = 0
+    for i in range(1, len(nums)):
+        nums[i] += nums[i - 1]
+    for l in range(len(nums) - 1):
+        for r in range(l + 1, len(nums)):
+            if nums[r] - nums[l] == k:
+                res += 1
+    return res + sum(1 for i in nums if i == k)
+
 
 def subarraySum_dict(nums, k):
     d, curr_sum, res = {0 : 1}, 0, 0
@@ -130,3 +160,7 @@ if __name__ == '__main__':
     print(subarraySum_another_brute_force([1, 2, 3], 3))
     print(subarraySum_another_brute_force([1, 1, 1], 2))
     print(subarraySum_another_brute_force([3, 4, 7, 2, -3, 1, 4, 2], 7))
+    print(subarraySum_running_sum([-1, -1, 1], 0))
+    print(subarraySum_running_sum([1, 2, 3], 3))
+    print(subarraySum_running_sum([1, 1, 1], 2))
+    print(subarraySum_d_alt2([1, 2, 3], 3))
