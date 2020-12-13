@@ -31,6 +31,31 @@ def checkInclusion_another(s1, s2):  # another slow but works
     return False
 
 
+def checkInclusion_dict(s1, s2):
+    if len(s2) < len(s1): return False
+    charCounts = Counter(s1)
+    m, n, nChars = len(s1), len(s2), len(charCounts)
+    #Only consider window of length m and only check chars in s1
+    for i in range(m):
+        if s2[i] in charCounts:
+            charCounts[s2[i]] -= 1
+            if charCounts[s2[i]] == 0:
+                nChars -= 1
+        if nChars == 0:
+            return True
+        
+    for i in range(m, n):
+        if s2[i - m] in charCounts:
+            charCounts[s2[i - m]] += 1
+            if charCounts[s2[i - m]] == 1: nChars += 1
+        if s2[i] in charCounts:
+            charCounts[s2[i]] -= 1
+            if charCounts[s2[i]] == 0: nChars -= 1
+        if nChars == 0:
+            return True
+    return False
+
+
 def checkInclusion_alt(s1, s2):
     s, e = 0, len(s1)
     s1 = sorted(s1)
