@@ -1,17 +1,16 @@
-def threeSum(nums):
+def threeSum(nums):  # O(n^2) and O(n)
     l = len(nums)
     nums.sort()
     ans = set()
-    for i in range(0,l-2):
+    for i in range(0,l - 2):
         d = set()
-        s = 0-nums[i]
-
-        for j in range(i+1,l):
+        s = 0 - nums[i]
+        for j in range(i + 1,l):
             x = s-nums[j]
             if x not in d:
                 d.add(nums[j])
             else:
-                ans.add((nums[i],nums[j],x))
+                ans.add((nums[i], nums[j], x))
     return list(ans)
 
 
@@ -57,6 +56,8 @@ def Sum3_with_helper(nums): # with pointers, easier to comprehend
 #             r -= 1
 #         if len(curr) > 0: res.append(curr)
 #     return res if len(res) > 0 else []
+
+
 if __name__ == '__main__':
     # print(threeSum_pointers([-1, 0, 1, 2, -1, -4]))
     # print(threeSum_pointers([0,0,0,0]))

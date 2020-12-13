@@ -1,7 +1,6 @@
 def threeSumSmaller(nums, target):
     nums.sort()
     res = 0
-
     def _helper(arr, l, target):
         s, r = 0, len(arr) - 1
         while l < r:
@@ -15,6 +14,7 @@ def threeSumSmaller(nums, target):
     for i in range(len(nums) - 2):
         res += _helper(nums, i + 1, target - nums[i])
     return res
+
 
 def threeSumSmaller_alt(nums, target):
     result = 0
@@ -31,5 +31,5 @@ def threeSumSmaller_alt(nums, target):
     return result
 
 if __name__ == '__main__':
-    print(threeSumSmaller([-2,0,1,3], 2))
-    print(threeSumSmaller_alt([-2,0,1,3], 2))
+    print(threeSumSmaller([-2, 0, 1, 3], 2))
+    print(threeSumSmaller_alt([-2, 0, 1, 3], 2))
