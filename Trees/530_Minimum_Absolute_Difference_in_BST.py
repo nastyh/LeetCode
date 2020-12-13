@@ -27,7 +27,6 @@ class TreeNode:
         #     return values
 
         get_values(root)
-        print(values_list)
         # values_list = get_values_bfs(root)
 
         if len(values_list) != len(set(values_list)):
