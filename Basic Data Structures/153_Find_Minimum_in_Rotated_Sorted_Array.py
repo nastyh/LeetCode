@@ -32,5 +32,16 @@ def findMin_bin_search(nums):
             r = m - 1
 
 
+def findMin_bin_search_alt(nums):
+    left, right = 0, len(nums) - 1
+    while nums[left] > nums[right]:
+        middle  = (left + right) // 2
+        if nums[middle] < nums[right]:
+            right = middle
+        else:
+            left = middle + 1
+    return nums[left]
+
+
 if __name__ == '__main__':
     print(findMin([3, 4, 5, 1, 2]))
