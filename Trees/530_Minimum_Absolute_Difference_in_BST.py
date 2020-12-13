@@ -6,12 +6,12 @@ class TreeNode:
         self.left = left
         self.right = right
     def getMinimumDifference(self, root):
-        def get_values(values, root):
-            if root is not None:
-                values.append(root.val)
-                values = get_values(values, root.left)
-                values = get_values(values, root.right)
-            return values
+        values_list = []
+        def get_values(node):  # inorder traversal; returns a sorted array
+            if not node: return 
+            get_values(node.left)
+            values_list.append(node.val)
+            get_values(node.right)
 
         # def get_values_bfs(root): # same as above, but BFS
         #     d = deque()
@@ -26,24 +26,22 @@ class TreeNode:
         #             d.append(t.right)
         #     return values
 
-        values_list = get_values([], root)
+        get_values(root)
+        print(values_list)
         # values_list = get_values_bfs(root)
 
         if len(values_list) != len(set(values_list)):
             return 0
-
-        values_list.sort()
         minimum_diff = values_list[1] - values_list[0]
 
         for i in range(1, len(values_list)):
             diff = values_list[i] - values_list[i - 1]
             if diff < minimum_diff:
                 minimum_diff = diff
-
         return minimum_diff
 
 if __name__ == '__main__':
     l = TreeNode(1)
     l.right = TreeNode(3)
-    l.right.right = TreeNode(2)
+    l.right.left = TreeNode(2)
     print(l.getMinimumDifference(l))
