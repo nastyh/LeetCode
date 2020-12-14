@@ -24,7 +24,7 @@ def subarraySum_d_alt2(nums, k):  # O(n) and O(n)
 
 # a bit simpler to follow
 
-def subarraySum_dp(nums, k):
+def subarraySum_dp(nums, k):  # O(n^2) and O(n)
     dp = [None] * len(nums)
     res = 0
     dp[0] = 0
@@ -52,6 +52,19 @@ def subarraySum_running_sum(nums, k):  #  O(n^2) and O(1). TLE
             if nums[r] - nums[l] == k:
                 res += 1
     return res + sum(1 for i in nums if i == k)
+
+
+def subarraySum_running_sum_efficient(nums, k):  #  O(n^2) and O(1). TLE
+    cumSum = 0
+    res = 0
+    for l in range(len(nums)):
+        s = 0
+        for r in range(l, len(nums)):
+            s += nums[r]
+            if s == k:
+                res += 1
+    return res
+
 
 
 def subarraySum_dict(nums, k):
