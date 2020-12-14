@@ -13,6 +13,21 @@ def partition(s):
     return res
 
 
+def partition_another(s):
+    res, len_s = [], len(s)
+    def _isPal(s):
+        return s == s[::-1]
+    def _helper(s, ix, path):
+        if ix == len(s):
+            res.append(path)
+            return
+        for i in range(ix + 1, len_s + 1):
+            if _isPal(s[ix + 1:]):
+                _helper(s, i, path + [s[ix + 1:]])
+    _helper(s, 0, [])
+    return res
+        
+
 def partition_alt(s):
      ans = []
     def dfs(currList, k):
