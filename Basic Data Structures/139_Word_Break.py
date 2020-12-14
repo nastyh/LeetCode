@@ -33,6 +33,7 @@ def wordBreak_alt(s, wordDict):  #w/ recursion
         memo[idx] = ret 
         return ret 
     return recurse(0)
+    
 
 if __name__ == '__main__':
     print(wordBreak("leetcode",["leet", "code"]))

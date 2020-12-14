@@ -23,7 +23,7 @@ def wordBreak(s, wordDict):
     return dp[len(s)]
 
 def wordBreak_another(s, wordDict):
-    if len(s) <=1:
+    if len(s) <= 1:
         return [s] if s in wordDict else []
     
     parents = defaultdict(list)
@@ -34,11 +34,11 @@ def wordBreak_another(s, wordDict):
     for i in range(len(s)):
         if mem[i]:
             for j in range(i,len(s)):
-                if s[i:j+1] in wordDict: 
-                    mem[j+1] = True
+                if s[i:j + 1] in wordDict: 
+                    mem[j + 1] = True
                     parents[j].append(i)
                     
-    def build(k=len(s) - 1):
+    def build(k = len(s) - 1):
         if k < 0: return [""]
         res = []
         for i in parents[k]:
@@ -49,6 +49,60 @@ def wordBreak_another(s, wordDict):
             for x in a:
                 res.append(x+u)
         return res
-    
     ans = build()       
     return [] if ans == [""] else ans
+
+
+def wordBreak_more(s, wordDict):
+    cache={}
+    def wordbr(s):
+        if s not in cache: 
+            result=[]
+            for w in wordDict:
+                if s[:len(w)] == w:
+                    if len(s) == len(w):
+                        result.append(w)
+                    else:
+                        for word in wordbr(s[len(w):]):
+                            result.append(w+" "+word)
+            cache[s] = result
+        return cache[s]
+    
+    return wordbr(s)
+
+
+def wordBreak_trie(s, wordDict):
+    all_results = []
+    trie = {}
+    s_letters, words_letters = set(s), set()
+    # Build a trie from the words in word dictionary
+    for word in wordDict:
+        node = trie
+        for letter in word:
+            if letter not in node:
+                node[letter] = {}
+            node = node[letter]
+            words_letters.add(letter)
+        node[None] = word
+    # Check if all letters of the S string are in the words' letters
+    if s_letters - words_letters:
+        return []
+    # BFS
+    # Each element in the queue is the S-string index (current parsing position) and
+    # an array with the found words so far
+    queue = collections.deque([(0, [])])
+    while queue:
+        idx, result = queue.pop()
+        # If index has reached the end of the S string, then we have found one of the
+        # results
+        if idx == len(s):
+            all_results.appendleft(" ".join(result))
+            continue
+        # Go through the trie until a word is found
+        node = trie
+        while idx < len(s) and s[idx] in node:
+            node = node[s[idx]]
+            idx = idx + 1
+            if None in node:
+                queue.append((idx, result + [node[None]]))
+    return all_results
