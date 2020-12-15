@@ -64,9 +64,25 @@ def longest_dp(s):
     return ans
 
 
+# if we need length:
+def longest_length_dp(s):
+    dp = [[False] * len(s) for _ in range(len(s))]
+    for i in range(len(s)):  # diagonals are True
+        dp[i][i] = True
+    res = 1
+    for st in range(len(s) - 1, -1, -1):
+        for en in range(st + 1, len(s)):
+            if s[st] == s[en]:
+                if en - st == 1 or dp[st + 1][en - 1]:
+                    dp[st][en] = True
+                    res = max(res, en - st + 1)
+    return res
+
+
 if __name__ == '__main__':
     print(longest('abababa'))
     print(longest('ab'))
     print(longest_bf('abababa'))
     print(longest_center('abababa'))
     print(longest_dp('abababa'))
+    print(longest_length_dp('cddpd'))
