@@ -61,3 +61,41 @@ def findMedianSortedArrays(nums1, nums2):
     else:
         # Return the cur value, as a float
         return float(cur)
+
+
+def findMedianSortedArrays_alt(nums1, nums2):
+    overall=[]
+    m=len(nums1)
+    n=len(nums2)
+    tot=m + n
+    answer_ind=[]
+    if(tot % 2 == 0):
+        answer_ind=[(tot // 2) - 1,(tot // 2)]
+    else:
+        answer_ind=[(tot // 2)]
+        
+    pnt1 = 0
+    pnt2 = 0
+    while(pnt1 < m or pnt2 < n):
+        if(pnt1 < m and pnt2 < n):
+            if(nums1[pnt1] <= nums2[pnt2]):
+                overall.append(nums1[pnt1])
+                pnt1 += 1
+            else:
+                overall.append(nums2[pnt2])
+                pnt2 += 1
+        elif(pnt1 < m):
+            overall.append(nums1[pnt1])
+            pnt1 += 1
+        elif(pnt2 < n):
+            overall.append(nums2[pnt2])
+            pnt2 += 1
+        
+        if(len(overall)-1 == answer_ind[-1]):
+            sm=0
+            for k in answer_ind:
+                sm += overall[k]
+            
+            return sm / float(len(answer_ind))
+    
+        return -1
