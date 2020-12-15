@@ -6,7 +6,7 @@ class Node:
         self.right = None
         self.parent = None
 
-def inorderSuccessor(self, node):
+def inorderSuccessor(self, node):  # O(logn n), O(1)
     if node.right:
         node = node.right
         while node.left:

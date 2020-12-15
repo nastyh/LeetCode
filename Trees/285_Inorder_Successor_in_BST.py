@@ -23,7 +23,7 @@ class TreeNode:
      if the node doesn't have the right subtree, return the node from which you made the last left turn
     """
 
-    def inorderSuccessor_BST_property(self, root, p):
+    def inorderSuccessor_BST_property(self, root, p):  # O(H), O(H)
         res = None
         if not root: return
         if p.right:
@@ -41,7 +41,7 @@ class TreeNode:
         return res.val if res else None
 
     
-    def inorderSuccessor_stack(self, root, p):
+    def inorderSuccessor_stack(self, root, p):  # O(H), O(1)
         stack, prev, curr = [], None, None
         while root or stack:
             while root:
