@@ -30,6 +30,7 @@ def countSubstrings_middle(s):  #starting from the middle, also times out
         ans += _helper(s, ix, ix) + _helper(s, ix, ix + 1)
     return ans
 
+
 def countSubstrings_dp(s):  # DP, O(n*2) for both complexity and space
     dp = [[None] * len(s) for _ in range(len(s))]
     res = 0
@@ -52,6 +53,20 @@ def countSubstrings_dp(s):  # DP, O(n*2) for both complexity and space
     return  res
     
 
+def countSubstrings_dp_from_the_end(s):
+    dp = [[False] * len(s) for _ in range(len(s))]
+    res = 0
+    for i in range(len(s)):
+        res += 1
+        dp[i][i] = 1
+    for st in range(len(s) - 1, -1, -1):
+        for en in range(st + 1, len(s)):
+            if s[st] == s[en]:
+                if en - st == 1 or dp[st + 1][en - 1]:
+                    dp[st][en] = True
+                    res += 1
+    return res
+
 
 if __name__ == '__main__':
     # print(countSubstrings('abc'))
@@ -60,4 +75,6 @@ if __name__ == '__main__':
     # print(countSubstrings_middle('aaa'))
     print(countSubstrings_dp('abc'))
     print(countSubstrings_dp('aaa'))
+    print(countSubstrings_dp_from_the_end('abc'))
+    print(countSubstrings_dp_from_the_end('aaa'))
     # print(_test('abc')) 
