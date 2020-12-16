@@ -51,8 +51,55 @@ def sortedSquares_efficient(nums):
     return res
 
 
+def sortedSquares_alt(nums): 
+    """
+    Cover edge cases
+    Create two lists: left_nums are squared nums up to zero. Result is decreasing
+    right_nums are squared numbers from the right from zero but they're in a decreasing order
+    Reverse both, start comparing and appending
+    Keep care of a situation when one list is longer than another
+    """
+    res = []
+    if len(nums) == 1: return [nums[0]**2]
+    if all(i >= 0 for i in nums): return [i**2 for i in nums]
+    if all(i < 0 for i in nums): return [i**2 for i in nums][::-1]
+    left_nums, right_nums = [], []
+    i = 0
+    while i < len(nums) and nums[i] <= 0:  # the order is important, won't work with [-2, 0] otherwise 
+        left_nums.append(nums[i]**2)
+        i += 1
+    j = len(nums) - 1
+    while nums[j] > 0:
+        right_nums.append(nums[j]**2)
+        j -= 1
+    left_nums_rev, right_nums_rev = left_nums[::-1], right_nums[::-1]
+    if len(left_nums_rev) == 0 and len(right_nums_rev) != 0:
+        return right_nums_rev
+    if len(left_nums_rev) != 0 and len(right_nums_rev) == 0:
+        return left_nums_rev
+    l, r = 0, 0
+    while l < len(left_nums_rev) and r < len(right_nums_rev):
+        if left_nums_rev[l] <= right_nums_rev[r]:
+            res.append(left_nums_rev[l])
+            l += 1
+        else:
+            res.append(right_nums_rev[r])
+            r += 1
+    if l != len(left_nums_rev):
+        res.extend([i for i in left_nums_rev[l:]])
+    if r != len(right_nums_rev):
+        res.extend([j for j in right_nums_rev[r:]])
+    return res
+
+
 if __name__ == '__main__':
-    print(sortedSquares([-4,-1,0,3,10]))
+    # print(sortedSquares([-4,-1,0,3,10]))
     # print(sortedSquares([-7,-3,2,3,11]))
-    print(sortedSquares_efficient([-4,-1,0,3,10]))
-    print(sortedSquares_efficient([-7,-3,2,3,11]))
+    # print(sortedSquares_efficient([-4,-1,0,3,10]))
+    # print(sortedSquares_efficient([-7,-3,2,3,11]))
+    print(sortedSquares_alt([-4,-1,0,3,10]))
+    print(sortedSquares_alt([-7,-3,2,3,11]))
+    # print(sortedSquares_efficient([-2, 0]))
+    print(sortedSquares_alt([-2, 0]))
+    print(sortedSquares_alt([-5, -3, -2, -1]))
+    # print(sortedSquares_efficient([-5, -3, -2, -1]))
