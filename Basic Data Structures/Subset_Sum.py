@@ -8,7 +8,7 @@ def subset_sum_brute_force(nums, target):  # O(2^n)
     return _helper(nums, target, 0)
 
 
-def subset_sum_dp(nums, target):
+def subset_sum_dp(nums, target):  # bottom-up O(Ntarget) and O(NM)
     """
     create dp with columns from 0 to target (including)
     rows are how many numbers we have in nums + 1 (for zero)
@@ -17,7 +17,7 @@ def subset_sum_dp(nums, target):
     dp = [[False for x in range(target + 1)] for y in range(len(nums))]
     for i in range(0, len(nums)):  # populate the first column with True, as we can always form '0' sum with an empty set
         dp[i][0] = True
-    for s in range(1, target + 1):
+    for s in range(1, target + 1):  # first row
         dp[0][s] = True if nums[0] == s else False
     # process all subsets for all sums
     for row in range(1, len(nums)):
@@ -28,9 +28,23 @@ def subset_sum_dp(nums, target):
             elif col >= nums[row]:
                 # else include the number and see if we can find a subset to get the remaining sum
                 dp[row][col] = dp[row - 1][col - nums[row]]
-
-    # the bottom-right corner will have our answer.
     return dp[-1][-1]
+
+
+def subset_sum_dp_improved(nums, target):  # bottom-up O(Ntarget) and O(target)
+    """
+    only need to maintain two rows of data
+    """
+    dp = [False for _ in range(target + 1)]
+    dp[0] = True
+    for col in range(1, target + 1):
+        if nums[0] == col:
+            dp[col] = True
+    for row in range(1, len(nums)):
+        for col in range(target, -1, -1):
+            if not dp[col] and col >= nums[row]:
+                dp[col] = dp[col - nums[row]]
+    return dp[-1]
 
 
 if __name__ == '__main__':
@@ -40,3 +54,7 @@ if __name__ == '__main__':
     print(subset_sum_dp([1, 2, 3, 7], 6))
     print(subset_sum_dp([1, 2, 7, 1, 5], 10))
     print(subset_sum_dp([1, 3, 4, 8], 6))
+    print(subset_sum_dp_improved([1, 2, 3, 7], 6))
+    print(subset_sum_dp_improved([1, 2, 7, 1, 5], 10))
+    print(subset_sum_dp_improved([1, 3, 4, 8], 6))
+
