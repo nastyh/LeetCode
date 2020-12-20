@@ -1,4 +1,4 @@
-def isPalindrome(self, s: str) -> bool:
+def isPalindrome(s):
     if len(s) == 0:
         return True
 
@@ -15,8 +15,26 @@ def isPalindrome(self, s: str) -> bool:
     return True
 
 
+def isPalindrome_no_space(s):  # O(n) and O(1)
+    if len(s) == 0:
+        return True
+    l, r = 0, len(s) - 1
+    while l < r:
+        if not s[l].isalnum():
+            l += 1
+        elif not s[r].isalnum():
+            r -= 1
+        elif s[l].lower() != s[r].lower():
+            return False
+        else:
+            l += 1
+            r -= 1
+    return True
+
+
 if __name__ == '__main__':
     print(isPalindrome('@dfb564*#'))
+    print(isPalindrome_no_space('@dfb564*#'))
 
 
 # "A man, a plan, a canal: Panama"     race a car
