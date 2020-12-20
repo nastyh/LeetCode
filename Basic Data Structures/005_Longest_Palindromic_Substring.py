@@ -47,14 +47,22 @@ def longest_center(s):  # going wide from the center
     return s[st:en + 1]
 
 
-def longest_dp(s):
+def longest_dp(s):  # O(n^2) and O(n^2)
+    """
+    Start from the second last character
+    End is the staring index + 1
+    If elements at these indices are equal:
+    if they're next to each other (bb) or everything in between is already a palindrome (bacab),
+    this is what we need 
+    Also save the answer in ans
+    """
     if len(s) <= 1: return s
     ans = ''
     dp = [[False] * len(s) for _ in range(len(s))]
     for i in range(len(s)):  # filling out the main diagonal
         dp[i][i] = True
         ans = s[i]
-    for l in range(len(s) - 1, -1, -1):
+    for l in range(len(s) - 2, -1, -1):
         for r in range(l + 1, len(s)):
             if s[l] == s[r]:  # if a palindrome
                 if r - l == 1 or dp[l + 1][r - 1]:  # if it's a two character string or everything in between the characters is already a palindrome 
