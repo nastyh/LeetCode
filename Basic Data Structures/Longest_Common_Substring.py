@@ -1,7 +1,7 @@
 def longest_common_substring_dp_bottoms_up(s1, s2):  # O(NM) both
     res = 0
     dp = [[0] * (len(s1) + 1) for _ in range(len(s2) + 1)]  # s1 along the cols, s2 along the rows
-    for row in range(len(s2)):
+    for row in range(1, len(s2)):
         for col in range(1, len(s1)):
             if s1[col - 1] == s2[row - 1]:
                 dp[row][col] = dp[row - 1][col - 1] + 1
