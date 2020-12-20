@@ -53,19 +53,41 @@ def countSubstrings_dp(s):  # DP, O(n*2) for both complexity and space
     return  res
     
 
-def countSubstrings_dp_from_the_end(s):
+def countSubstrings_dp_from_the_end(s):  # O(n^2) and O(n^2)
     dp = [[False] * len(s) for _ in range(len(s))]
     res = 0
     for i in range(len(s)):
         res += 1
         dp[i][i] = 1
-    for st in range(len(s) - 1, -1, -1):
+    for st in range(len(s) - 2, -1, -1):
         for en in range(st + 1, len(s)):
             if s[st] == s[en]:
                 if en - st == 1 or dp[st + 1][en - 1]:
                     dp[st][en] = True
                     res += 1
     return res
+
+
+def countSubstrings_helper(s):  # O(n^2) and O(1)
+    """
+    Choose all possible centers for palindromes 
+    If a string is of the odd length, every character is a center
+    If a string is of the even length, every pair of characters is a center
+    """
+    ans = 0
+    def _helper(st, l, r):
+        res = 0
+        while l >= 0 and r < len(st):
+            if st[l] != st[r]:
+                break
+            l -= 1
+            r += 1
+            res += 1
+        return res
+    for i in range(len(s)):
+        ans += _helper(s, i, i)
+        ans += _helper(s, i, i + 1)
+    return ans
 
 
 if __name__ == '__main__':
@@ -77,4 +99,3 @@ if __name__ == '__main__':
     print(countSubstrings_dp('aaa'))
     print(countSubstrings_dp_from_the_end('abc'))
     print(countSubstrings_dp_from_the_end('aaa'))
-    # print(_test('abc')) 
