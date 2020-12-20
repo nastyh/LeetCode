@@ -51,7 +51,7 @@ def longestPalindromeSubseq_bottoms_up(s):  # O(n^2) and O(n^2)
 
 
 if __name__ == '__main__':
-    # print(longestPalindromeSubseq('abdbca'))
+    # print(longestPalindromeSubseq('abdbca'))m
     # print(longestPalindromeSubseq_alt('abdbca'))
     print(longestPalindromeSubseq_bottoms_up('abdbca'))
     print(longestPalindromeSubseq_bottoms_up('bbbab'))
