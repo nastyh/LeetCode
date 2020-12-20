@@ -8,6 +8,12 @@ def findLength(A, B):
     # return dp
 
 
+def findLength_alt(A, B):
+    dp = [[0] * (len(A) + 1) for _ in range((len(B) + 1))]  # A cols, B rows
+    
+
+
+
 if __name__ == '__main__':
     print(findLength([1, 2, 3, 2, 1], [3, 2, 1, 4, 7]))
     print(findLength([0, 0, 0, 0, 1], [1, 0, 0, 0, 0]))

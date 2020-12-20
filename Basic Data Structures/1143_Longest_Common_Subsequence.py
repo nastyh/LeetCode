@@ -16,7 +16,7 @@ def longestCommonSubsequence(text1, text2):  # O(n^2) and O(len(text1) * len(tex
             else:
                 dp[j][i] = max(dp[j - 1][i], dp[j][i - 1])
     return dp[-1][-1]
-
+    
 
 def longestCommonSubsequence_alt(text1, text2):
     """"
