@@ -1,14 +1,13 @@
-def combine(n, k):  # DOESN"T WORK, CREATES DUPLICATES FOR SOME REASON
+def combine(n, k):  # O(k*CkchooseN) and O(CkchooseN)
+    nums = [i for i in range(1, n + 1)]
     res = []
-    nums = [num for num in range(1, n + 1)]
-    def _helper(curr_res, curr_ix):
+    def _helper(nums, curr_ix, curr_res):
         if len(curr_res) == k:
-            res.append(curr_res[:])
+            res.append(curr_res)
         for i in range(curr_ix, len(nums)):
-            curr_res.append(nums[i])
-            _helper(curr_res, curr_ix + 1)
-            curr_res.pop()
-    _helper([], 0)
+            # curr_res.append(nums[i])
+            _helper(nums, i + 1, curr_res + [nums[i]])
+    _helper(nums, 0, [])
     return res
 
 
