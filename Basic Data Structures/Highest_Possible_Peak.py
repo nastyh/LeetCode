@@ -73,9 +73,9 @@ def highest_peak(landscape):
                 q.append([y, x, 0])
                 dp[y][x] = 0
     while q:
-        _helper_print(dp)
+        # _helper_print(dp)
         i_step, j_step, step = q.popleft()
-        print(i_step, j_step, step)
+        # print(i_step, j_step, step)
         # dp[i_step][j_step] = step
         for r, c in [(i_step + 1, j_step), (i_step - 1, j_step), (i_step, j_step - 1), (i_step, j_step + 1)]:
             if 0 <= r < len(landscape) and 0 <= c < len(landscape[0]) and dp[r][c] < 0:
@@ -85,9 +85,9 @@ def highest_peak(landscape):
                     res = max(res, step + 1)
                     q.append([r, c, step + 1])
     return res
-    
-                                                    
-print(highest_peak(landscape_1))
+
+if __name__ == '__main__':                                                 
+    print(highest_peak(landscape_1))
                                                         
                                                         
                                                         

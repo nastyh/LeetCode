@@ -23,6 +23,32 @@ def lengthOfLIS_log(nums):  # O(nlogn)
     return len(dp)
 
 
+def lengthOfLIS_tail(nums): # O(nlogn)
+    """
+    tails is an array storing the smallest tail of all increasing subsequences with length i+1 in tails[i].
+    nums = [4,5,6,3], then all the available increasing subsequences are:
+    len = 1   :      [4], [5], [6], [3]   => tails[0] = 3
+    len = 2   :      [4, 5], [5, 6]       => tails[1] = 5
+    len = 3   :      [4, 5, 6]            => tails[2] = 6
+
+    (1) if x is larger than all tails, append it, increase the size by 1
+    (2) if tails[i-1] < x <= tails[i], update tails[i]
+    """
+    tails = [0] * len(nums)
+    size = 0
+    for x in nums:
+        i, j = 0, size
+        while i != j:
+            m = (i + j) / 2
+            if tails[m] < x:
+                i = m + 1
+            else:
+                j = m
+        tails[i] = x
+        size = max(i + 1, size)
+    return size
+
+
 def lengthOfLIS_log_another(nums):
     if not nums:
         return 0
