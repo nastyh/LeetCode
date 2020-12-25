@@ -1,27 +1,24 @@
 def isAlienSorted(words, order):
-
-        def _helper(left, right, d):
-
-            for l_ix in range(min(len(left), len(right))):
-                if d[left[l_ix]] > d[right[l_ix]]:
-                    return False
-                elif d[left[l_ix]] < d[right[l_ix]]:
-                    return True
-                else:
-                    continue
-            return True if len(left) < len(right) else False
-
-        d = {}
-        for k, v in enumerate(order):
-            if v not in d:
-                d[v] = k
-
-        isSorted = False
-        for w_ix in range(len(words) - 1):
-            isSorted = _helper(words[w_ix], words[w_ix + 1], d)
-            if not isSorted:
+    def _helper(left, right, d):
+        for l_ix in range(min(len(left), len(right))):
+            if d[left[l_ix]] > d[right[l_ix]]:
                 return False
-        return True
+            elif d[left[l_ix]] < d[right[l_ix]]:
+                return True
+            else:
+                continue
+        return True if len(left) < len(right) else False
+    d = {}
+    for k, v in enumerate(order):
+        if v not in d:
+            d[v] = k
+    isSorted = False
+    for w_ix in range(len(words) - 1):
+        isSorted = _helper(words[w_ix], words[w_ix + 1], d)
+        if not isSorted:
+            return False
+    return True
+
 
 def isAlienSorted_naive(words, order):
     d = {}
