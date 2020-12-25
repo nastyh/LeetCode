@@ -31,7 +31,7 @@ def combinationSum_alt(candidates, target):
     return helper(candidates, target, 0, 0, ())
 
 
-def combinationSum_best(candidates, target):
+def combinationSum_best(candidates, target):  # O(N^(M/min_cand + 1)), O(M/min_cand), where N == len(candidates), M - target, min_cand == min(candidates_)
     """
     Idea: recursion. We take an element and see whether target - element == 0. If yes, it means
     we just found a good combination. Just add it to res.
@@ -53,5 +53,5 @@ def combinationSum_best(candidates, target):
 
 
 if __name__ == '__main__':
-    print(combinationSum_best([2,3,6,7], 7))
-    print(combinationSum_best([2,3,5], 8))
+    print(combinationSum_best([2, 3, 6, 7], 7))
+    print(combinationSum_best([2, 3, 5], 8))

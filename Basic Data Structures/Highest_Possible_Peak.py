@@ -65,7 +65,7 @@ def highest_peak(landscape):
         #             q.append([r, c, step + 1])
     
     
-    dp = [[-1] * len(landscape[0]) for _ in range(len(landscape))]
+    dp = [[-1] * len(landscape[0]) for _ in range(len(landscape))]  # not visited are -1
     q = deque()
     for y in range(len(landscape)):
         for x in range(len(landscape[0])):
@@ -76,15 +76,14 @@ def highest_peak(landscape):
         # _helper_print(dp)
         i_step, j_step, step = q.popleft()
         # print(i_step, j_step, step)
-        # dp[i_step][j_step] = step
         for r, c in [(i_step + 1, j_step), (i_step - 1, j_step), (i_step, j_step - 1), (i_step, j_step + 1)]:
-            if 0 <= r < len(landscape) and 0 <= c < len(landscape[0]) and dp[r][c] < 0:
-                # dp[i_step][j_step] = step + 1
+            if 0 <= r < len(landscape) and 0 <= c < len(landscape[0]) and dp[r][c] < 0:  # check we aren't out of bounds and haven't been to this cell
                 if landscape[r][c] == False:
                     dp[r][c] = step + 1
                     res = max(res, step + 1)
                     q.append([r, c, step + 1])
     return res
+
 
 if __name__ == '__main__':                                                 
     print(highest_peak(landscape_1))
