@@ -15,6 +15,24 @@ class TreeNode:
             return self.hasPathSum(root.left, s - root.val) or self.hasPathSum(root.right, s - root.val)
 
     
+    def hasPathSum_another(self, root, s):
+        """
+        key here is to write return l or r. Because otherwise, if the very left subtree isn't True,
+        it will immediately return False to everything
+        """
+        def _helper(node, num):
+            if not node: return 
+            if  node.val == num and not node.left and not node.right:
+                return True
+            l, r = False, False
+            if node.left: 
+                l = _helper(node.left, num - node.val)
+            if node.right:
+                r = _helper(node.right, num - node.val)
+            return l or r
+        return _helper(root, s)
+
+    
     def hasPathSum_DFS(self, root, s):
         if not root: return False
         if root and not root.left and not root.right:
