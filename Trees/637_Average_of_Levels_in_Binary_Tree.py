@@ -23,6 +23,24 @@ class TreeNode:
             res.append(curr_level / nodes_in_level)
         return res
 
+    
+    def averageOfLevels_most_precise(self, root):  # O(h) and O(1)
+        if not root: return [0]
+        if root and not root.left and not root.right: return [root.val]
+        d, res = deque(), []
+        d.append(root)
+        while d:
+            level_size, curr_sum = len(d), 0
+            for _ in range(len(d)):
+                t = d.popleft()
+                curr_sum += t.val
+                if t.left:
+                    d.append(t.left)
+                if t.right:
+                    d.append(t.right)
+            res.append(curr_sum / level_size)
+        return res
+
 
     def averageOfLevels_dfs(self,root):
         if root is not None:
