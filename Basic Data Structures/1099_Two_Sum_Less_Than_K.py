@@ -1,5 +1,5 @@
 import math
-def twoSumLessThanK(A, K):
+def twoSumLessThanK(A, K):  # O(nlogn) & O(nlogn) of we think that sort creates space overhead
     A.sort()
     res = -math.inf
     l, r = 0, len(A) - 1
@@ -11,7 +11,8 @@ def twoSumLessThanK(A, K):
             r -= 1
     return res if res != -math.inf else -1
 
-def twoSumLessThanK_bin_search(A, K):
+
+def twoSumLessThanK_bin_search(A, K):  # O(nlogn) & O(nlogn) 
     A.sort()
     res = -1
     for i, num in enumerate(A):
