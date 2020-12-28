@@ -1,4 +1,7 @@
-def addBinary(a, b):
+def addBinary(a, b):  # O(M + N)
+    """
+    convert to decimal, sum, convert to binary
+    """
     def binToDec(n):  # n is a string
         return sum([2**k if v=='1' else 0 for k, v in enumerate(n[::-1])])
     def decToBin_alt(n):  # n is a string
@@ -20,6 +23,24 @@ def addBinary(a, b):
         return result
     c_dec = binToDec(a) + binToDec(b)
     return decToBin_alt(c_dec)
+
+
+def addBinary_xor(a, b):  # without using the plus sign. O(M +N) and O(max(M, M)) to store the result
+    """
+    XOR sums two numbers w/o taking into account carries
+    Current carry is an AND between two numbers shifted one bit to the left
+    Repeat until there is no carry left
+    """
+    x, y = int(a, 2), int(b, 2)
+    while y:
+        answer = x ^ y
+        carry = (x & y) << 1
+        x, y = answer, carry
+    return bin(x)[2:]
+
+
+def addBinary_pythonic(a, b):
+    return bin(int(a, 2) + int(b, 2))[2:]
 
 
 if __name__ == '__main__':
