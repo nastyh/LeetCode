@@ -8,16 +8,38 @@ def nextGreaterElement(nums1, nums2): # brute force
                     break
     return res
 
-def nextGreaterElement_alt(nums1, nums2):
+def nextGreaterElement_brute_force_another(nums1, nums2):
+    """
+    to avoid reusing .index(), keep a dictionary
+    {element in the first array: its index in the second array}
+    """
+    res = [-1] * len(nums1)
     d = {}
-    st = []
-    for n in nums2:
-        while st and st[-1] < n:
-            d[st.pop()] = n 
-        st.append(n)
-    for i in range(len(nums1)):
-        nums1[i] = d.get(nums1[i], -1)
-    return nums1
+    for num in nums1:
+        d[num] = nums2.index(num)
+    for k, v in enumerate(nums1):
+        for key in range(d[v] + 1, len(nums2)):
+            if nums2[key] > v:
+                res[k] = nums2[key]
+                break
+    return res
+
+def nextGreaterElement_alt(nums1, nums2):
+    """
+    Build a dictionary d:
+    {element in nums2: next greater element to the right}
+    If there is not greater element for a number, then there won't be a respective pair
+    """
+    d, st = {}, []
+    res = [-1] * len(nums1)
+    for num in nums2:
+        while st and st[-1] < num:
+            d[st.pop()] = num
+        st.append(num)
+    for k, v in enumerate(nums1):
+        if v in d:
+            res[k] = d[v]
+    return res
 
 
     # Just an experiment; isn't required for this question
