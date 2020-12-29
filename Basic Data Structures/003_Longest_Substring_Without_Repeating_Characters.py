@@ -55,7 +55,7 @@ def lengthOfLongestSubstring_dict(s):
         if ch in dic:
             left = max(left, dic[ch])
         dic[ch] = i
-        res = max(res, i-left)
+        res = max(res, i - left)
     return res
 
 
@@ -85,16 +85,33 @@ def lengthOfLongestSubstring_set(s):
     return glob
 
 
-def lengthOfLongestSubstring_stack(self, s: str) -> int:
-        stack=[]
-        res=0
+def lengthOfLongestSubstring_stack(s):
+        stack = []
+        res = 0
         for i in range(len(s)):
             if s[i] not in stack:
                 stack.append(s[i])
-                res=max(res,len(stack))
+                res=max(res, len(stack))
             elif s[i] in stack:
-                stack=stack[stack.index(s[i])+1:]+[s[i]]
+                stack=stack[stack.index(s[i]) + 1:] + [s[i]]
         return res
+
+
+def lengthOfLongestSubstring_any(s):   # works but slow
+    l, r, res, d = 0, 0, 0, {}
+    if len(s) <= 1: return len(s)
+    if len(set(s)) == 1: return len(set(s))
+    while r < len(s):
+        if s[r] not in d:
+            d[s[r]] = 1
+        else:
+            d[s[r]] += 1
+        while any(v > 1 for v in d.values()):
+            d[s[l]] -= 1
+            l += 1
+        res = max(res, r - l + 1)
+        r += 1
+    return res
 
 if __name__ == '__main__':
     print(lengthOfLongestSubstring_optimal('abcabcbb'))
@@ -104,3 +121,5 @@ if __name__ == '__main__':
     print(lengthOfLongestSubstring_dict('abcabcbb'))
     print(lengthOfLongestSubstring_dict_alt('au')) #pwwkew
     print(lengthOfLongestSubstring_set('pwwkew'))
+    print(lengthOfLongestSubstring_any('pwwkew'))
+    print(lengthOfLongestSubstring_dict('abcabcbb'))
