@@ -5,16 +5,16 @@ def setZeroes(matrix):  # O(n) and O(n)
     m = len(matrix)  # rows
     n = len(matrix[0])  # columns
     s = set()
-    for i in range(m):
-        if not all(matrix[i]):
-            for j in range(n):
+    for i in range(m):  # taking rows
+        if not all(matrix[i]):  # if not all numbers in the row are 1
+            for j in range(n):  # going through this row one by one (by column, essentially)
                 if matrix[i][j] == 0:
                     s.add(j)
                 else:
                     matrix[i][j] = 0
     for i in s:
         for r in range(m):
-            matrix[r][i]=0
+            matrix[r][i]  =0
     return matrix
 
 
