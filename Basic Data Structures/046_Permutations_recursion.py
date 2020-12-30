@@ -40,7 +40,7 @@ def permute_dfs(nums):
     return res
 
 
-def permute_another(nums):
+def permute_another(nums):  # N! / (N - k)! and O(N!)
     if len(nums) == 0: return None
     if len(nums) == 1: return [nums]
     res = []
