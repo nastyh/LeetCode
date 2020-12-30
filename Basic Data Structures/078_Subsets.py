@@ -1,7 +1,6 @@
 def subsets(nums): # O(n*2**n), same space complexity
     n = len(nums)
     output = [[]]
-    
     for num in nums:
         output += [curr + [num] for curr in output]
     return output
@@ -29,6 +28,17 @@ def subsets_alt(nums):
 			_helper(nums, i + 1, curr)
 			curr.pop()
 	_helper(nums, 0, [])
+	return res
+
+
+def subsets_iter(nums):
+	if len(nums) == 0: return [[]]
+	res = [[]]
+	for num in nums:
+		n = len(res)
+		for i in range(n):
+			r = res[i] + [num]
+			res.append(r)
 	return res
 
 
