@@ -31,7 +31,7 @@ def checkInclusion_another(s1, s2):  # another slow but works
     return False
 
 
-def checkInclusion_dict(s1, s2):
+def checkInclusion_dict(s1, s2):  # O(l1 + (l2 - l1)) and O(l2)
     if len(s2) < len(s1): return False
     charCounts = Counter(s1)
     m, n, nChars = len(s1), len(s2), len(charCounts)
@@ -67,6 +67,25 @@ def checkInclusion_alt(s1, s2):
     return False
 
 
+def checkInclusion_more(s1, s2):
+    """
+    Initialize the right pointer. The left pointer is right minus the length of s1
+    Accurate with the indicess
+    """
+    if len(s2) < len(s1): return False
+    def _isPal(st1, st2):
+        return Counter(st1) == Counter(st2)
+    r = len(s1) - 1
+    while r < len(s2):
+        if _isPal(s1, s2[r - len(s1) + 1:r + 1]):
+           return True
+        r += 1
+    return False
+
+
+
 if __name__ == '__main__':
-    print(checkInclusion('ab', 'eidbaooo'))
-    print(checkInclusion('ab', 'eidboaoo'))
+    # print(checkInclusion('ab', 'eidbaooo'))
+    # print(checkInclusion('ab', 'eidboaoo'))
+    print(checkInclusion_more('ab', 'eidboaoo'))
+    print(checkInclusion_more('ab', 'eidbaooo'))
