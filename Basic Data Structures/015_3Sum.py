@@ -2,11 +2,11 @@ def threeSum(nums):  # O(n^2) and O(n)
     l = len(nums)
     nums.sort()
     ans = set()
-    for i in range(0,l - 2):
+    for i in range(0, l - 2):
         d = set()
         s = 0 - nums[i]
         for j in range(i + 1,l):
-            x = s-nums[j]
+            x = s - nums[j]
             if x not in d:
                 d.add(nums[j])
             else:
@@ -37,35 +37,46 @@ def Sum3_with_helper(nums): # with pointers, easier to comprehend
     return res
 
 
-# def test(array, target):
-#     l, r = 0, len(array) - 1
-#     res, curr = [], []
-#     while l < r:
-#         if array[l] + array[r] == target:
-#             curr = []
-#             curr.append(array[l])
-#             curr.append(array[r])
-#             curr.append(target)
-#             l += 1
-#             r -= 1
-#             # res.append(target)
-#             # return res
-#         elif array[l] + array[r] < target:
-#             l += 1
-#         else:
-#             r -= 1
-#         if len(curr) > 0: res.append(curr)
-#     return res if len(res) > 0 else []
+def threeSum_sorting(nums):  # O(n^2 + nlogn) and O(n)
+    """
+    Solution with sorting (nlogn(n))
+    For every element do two sum on the elements to the right from a current element
+    Two extra edge cases here:
+    don't want to redo for the same elements. Taken care of by if k > 0 and nums[k] == nums[k - 1]:
+    Another edge case is [-2, 0, 0, 2, 2]. Once we found [2, 0, -2], we move left and right inwards and end up with another [2, 0, -2]
+    To avoid it, we have two while loops after we found a triplet 
+    """
+    res = []
+    nums.sort()
+    def _helper(numbers, target):
+        nonlocal res
+        l, r = 0, len(numbers) - 1
+        while l < r: 
+            if numbers[l] + numbers[r] == target:
+                res.append([-target, numbers[l], numbers[r]])
+                l += 1
+                r -= 1
+                while l < r and numbers[l] == numbers[l - 1]:
+                    l += 1
+                while l < r and numbers[r] == numbers[r + 1]:
+                    r -= 1
+            elif numbers[l] + numbers[r] < target:
+                l += 1
+            else:
+                r -= 1
+    for k, v in enumerate(nums):
+        if k > 0 and nums[k] == nums[k - 1]:
+            continue
+        _helper(nums[k + 1:], -v)
+    return res
 
 
 if __name__ == '__main__':
     # print(threeSum_pointers([-1, 0, 1, 2, -1, -4]))
     # print(threeSum_pointers([0,0,0,0]))
     # print(threeSum_pointers([-2,0,1,1,2]))
-    # print(test([0, 1, 2, -1, -4], 1))
     # print(threeSum([-1, 0, 1, 2, -1, -4]))
-    # print(test([-4, -1, 0, 1, 2], 1))
-    # print(test([-4, -1, -1, 1, 2], 0))
-    # print(test([-4, -1, -1, 0, 2], -1))
-    # print(test([0, 1, 1, 2], 2))
-    print(Sum3_with_helper([-1, 0, 1, 2, -1, -4]))
+    # print(Sum3_with_helper([-1, 0, 1, 2, -1, -4]))
+    print(threeSum_sorting([-1, 0, 1, 2, -1, -4]))
+    print(threeSum_sorting([-2, 0, 0, 2, 2]))
+    # print(threeSum_sorting([0, 0, 0, 0]))
