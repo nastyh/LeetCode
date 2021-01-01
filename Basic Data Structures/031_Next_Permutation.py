@@ -1,7 +1,7 @@
 def nextPermutation(nums):
     i = 0
-    for i in range(len(nums)-1,0,-1):
-        if nums[i] > nums[i-1]:
+    for i in range(len(nums)-1, 0, -1):
+        if nums[i] > nums[i - 1]:
             break
     i-=1
         # Get the next larger element.
