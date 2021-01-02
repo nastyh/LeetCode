@@ -53,6 +53,23 @@ def knapsack_memo_bottom_up(profits, weights, capacity): # both O(NC), N total i
     return dp[-1][-1]  # the very last cell
 
 
+def knapsack_bottom_up_alt(profits, weights, capacity):  # both O(NC), N total items, C capacity
+    """
+    as above with slight changes in filling out dp
+    """
+    dp = [[0] * (capacity + 1) for y in range(len(profits))]
+    if capacity <= 0 or len(profits) == 0 or len(profits) != len(weights):
+        return 0
+    for col in range(0, capacity + 1):  # first row 
+        if weights[0] < col:
+            dp[0][col] = profits[0]
+    for row in range(1, len(profits)):
+        for col in range(1, capacity + 1):
+            if col >= weights[row]:
+                dp[row][col] = max(dp[row - 1][col], profits[row] + dp[row - 1][col - weights[row]])
+    return dp[-1][-1]
+
+
 def knapsack_memo_bottom_up_efficient(profits, weights, capacity):  # O(NC), N total items, C capacity, space O(2C)
     """
     We don't need to maintain the whole dp matrix but just need one previous row
@@ -77,5 +94,7 @@ if __name__ == '__main__':
     print(knapsack_memo([4, 5, 3, 7], [2, 3, 1, 4], 5))
     print(knapsack_memo_bottom_up([1, 6, 10, 16], [1, 2, 3, 5], 5))
     print(knapsack_memo_bottom_up([4, 5, 3, 7], [2, 3, 1, 4], 5))
+    print(knapsack_bottom_up_alt([4, 5, 3, 7], [2, 3, 1, 4], 5))
     print(knapsack_memo_bottom_up_efficient([1, 6, 10, 16], [1, 2, 3, 5], 5))
+    print(knapsack_bottom_up_alt([1, 6, 10, 16], [1, 2, 3, 5], 5))
 
