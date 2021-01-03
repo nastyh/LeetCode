@@ -55,8 +55,9 @@ def checkInclusion_dict(s1, s2):  # O(l1 + (l2 - l1)) and O(l2)
             return True
     return False
 
+ 
 
-def checkInclusion_alt(s1, s2):
+def checkInclusion_alt(s1, s2):  # with sorting 
     s, e = 0, len(s1)
     s1 = sorted(s1)
     chars = list(set(s1))
@@ -83,9 +84,9 @@ def checkInclusion_more(s1, s2):
     return False
 
 
-
 if __name__ == '__main__':
     # print(checkInclusion('ab', 'eidbaooo'))
     # print(checkInclusion('ab', 'eidboaoo'))
     print(checkInclusion_more('ab', 'eidboaoo'))
     print(checkInclusion_more('ab', 'eidbaooo'))
+    print(checkInclusion_more('adc', 'dcda'))
