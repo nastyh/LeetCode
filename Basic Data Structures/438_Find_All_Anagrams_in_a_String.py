@@ -68,7 +68,6 @@ def findAnagrams_dicts(s, p):
         return []
     p_count = Counter(p)
     s_count = Counter()
-
     res = []
     for i in range(len_s):  # going element by element through the long string s
         s_count[s[i]] += 1
@@ -118,9 +117,25 @@ def findAnagrams_counter(s, p): # times out but works
     return res
 
 
+def findAnagrams_counter_another(s, p):  # times out but works
+    res = []
+    def _helper(a, b):
+        return Counter(a) == Counter(b)
+    i = len(p)
+    while i <= len(s):
+        candidate = s[i - len(p): i]
+        if _helper(candidate, p):
+            res.append(i - len(p))
+        i += 1
+    return res 
+
+
 if __name__ == '__main__':
     # print(findAnagrams('cbaebabacd', 'abc'))
     print(findAnagrams_dicts('cbaebabacd', 'abc'))
     print(findAnagrams_sorted('cbaebabacd', 'abc'))
     # print(findAnagrams_another('cbaebabacd', 'abc'))
     print(findAnagrams_counter('cbaebabacd', 'abc'))
+    print(findAnagrams_counter('abab', 'ab'))
+    print(findAnagrams_counter_another('cbaebabacd', 'abc'))
+    print(findAnagrams_counter_another('abab', 'ab'))
