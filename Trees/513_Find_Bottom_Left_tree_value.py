@@ -57,6 +57,50 @@ class TreeNode:
                 d.append((t.right, cd + 1))
 
     
+    def findBottomLeftValue_BFS_alt(self, root):  # O(n) and O(1)
+        """
+        Same as above
+        _levels() calculates the number of levels in the tree
+        Then pass this value to the main function and decrement it every time
+        Once it becomes 1, we're at the last level, return t.val immediately 
+        """
+        if not root: return 0
+        if root and not root.left and not root.right: 
+            return root.val
+        levels = 0
+        def _levels(node):
+            nonlocal levels
+            if not node: 
+                levels = 0
+            if node and not node.left and not node.right:
+                levels = 1 
+            d = deque()
+            d.append((node, 1))
+            while d:
+                t, level = d.popleft()
+                if t.left or t.right:
+                    level += 1
+                if t.left:
+                    d.append((t.left, level))
+                if t.right:
+                    d.append((t.right, level))
+            levels = level 
+        _levels(root)
+        d = deque()
+        d.append((root, levels))
+        while d:
+            for _ in range(len(d)):
+                t, lev = d.popleft()
+                if lev == 1:
+                    return t.val
+                if t.left or t.right:
+                    lev -= 1
+                if t.left:
+                    d.append((t.left, lev))
+                if t.right:
+                    d.append((t.right, lev))
+
+    
     def findBottomLeftValue_stack(self, root):
         if not root:
             return []
@@ -100,7 +144,16 @@ if __name__ == '__main__':
     l.left.left = TreeNode(3)
     l.left.right = TreeNode(4)
     l.right.right = TreeNode(6)
+    m = TreeNode(1)
+    m.left = TreeNode(2)
+    m.right = TreeNode(3)
+    m.left.left = TreeNode(4)
+    m.right.left = TreeNode(5)
+    m.right.right = TreeNode(6)
+    m.right.left.left = TreeNode(7)
     print(l.findBottomLeftValue(l))
     print(l.findBottomLeftValue_alt(l))
     print(l.findBottomLeftValue_stack(l))
     print(l.findBottomLeftValue_DFS(l))
+    print(l.findBottomLeftValue_BFS_alt(l))
+    print(m.findBottomLeftValue_BFS_alt(m))
