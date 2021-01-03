@@ -39,7 +39,8 @@ def minSubArrayLen_another(s, nums):
             l += 1
     return glob if glob != math.inf else 0
 
-def minSubArrayLen_binary(s, nums):  # binary search works b/c the prefix sum is always increasing
+
+def minSubArrayLen_binary(s, nums):  # binary search works b/c the prefix sum is always increasing O(nlogn)
     def bi_search(A, target):
         le, ri = 0, len(A) - 1
         while le <= ri:
@@ -63,10 +64,26 @@ def minSubArrayLen_binary(s, nums):  # binary search works b/c the prefix sum is
         if ri < len(cum):
             ret = min(ret, ri - le)
     return 0 if ret == float('inf') else ret  
+
+
+def minSubArrayLen_cum_sum(nums):
+    if not nums: return 0
+    cum = [0] * (len(nums) + 1)
+    cum[0] = 0
+    for i in range(1, len(cum)):
+        cum[i] = cum[i - 1] + nums[i - 1]
+    i, j = 0, 1
+    ret = float('inf')
+    while j < len(cum):
+        while cum[j] - cum[i] >= s:
+            ret = min(ret, j - i)
+            i += 1
+        j += 1
+    return 0 if ret == float('inf') else ret
             
             
 if __name__ == '__main__':
-    print(minSubArrayLen(7, [2,3,1,2,4,3]))
+    print(minSubArrayLen(7, [2, 3, 1, 2, 4, 3]))
     # print(minSubArrayLen(11, [1,2,3,4,5]))
     # print(minSubArrayLen_alt(11, [1,2,3,4,5]))
     # print(minSubArrayLen_alt(7, [2, 3, 1, 2, 4, 3]))
