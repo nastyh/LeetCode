@@ -7,13 +7,19 @@ def peakIndexInMountainArray(A):
     #         return i
 
 
-def peakIndexInMountainArray_bin_search(A):
+def peakIndexInMountainArray_bin_search(A):  # O(logn)
+    """
+    There are three cases:
+    1. A[m] is the peak
+    2. A[m] is not a peak and is a part of the increasing sequence
+    3. A[m] is not a peak and is a part of the decreasing sequence
+    """
     l, r = 0, len(A) - 1
     while l < r:
         m = l + (r - l) // 2
-        if A[m] > A[m + 1]:
+        if A[m] > A[m + 1]:  # cases 1. and 3.
             r = m
-        else:
+        else:  # case 2 
             l = m + 1
     return l
 

@@ -1,4 +1,4 @@
-def findPeakElement(nums):
+def findPeakElement(nums):  # O(n) and O(1)
     for i in range(len(nums) - 1):
         if nums[i] > nums[i + 1]:
             return i
