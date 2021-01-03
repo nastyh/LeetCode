@@ -1,19 +1,16 @@
 from collections import Counter, defaultdict
 
-def groupAnagrams_alt(strs):
+def groupAnagrams_alt(strs):  # O(NKlogK) where N is the length of strs, K is the max length of an element in strs. O(NK)
     """
     Idea is that the key is the strings in the sorted order (eat becomes aet).
     And then keys' values are actual words that can be formed from these keys
     """
-    if len(strs) == 0:
-        return []
+    if len(strs) == 1:
+        return [strs]
     d = defaultdict(list)
-    for word in strs:
-        t = ''.join(sorted(word))
-        if t not in d:
-            d[t] = [word]
-        else:
-            d[t].append(word)
+    for candidate in strs:
+        t = ''.join(sorted(candidate))  # won't work without this reassignment 
+        d[t].append(candidate)
     return [v for v in d.values()]
 
 
