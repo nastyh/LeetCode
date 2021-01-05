@@ -1,6 +1,6 @@
 def unbounded_knapsack(profit, weight, capacity):  # O(N*capacity) both, where N = len(profit)
     dp = [[0] * (capacity + 1) for _ in range(len(profit))]
-    for col in range(1, capacity + 1):  # first row
+    for col in range(1, capacity + 1):  # first col
         if weight[0] <= col:
             dp[0][col] = profit[0] + dp[0][col - weight[0]]
     for row in range(1, len(profit)):  # starting from cell (1, 1)
