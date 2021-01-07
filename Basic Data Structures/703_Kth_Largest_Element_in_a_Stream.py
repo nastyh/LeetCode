@@ -12,8 +12,6 @@ class KthLargest:
         return res[self.k - 1]
 
 
-
-
 # using heap
 class KthLargest:
     def __init__(self, k: int, nums: List[int]):
@@ -35,3 +33,26 @@ class KthLargest:
             if val > self.heap[0]:
                 heapq.heappushpop(self.heap,val)
         return self.heap[0]
+
+
+class KthLargest:
+    """
+    Slightly different implementation of the heap idea
+    It is initialized with a list nums and with a number k. We need to only keep k largest numbers
+    in this list 
+
+    """
+   def __init__(self, k: int, nums: List[int]):
+        self.k = k
+        self.heap = nums
+        heapq.heapify(self.heap)
+        while len(self.heap) > k:
+            heapq.heappop(self.heap)
+            
+    def add(self, val: int) -> int:
+        if len(self.heap) < self.k:
+            heapq.heappush(self.heap, val)
+        else:
+            if val > self.heap[0]:
+                heapq.heappushpop(self.heap, val)
+        return self.heap[0] 
