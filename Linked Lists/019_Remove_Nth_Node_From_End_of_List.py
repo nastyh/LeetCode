@@ -10,14 +10,14 @@ class ListNode:
         curr = head
         while curr:
             curr = curr.next
-            ix +=1
+            ix += 1
         k = ix - n
 
         prev, curr = None, head
-        while k !=0:
+        while k != 0:
             prev = curr
             curr = curr.next # current points to the element that we need to remove
-            k -=1
+            k -= 1
 
         if prev == None: # means we're removing the first element in the list
             return head.next
@@ -25,6 +25,29 @@ class ListNode:
             prev.next = curr.next
             curr.next= None
         return head
+
+    
+    def removeNthFromEnd_one_pass(self, head, n):
+        """
+        First, obvious edge cases
+        Then create dummy, left, and right 
+        Move right n steps
+        Then start moving both left and right till right gets to the end
+        As a result, left will end up on a node prior to a node we want to delete
+        Relink it to the element after the node we want to remove 
+        """
+        if not head: return None
+        if head and not head.next: return head.next
+        dummy = ListNode(-1)
+        dummy.next = head
+        l, r  = dummy, dummy
+        for _ in range(n):
+            r = r.next
+        while r.next:
+            l = l.next
+            r = r.next
+        l.next = l.next.next
+        return dummy.next
 
 
     def removeNthFromEnd_pythonic(self, head, n):  # a bit cleaner
