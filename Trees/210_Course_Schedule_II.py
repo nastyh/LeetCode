@@ -1,5 +1,5 @@
 from collections import deque, defaultdict
-def findOrder(numCourses, prerequisites):
+def findOrder(numCourses, prerequisites):  # O(V + E) both, where V is the number of vertices and E are edges
     adj_list = defaultdict(list)
     degree_count = {i : 0 for i in range(numCourses)}
     res = []
@@ -19,7 +19,7 @@ def findOrder(numCourses, prerequisites):
             degree_count[child] -= 1
             if degree_count[child] == 0:
                 sources.append(child)
-    return res if len(res) == numCourses else []
+    return res if len(res) == numCourses else []  # if there is a cycle, we need to return an empty list 
 
 
 if __name__ == '__main__':

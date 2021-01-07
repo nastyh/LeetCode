@@ -2,16 +2,12 @@ class Trie(object):
 
     def __init__(self):
         self.head = {}
-        """
-        Initialize your data structure here.
-        """
-        
 
-    def insert(self, word):        
+    def insert(self, word):  # O(m) both, where m is the key length       
         """
-        Inserts a word into the trie.
-        :type word: str
-        :rtype: None
+        Iterate over a word. If it's a new letter, add it to the dictionary, as its value create a new dictionary
+        If this is an already existing letter, make current this letter's value (in the dictionary)
+        Finally, add an asterix as a value to show that it's the word's end
         """
         current = self.head
         for character in word:
@@ -20,8 +16,12 @@ class Trie(object):
             current = current[character]
         current['*'] = True            # '*' marks the end of word
         
-
-    def search(self, word):
+    def search(self, word):  # O(m) and O(1)
+        """
+        Iterate over a word. If at any moment, a character doesn't exist in a current dictionary, return False
+        If we arrived to an asterix, then the word is present, return True
+        Finally return False, b/c you're looking for a word, not part of the word
+        """
         current = self.head
         for character in word:
             if character not in current:
@@ -30,32 +30,23 @@ class Trie(object):
         if '*' in current:
             return True
         return False
-		
-        """
-        Returns if the word is in the trie.
-        :type word: str
-        :rtype: bool
-        """
         
-
-    def startsWith(self, prefix):
+    def startsWith(self, prefix):  # O(m) and O(1)
+        """
+        Exactly as above but without the last return False
+        """
         current = self.head
         for character in prefix:
             if character not in current:
                 return False
             current = current[character]
         return True
-        """
-        Returns if there is any word in the trie that starts with the given prefix.
-        :type prefix: str
-        :rtype: bool
-        """
+        
 
 class Trie_another:
     def __init__(self):
         self.endOfWord = False
         self.children = [None] * 26
-    
 
     def insert(self, word):
         curr = self
@@ -64,7 +55,6 @@ class Trie_another:
                 curr.children[ord(w) - ord('a')] = Trie_another()
             curr = curr.children[ord(w) - ord('a')]
         curr.endOfWord = True
-
     
     def search(self, word):
         curr = self

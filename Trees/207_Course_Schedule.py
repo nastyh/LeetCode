@@ -1,6 +1,7 @@
 from collections import deque, defaultdict
-def canFinish(numCourses, prerequisites):
+def canFinish(numCourses, prerequisites):  # O(E + V) both where V is the number of courses and E is the number of dependencies 
     """
+    This is topological sort
     Need a usual adj_list (but in one direction)
     Need a dictionary degree_count that will contain vertices that have never been children
     Put that vertex into a deque and start iterating over its children. 
@@ -34,7 +35,7 @@ def dfs(nd, vis):
         return True
     if vis[nd] == 2:
         return False
-    vis[nd]=1
+    vis[nd] = 1
     for m in dc[nd]:
         if vis[m] != 2 and dfs(m,vis):
             return True
@@ -51,7 +52,7 @@ def dfs(nd, vis):
     return True
 
 def canFinish_alt(numCourses, prerequisites):
-    #BFS
+    #another interpretation of the topological sort 
     edges = [[] for i in range(numCourses)]
     inDegree = [0 for i in range(numCourses)]
 
