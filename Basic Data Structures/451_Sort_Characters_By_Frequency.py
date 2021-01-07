@@ -1,4 +1,13 @@
 import heapq
+
+def frequencySort_pythonic(s):
+    d = Counter(s)
+    res = []
+    for key, value in sorted(d.items(), key = lambda x : x[1], reverse = True):
+        res.append(key * value)
+    return ''.join(res)
+    
+
 def frequencySort(s):
     d  = {}
     for ch in s:
