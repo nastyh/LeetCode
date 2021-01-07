@@ -1,5 +1,5 @@
 import math
-def lengthOfLongestSubstring_optimal(s):
+def lengthOfLongestSubstring_optimal(s):  # O(n) both
     if len(s) <= 1: return len(s)
     if len(set(s)) == 1: return 1
     l, r, storage, res = 0, 0, set(), -math.inf
@@ -10,24 +10,6 @@ def lengthOfLongestSubstring_optimal(s):
             r += 1
         else:
             storage.remove(s[l])
-            l += 1
-    return res
-
-
-def lengthOfLongestSubstring_another_set(s):
-    if len(s) <= 1: return len(s)
-    if len(set(s)) == 1: return 1
-    if len(set(s)) == len(s): return len(s)
-    l, r, d = 0, 0, set()
-    res = 0
-    while r < len(s):
-        if s[r] not in d:
-            d.add(s[r])
-            res = max(res, r - l + 1)
-            r += 1
-        else:
-            res = max(res, r - l)
-            d.remove(s[l])
             l += 1
     return res
 
@@ -112,6 +94,7 @@ def lengthOfLongestSubstring_any(s):   # works but slow
         res = max(res, r - l + 1)
         r += 1
     return res
+
 
 if __name__ == '__main__':
     print(lengthOfLongestSubstring_optimal('abcabcbb'))
