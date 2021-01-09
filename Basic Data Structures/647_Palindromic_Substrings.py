@@ -54,11 +54,17 @@ def countSubstrings_dp(s):  # DP, O(n*2) for both complexity and space
     
 
 def countSubstrings_dp_from_the_end(s):  # O(n^2) and O(n^2)
+    """
+    Fill the main diagonal with True and increment res
+    l is the second last char
+    If they're the same and next to each other or
+    they're the same and everything in between them is already a palindrome, then increment res
+    """
     dp = [[False] * len(s) for _ in range(len(s))]
     res = 0
     for i in range(len(s)):
         res += 1
-        dp[i][i] = 1
+        dp[i][i] = True
     for st in range(len(s) - 2, -1, -1):
         for en in range(st + 1, len(s)):
             if s[st] == s[en]:
