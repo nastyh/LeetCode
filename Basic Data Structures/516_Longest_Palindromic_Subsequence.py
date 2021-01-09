@@ -30,7 +30,7 @@ def longestPalindromeSubseq_alt(s):  # O(n^2) and O(n)
 
 def longestPalindromeSubseq_bottoms_up(s):  # O(n^2) and O(n^2)
     """
-    Diagonals filled with 1 (b/c strings of one character are palindroms)
+    Diagonals filled with 1 (b/c strings of one character are palindromes)
     Then start two loops: the starting index is the second last character
     Ending index is the starting + 1 index
     If letters at indices aren't the same, choose the max between the element to the left and below
@@ -44,7 +44,7 @@ def longestPalindromeSubseq_bottoms_up(s):  # O(n^2) and O(n^2)
     for st in range(len(s) - 2, -1, -1):
         for en in range(st + 1, len(s)):
             if s[st] != s[en]:
-                dp[st][en] = max(dp[st + 1][en], dp[st][en - 1])
+                dp[st][en] = max(dp[st + 1][en], dp[st][en - 1])  # it chooses the max between either skipping the left or the right element 
             else:
                 dp[st][en] = 2 + dp[st + 1][en - 1]
     return dp[0][-1]
