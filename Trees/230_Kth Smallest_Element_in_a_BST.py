@@ -6,6 +6,9 @@ class TreeNode:
 
     
     def kthSmallest(self, root, k):  # naive: O(n) and O(n + h)
+        """
+        Do inorder traversal
+        """
         def _dfs(node):
             res, l, r = [], [], []
             if not root:
