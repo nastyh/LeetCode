@@ -49,6 +49,7 @@ def longest_center(s):  # going wide from the center
 
 def longest_dp(s):  # O(n^2) and O(n^2)
     """
+    At the main diagonal, put True 
     Start from the second last character
     End is the staring index + 1
     If elements at these indices are equal:
