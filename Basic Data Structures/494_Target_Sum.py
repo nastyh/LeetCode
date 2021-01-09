@@ -47,11 +47,9 @@ def findTargetSumWays_optimized(nums, s):  # O(NS) and O(S)
         n = len(nums)
         dp = [0 for x in range(s + 1)]
         dp[0] = 1
-
         # with only one number, we can form a subset only when the required sum is equal to the number
         for j in range(1, s + 1):
             dp[j] = 1 if nums[0] == j else 0
-
         # process all subsets for all sums
         for i in range(1, n):
             for j in range(s, -1, -1):
