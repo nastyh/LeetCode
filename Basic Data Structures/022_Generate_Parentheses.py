@@ -24,6 +24,8 @@ def generateParenthesis_easier(n):
 	When we build the string, we need to take care of
 	- opening should always be <=n. In this case we can always add another opening
 	- closing should always be <=n. In this case we can always add another closing
+	Time complexity is the n-th Catalan number (1/(n + 1)) * (2n choose n); Assymptotically it's 4^n/(n * sqrt(n))
+	Space complexity: same 
 	"""
 	def _helper(n, op, cl, res, curr):
 		if len(curr) == 2 * n:
