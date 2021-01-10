@@ -1,4 +1,4 @@
-def findMin(nums):
+def findMin(nums):  # optimal 
     left, right = 0, len(nums) - 1
     while left < right:
         mid = left + (right - left) // 2
