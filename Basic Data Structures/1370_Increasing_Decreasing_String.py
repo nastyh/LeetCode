@@ -1,6 +1,24 @@
 from collections import Counter
 import string
-def sortString(s):
+
+def sortString_sorting(s):
+    d = Counter(s)
+    result = []
+    smallest = True
+    while d:
+        keys = [key for key in d]
+        keys = sorted(keys) if smallest else sorted(keys, reverse = True)
+        smallest = not smallest
+        for key in keys:
+            result.append(key)
+            if d[key] == 1:
+                del d[key]
+            else:
+                d[key] -= 1
+    return ''.join(result)
+    
+
+def sortString(s):  # times out and doesn't work for ggggggg
     if len(s) == 1: return s
     res = ''
     alphabet = list(string.ascii_lowercase)

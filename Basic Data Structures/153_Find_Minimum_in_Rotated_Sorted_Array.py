@@ -15,16 +15,16 @@ def findMin(nums):
         return nums[piv_ix + 1]
 
 
-def findMin_bin_search(nums):
+def findMin_bin_search(nums):  # optimal and fastest
     if len(nums) == 1: return nums[0]
     if nums[0] < nums[-1]:
         return nums[0]
     l, r = 0, len(nums) - 1
     while l <= r:
         m = l + (r - l) // 2
-        if nums[m] > nums[m + 1]:
+        if nums[m] > nums[m + 1]:  # we are on the top of the left subarray
             return nums[m + 1]
-        if nums[m - 1] > nums[m]:
+        if nums[m - 1] > nums[m]:  # we're in the valley
             return nums[m]
         if nums[m] > nums[0]:
             l = m + 1
@@ -34,12 +34,12 @@ def findMin_bin_search(nums):
 
 def findMin_bin_search_alt(nums):
     left, right = 0, len(nums) - 1
-    while nums[left] > nums[right]:
+    while left < right:
         middle  = (left + right) // 2
-        if nums[middle] < nums[right]:
+        if nums[middle] < nums[right]:  # go to the left half
             right = middle
         else:
-            left = middle + 1
+            left = middle + 1  # go to the right half; don't need to look at nums[middle], that's why +1
     return nums[left]
 
 
