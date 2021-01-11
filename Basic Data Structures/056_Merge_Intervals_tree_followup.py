@@ -1,3 +1,19 @@
+"""
+How do you add intervals and merge them for a large stream of intervals? (Facebook Follow-up Question)
+We need to have two functions for the tree (add interval and query tree).
+TreeNode - On top of the left child, right child, start boundary, and end boundary, we have a middle field that determines whether a new interval goes to the left child,
+right right or merged with the current node.
+
+add - If the new interval touches or crosses the middle of the current node, we update the current node. Otherwise, we put the new interval into the left subtree or right subtree.
+
+Why do we use middle for comparison and not start or end boundaries?
+The reason is that we can use merge-sort technique to query the merged intervals result when the left subtree does not overlap with the right subtree.
+query - Use merge-sort technique by retrieving the merged intervals of the left subtree (i.e. left_intervals) and those of the right subtree (i.e. right_intervals).
+Because of the implementation of add, we can guarantee that
+
+if there's an interval in the left_intervals that overlaps with the current node, then we know that all the intervals after that interval overlaps with the current node.
+The first few intervals or zero intervals in the right_intervals overlap with the current node.
+"""
 class TreeNode:
     def __init__(self, start, end, middle):
         self.start = start

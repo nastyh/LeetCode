@@ -2,7 +2,7 @@ def merge(nums1, m, nums2, n):
     """
     Do not return anything, modify nums1 in-place instead.
     """
-    nums2_index=0
+    nums2_index = 0
     nums1_index = 0
     while nums2_index < n and nums1_index < m:
         if nums2[nums2_index] <= nums1[nums1_index]:
@@ -26,6 +26,20 @@ def merge_another(nums1, m, nums2, n):
     nums1.sort()
 
 
+def merge_optimal(nums1, m, nums2, n):
+    end_of_zeroes = n - 1  # index of the last element in nums2
+    end_of_nums = m - 1  #  index of the last non-zero element in nums1
+    for i in range(m + n - 1, -1, -1):
+        if end_of_nums < 0:
+            break
+        if nums1[end_of_zeroes] > nums2[end_of_nums]:
+            nums1[i] = nums[end_of_nums]
+            end_of_nums -= 1
+        else:
+            nums1[i] = nums2[end_of_zeroes]
+            end_of_zeroes -= 1
+    
+
 def merge_back((nums1, m, nums2, n):
     m -= 1
     n -= 1
@@ -42,30 +56,3 @@ def merge_back((nums1, m, nums2, n):
         else:
             nums1[i] = nums2[n]
             n -= 1
-
-
-    # res = [None] * (m + n)
-    # i, j, k = 0, 0, 0
-
-    # while i < m and j < n:
-    #     if nums1[i] <= nums2[j]:
-    #         res[k] = nums1[i]
-    #         i += 1
-    #         k += 1
-    #     else:
-    #         res[k] = nums2[j]
-    #         j += 1
-    #         k += 1
-
-    # while i < m:
-    #     res[k] = nums1[i]
-    #     i += 1
-    #     k += 1
-
-    # while j < n:
-    #     res[k] = nums2[j]
-    #     j += 1
-    #     k += 1
-
-    # return res
-
