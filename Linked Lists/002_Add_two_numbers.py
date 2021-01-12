@@ -56,7 +56,7 @@ class ListNode(object):
             carry = num // 10
             l3.next = ListNode(num % 10)
             l3 = l3.next
-            l2 = l2. next
+            l2 = l2.next
         if carry != 0:
             l3.next = ListNode(1)
         return dummy.next 

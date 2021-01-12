@@ -35,7 +35,7 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
 
 def addTwoNumbers_no_reverse(self, l1, l2):
     """
-    Follow-up w/o reversting lists
+    Follow-up w/o reversing lists
     """
     n1 = n2 = 0
     while l1:
