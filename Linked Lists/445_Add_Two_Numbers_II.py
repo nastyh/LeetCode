@@ -5,7 +5,7 @@ class ListNode:
         self.next = next
 
 def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-    def _rev_helper(node):
+    def _rev_helper(node):  # reverse a linked list
         if not node: return
         prev, curr = None, node
         while curr:
@@ -31,4 +31,29 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
     if carry:
         l5.next = ListNode(1)
     return _rev_helper(dummy.next)
+
+
+def addTwoNumbers_no_reverse(self, l1, l2):
+    """
+    Follow-up w/o reversting lists
+    """
+    n1 = n2 = 0
+    while l1:
+        n1 *= 10
+        n1 += l1.val
+        l1 = l1.next
+    while l2:
+        n2 *= 10
+        n2 += l2.val
+        l2 = l2.next
+    n3=n1 + n2        
+    
+    ##turn n3 to linked list
+    prev = ListNode(-1)
+    head = prev
+    for i in str(n3):
+        n=ListNode(i)
+        head.next = n
+        head = n
+    return prev.next
         
