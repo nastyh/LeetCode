@@ -1,18 +1,50 @@
+def plusOne_optimal(digits):  # O(n) both
+    """
+    Solved in two steps
+    1) add 1 to the last element. It can be either a single digit or a 10.
+    If it's a 10, make carry equal to 1, otherwise there is no carry
+    2) Then we will loop through the rest of the list.
+    We start with the second last element in the list. We take a respective digit from digits and add carry.
+    This number can be either a single-digit number or a 10. If it's a single-digit, just plant it to the respective index,
+    if it is a 10, put zero and carry over 1.
+    At the end of the day, if carry is not zero, insert 1 to the beginning (edge case such as [9, 9])
+    """
+    res = [None] * len(digits)
+    carry = 0
+    num = digits[-1] + 1
+    if num == 10:
+        res[-1] = 0
+        carry = 1
+    else:
+        res[-1] = num
+        carry = 0
+    for i in range(len(digits) - 2, -1, - 1):
+        curr = digits[i] + carry
+        if curr == 10:
+            res[i] = 0
+            carry = 1
+        else:
+            res[i] = curr
+            carry = 0
+    if carry == 1:
+        res.insert(0, 1)
+    return res
+
+
+
 def plusOne(digits):
-
     n = len(digits)
-
-        # move along the input array starting from the end
+    # move along the input array starting from the end
     for i in range(n):
         idx = n - 1 - i
-        # set all the nines at the end of array to zeros
+    # set all the nines at the end of array to zeros
         if digits[idx] == 9:
             digits[idx] = 0
-        # here we have the rightmost not-nine
+    # here we have the rightmost not-nine
         else:
-            # increase this rightmost not-nine by 1
+        # increase this rightmost not-nine by 1
             digits[idx] += 1
-            # and the job is done
+        # and the job is done
             return digits
 
     return [1] + digits
