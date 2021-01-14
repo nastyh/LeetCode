@@ -13,7 +13,8 @@ def minSubArrayLen(s, nums):  # optimal
         r += 1
     return glob if glob != math.inf else 0
 
-def minSubArrayLen_alt(s, nums): # pretty much the same but list slicing looks more Pythonic; way slower, though
+
+def minSubArrayLen_alt(s, nums): # pretty much the same but list slicing looks more Pythonic; way slower, though, b/c we recalculate the whole thing
     l, r, curr_s, curr_l, glob_l = 0, 0, 0, 0, math.inf
     while r < len(nums):
         curr_s = sum(nums[l:r + 1])
@@ -57,7 +58,7 @@ def minSubArrayLen_binary(s, nums):  # binary search works b/c the prefix sum is
     cum = [0] * len(nums) + [0]
     cum[0] = 0
     for i in range(1, len(cum)):
-        cum[i] = cum[i-1] + nums[i-1]
+        cum[i] = cum[i - 1] + nums[i - 1]
     for le, v in enumerate(cum):
         # use binary search to locate 'ri' index
         ri = bi_search(cum, v + s)
