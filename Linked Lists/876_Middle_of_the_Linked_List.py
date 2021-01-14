@@ -4,10 +4,9 @@ class ListNode:
         self.val = val
         self.next = next
 
-    def middleNode(self, head):
+    def middleNode(self, head):    # O(n + n // 2) and O(1)
         if not head:
             return None
-
             def _length(node):
                 l, curr = 0, node
                 while curr:
@@ -24,7 +23,7 @@ class ListNode:
             return curr
 
 
-    def middleNode_2_pointers(self, head):
+    def middleNode_2_pointers(self, head):  # O(n) and O(1)
         if not head: return None
         if head and not head.next: return head
         slow = fast = head
@@ -32,6 +31,20 @@ class ListNode:
             slow = slow.next
             fast = fast.next.next
         return slow
+
+    
+    def middleNode_another(self, head):
+        if head and not head.next: return head
+        curr = head
+        l = 0
+        while head:
+            l += 1
+            head = head.next
+        middle_ix = l // 2
+        while middle_ix != 0:
+            curr = curr.next
+            middle_ix -= 1
+        return curr
     
 
     def middleNode_recur(head):
