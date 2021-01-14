@@ -4,7 +4,7 @@ class ListNode:
         self.val = val
         self.next = next
 
-    def isPalindrome_list(head):  # save to a list and check
+    def isPalindrome_list(self, head):  # save to a list and check
         res = []
         curr = head
         while curr:
@@ -13,8 +13,46 @@ class ListNode:
         return res == res[::-1]
 
 
+    def isPalindrome_optimal(self, head):  # O(n) and O(1)
+        """
+        Cover edge cases
+        Find the middle element using the slow/fast pointer technique
+        If the even number, then slow will point to the second middle element
+        If the odd, number then exactly to the middle element
+        Then we need to reverse the list starting from the middle
+        Then we need to compare element by element the reversed list with the left half of the original list
+        """
+        def _rev(node):  # helper to reverse the list
+            if not node: return
+            if node and not node.next: return node
+            prev, curr = None, node
+            while curr:
+                next_n = curr.next
+                curr.next = prev
+                prev = curr
+                curr = next_n
+            return prev
+        
+        if not head: return True
+        if head and not head.next:
+            return True
+        checker, slow, fast = head, head, head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        right_reversed = _rev(slow)
+        _rev(slow)  # a nice thing to do: un-reverse the second half of the list not to be messy
+        while right_reversed:
+            if right_reversed.val == checker.val:
+                right_reversed = right_reversed.next
+                checker = checker.next
+            else:
+                return False
+        return True
+
+
 # Straightforward: helper function returns a reversed list, then we compare two lists element by element
-    def isPalindrome(head):
+    def isPalindrome(self, head):
         if not head or not head.next: return True
         def _helper(self, node):
             curr = node
@@ -34,7 +72,7 @@ class ListNode:
 
     
   # The best one: find where the second half starts, reverse it, compare element by element, reverse back  
-    def isPalindrome_another(head):
+    def isPalindrome_another(self, head):
         def _reverseList(node):  # reverses a list
             curr = node
             prev = None
