@@ -47,11 +47,38 @@ class TreeNode:
         ans = float("inf")
         while root:
             if root.val == target: return root.val
-            ans = min(ans, root.val, key=lambda x: abs(x-target))
+            ans = min(ans, root.val, key=lambda x: abs(x - target))
             if root.val > target: root = root.left
             else: root = root.right
         return ans
 
+    
+    def closestValue_trav(self, root, target):  # O(n) both 
+        """
+        Early stopping of a list traversal
+        Traverse the tree in a pre-order fashion. Get a list in a sorted order
+        Start iterating and calculating the differences. 
+        Possible patterns are:
+        1) first element is the closest. Difference is increasing. We do an early stopping. 
+        2) valley pattern. Difference is decreasing, than starts increasing. In this case we do an early stopping after seeing that it starts increasing 
+        3) last element is the closest. Difference is decreasing all the way. We keep updating min_diff and at the end return ans 
+        """
+        nums = []
+        min_diff = math.inf
+        def _trav(node):
+            if not node: return 
+            _trav(node.left)
+            nums.append(node.val)
+            _trav(node.right)
+        _trav(root)
+        for num in nums:
+            curr_diff = abs(target - num)
+            if curr_diff < min_diff:
+                min_diff = curr_diff
+                ans = num
+            else:
+                return ans
+        return ans
 
 if __name__ == '__main__':
     l = TreeNode(4)
@@ -62,3 +89,4 @@ if __name__ == '__main__':
     # print(l.closestValue(l, 3.714286))
     # print(l.closestValue_efficient(l, 3.714286))
     print(l.closestValue_binary(l, 3.714286))
+    print(l.closestValue_trav(l, 3.714286))
