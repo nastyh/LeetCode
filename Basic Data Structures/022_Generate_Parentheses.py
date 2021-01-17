@@ -9,15 +9,15 @@ def generateParenthesis(n):
 			ans.append(S)
 			return
 		if left < n:
-			backtrack(S+'(', left+1, right)
+			backtrack(S+'(', left + 1, right)
 		if right < left:
-			backtrack(S+')', left, right+1)
+			backtrack(S+')', left, right + 1)
 	backtrack()
 	return ans
 
 
 
-def generateParenthesis_easier(n):
+def generateParenthesis_easier(n):  # O(4^n / sqrt(n)) both; coming from the N-th Catalan number 
 	"""
 	Helper takes n, number of opening, number of closing, final list, and the current string we're building
 	Once the current string is done (has 2n elements), append to res
@@ -27,18 +27,17 @@ def generateParenthesis_easier(n):
 	Time complexity is the n-th Catalan number (1/(n + 1)) * (2n choose n); Assymptotically it's 4^n/(n * sqrt(n))
 	Space complexity: same 
 	"""
-	def _helper(n, op, cl, res, curr):
+	res = []
+	def _helper(n, op, cl, curr):
 		if len(curr) == 2 * n:
 			res.append(curr)
 			return
-		if len(curr) < 2 * n:
-			if op > cl:
-				_helper(n, op, cl + 1, res, curr + ')')
-			if op < n:
-				_helper(n, op + 1, cl, res, curr + '(')
-		return res
-	return _helper(n, 0, 0, [], '')
-
+		if op != cl:
+			_helper(n, op, cl + 1, curr + ')')
+		if op < n:
+			_helper(n, op + 1, cl, curr + '(')
+	_helper(n, 0, 0, '')
+	return res
 
 
 if __name__ == '__main__':
