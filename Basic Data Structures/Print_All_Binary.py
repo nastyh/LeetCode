@@ -3,7 +3,7 @@ Given an integer n, print all binary numbers that have exactly this nany digits
 Input: n = 3
 Output: ['000', '001', '010', etc]
 """
-def print_all_binary(n):
+def print_all_binary(n):  # O(2^n) both 
     res = []
     def _helper(n, curr_res, curr_ix):
         if len(curr_res) == n:
