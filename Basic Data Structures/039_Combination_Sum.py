@@ -1,4 +1,4 @@
-def combinationSum(candidates, target): # returns a list of list
+def combinationSum(candidates, target): # returns a list of list O(M^2 * N) and O(M^2) where M is target and N == len(candidates)
     """
     Define dp(i) as all unique combinations whose sum is i.
     We'll get the recursion below for the number candiates[j]:

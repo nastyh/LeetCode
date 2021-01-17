@@ -14,6 +14,7 @@ def letterCombinations(digits):
 
     possible = [d[x] for x in digits]
     return [''.join(x) for x in product(*possible) if x]
+    
 
 def letterCombinations_alt(digits):
     def findCombination(currentComb , digit):
@@ -36,7 +37,30 @@ def letterCombinations_alt(digits):
     return result
 
 
-def letterCombinations_another(digits):
+def letterCombinations_iter(digits):
+    if len(digits) == 0: return []
+    if len(digits) == 1: return [i for i in digits]
+    d = {
+        "2": ["a", "b", "c"],
+        "3": ["d", "e", "f"],
+        "4": ["g", "h", "i"],
+        "5": ["j", "k", "l"],
+        "6": ["m", "n", "o"],
+        "7": ["p", "q", "r", "s"],
+        "8": ["t", "u", "v"],
+        "9": ["w", "x", "y", "z"]
+    }
+    res = [""]
+    for digit in digits:
+        curr_res = []
+        for val in res:
+            for ch in d[digit]:
+                curr_res.append(val + ch)
+        res = curr_res
+    return res
+        
+
+def letterCombinations_another(digits):  # O(3^N * 4^M) both, where N is the number of digits in the input that maps to 3 letters, and M -- maps to 4 letters
     d = {'2': 'abc',
          '3': 'def',
          '4': 'ghi',
@@ -63,4 +87,5 @@ def letterCombinations_another(digits):
 if __name__ == '__main__':
     print(letterCombinations('23'))
     print(letterCombinations_alt('23'))
+    print(letterCombinations_iter('23'))
     print(letterCombinations_another('23'))
