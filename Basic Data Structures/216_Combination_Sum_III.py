@@ -1,4 +1,4 @@
-def combinationSum3(k, n):
+def combinationSum3(k, n):  # O(9! * K / (9 - K)! ) and O(K)
     nums = [i for i in range(1, 10)]
     res = []
     def _helper(nums, k, n, curr, ix):
