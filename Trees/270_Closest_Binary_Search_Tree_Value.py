@@ -6,6 +6,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
     def closestValue(self, root, target):  # creating a list of lists where the first element is node's values, the second is the difference
         st, res = [], []
         st.append(root)
@@ -23,6 +24,7 @@ class TreeNode:
         res_sorted = sorted(res, key = lambda x: x[1]) # sorting the list of lists by the second value (by the difference) and returning the node value with such difference
         return res_sorted[0][0]
 
+
     def closestValue_efficient(self, root, target): # keeping track on the go
         st, glob_diff, glob_node = [], math.inf, None
         st.append(root)
@@ -39,7 +41,7 @@ class TreeNode:
         return glob_node
 
 
-    def closestValue_binary(self, root, target):  # binary search in a recursive manner
+    def closestValue_binary(self, root, target):  # binary search in a recursive manner  O(h) and O(1)
         """
         go left if target is smaller than current root value, and go right otherwise.
         Choose the closest to target value at each step.
@@ -47,7 +49,7 @@ class TreeNode:
         ans = float("inf")
         while root:
             if root.val == target: return root.val
-            ans = min(ans, root.val, key=lambda x: abs(x - target))
+            ans = min(ans, root.val, key = lambda x: abs(x - target))
             if root.val > target: root = root.left
             else: root = root.right
         return ans
@@ -79,6 +81,7 @@ class TreeNode:
             else:
                 return ans
         return ans
+
 
 if __name__ == '__main__':
     l = TreeNode(4)
