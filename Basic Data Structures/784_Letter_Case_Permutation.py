@@ -1,4 +1,4 @@
-def letterCasePermutation(S):
+def letterCasePermutation(S):  # O(2^N * N) both
     res = []
     def _helper(S, curr_res, curr_ix):
         if len(curr_res) == len(S):
