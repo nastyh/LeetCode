@@ -29,6 +29,26 @@ def getFactors_iter(n):
             x += 1
 
 
+def getFactors_understand(n):
+    res, nums = [], []
+    for num in range(2, n // 2 + 1):
+        if n % num == 0:
+            nums.append(num)
+    def _helper(nums, n, curr_res, curr_ix):
+        if n == 1:
+            res.append(curr_res[:])
+            return
+        if curr_ix >= len(nums) or n < 1:
+            return
+        for i in range(len(nums)):
+            n = n // nums[i]
+            curr_res.append(nums[i])
+            _helper(nums, n, curr_res, i + 1)
+    _helper(nums, n, [], 0)
+    return res
+
+
 if __name__ == '__main__':
-    print(getFactors(12))
-    print(getFactors_iter(12))
+    # print(getFactors(12))
+    # print(getFactors_iter(12))
+    print(getFactors_understand(12))
