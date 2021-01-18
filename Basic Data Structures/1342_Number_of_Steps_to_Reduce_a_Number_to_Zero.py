@@ -1,4 +1,4 @@
-def numberOfSteps(num):  # straightforward
+def numberOfSteps(num):  # straightforward  O(logn) and O(1)
     res = 0
     while num != 0:
         if num % 2 == 0:
@@ -9,7 +9,7 @@ def numberOfSteps(num):  # straightforward
             res += 1
     return res
 
-def numberOfSteps_binary(num):
+def numberOfSteps_binary(num):  # O(logn) both 
     steps = 0
     #Remove the "0b"
     binary = bin(num)[2:]
