@@ -7,6 +7,16 @@ def maxSlidingWindow(nums, k): # brute force
         res.append(max(curr))
     return res
 
+def maxSlidingWindow_brute_force_another(nums, k):
+    res = []
+    r = k - 1
+    while r < len(nums):
+        curr_res = max(nums[r - k + 1: r + 1])
+        res.append(curr_res)
+        r += 1
+    return res
+
+
 def maxSlidingWindow_sliding(nums, k): #sliding window
     if len(nums) == 0: return []
     l = 0
@@ -44,5 +54,6 @@ def maxSlidingWindow_deque(nums, k):  # O(n) and O(n)
 
 if __name__ == '__main__':
     # print(maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3))
+    print(maxSlidingWindow_brute_force_another([1, 3, -1, -3, 5, 3, 6, 7], 3))
     # print(maxSlidingWindow_sliding([1, 3, -1, -3, 5, 3, 6, 7], 3))
-    print(maxSlidingWindow_deque([1, 3, -1, -3, 5, 3, 6, 7], 3))
+    # print(maxSlidingWindow_deque([1, 3, -1, -3, 5, 3, 6, 7], 3))
