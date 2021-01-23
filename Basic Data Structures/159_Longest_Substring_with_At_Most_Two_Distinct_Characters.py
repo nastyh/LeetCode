@@ -62,7 +62,29 @@ def lengthOfLongestSubstringTwoDistinct(s):
         res = max(res, r - l)
     return res
 
+import math 
+def lengthOfLongestSubstringTwoDistinct_set(s):
+    if len(s) < 2: return len(s)
+    if len(set(s)) == 1: return len(s)
+    glob_l = -math.inf
+    l, r, distinct = 0, 0, set()
+    while r < len(s):
+        distinct.add(s[r])
+        if len(distinct) == 2:
+            curr_l = r - l + 1
+            glob_l = max(glob_l, curr_l)
+        elif len(distinct) > 2:
+            distinct.remove(s[l])
+            l += 1 
+        else:
+            r += 1
+
+        r += 1
+    return glob_l
+
 
 if __name__ == '__main__':
     print(lengthOfLongestSubstringTwoDistinct('eceba'))
     print(lengthOfLongestSubstringTwoDistinct('ccaabbb'))
+    print(lengthOfLongestSubstringTwoDistinct_set('eceba'))
+    print(lengthOfLongestSubstringTwoDistinct_set('ccaabbb'))

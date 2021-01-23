@@ -1,19 +1,10 @@
 from collections import deque
-def maxSlidingWindow(nums, k): # brute force
+def maxSlidingWindow(nums, k): # TLE, O(Nk) and O(N - k + 1) for the answer
     if len(nums) == 0: return []
     res = []
     for l in range(len(nums) - k + 1):
         curr = nums[l:l + k]
         res.append(max(curr))
-    return res
-
-def maxSlidingWindow_brute_force_another(nums, k):
-    res = []
-    r = k - 1
-    while r < len(nums):
-        curr_res = max(nums[r - k + 1: r + 1])
-        res.append(curr_res)
-        r += 1
     return res
 
 
@@ -54,6 +45,5 @@ def maxSlidingWindow_deque(nums, k):  # O(n) and O(n)
 
 if __name__ == '__main__':
     # print(maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3))
-    print(maxSlidingWindow_brute_force_another([1, 3, -1, -3, 5, 3, 6, 7], 3))
     # print(maxSlidingWindow_sliding([1, 3, -1, -3, 5, 3, 6, 7], 3))
     # print(maxSlidingWindow_deque([1, 3, -1, -3, 5, 3, 6, 7], 3))
