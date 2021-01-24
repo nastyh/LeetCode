@@ -1,28 +1,52 @@
-def searchMatrix_brute_force(matrix, target):  # O(logmn) + O(mn) to build a list. O(nm) to store
+def searchMatrix_brute_force(matrix, target):  # O(logmn) + O(mn) to build a list --> o(mn). O(nm) to store
+    """ 
+    _bin() does binary search
+    make a list and apply _bin() to it 
     """
-    Flatten a matrix into a list, do binary search
-    """
-    new_l = []
-    for row in matrix:
-        for num in row:
-            new_l.append(num)
-    l, r = 0, len(new_l) - 1
+    def _bin(nums, target):
+        l, r = 0, len(nums) - 1
+        while l <= r:
+            m = l + (r - l) // 2
+            if nums[m] == target:
+                return True
+            elif nums[m] < target:
+                l = m + 1
+            else:
+                r = m - 1
+        return False
+    
+    vals = []
+    for row in range(len(matrix)):
+        for col in range(len(matrix[0])):
+            vals.append(matrix[row][col])
+    return _bin(vals, target)
+
+
+def searchMatrix_easy(matrix, target):  # O(log(nm)) and O(1)
+    row = 0
+    for r in range(len(matrix)):
+        if target == matrix[r][0] or target == matrix[r][-1]:
+            return True
+        elif target > matrix[r][0] and target < matrix[r][-1]:
+            row = r
+            break
+    l, r = 0, len(matrix[row]) - 1
     while l <= r:
         m = l + (r - l) // 2
-        if new_l[m] == target:
+        if matrix[row][m] == target:
             return True
-        elif new_l[m] < target:
+        elif matrix[row][m] < target:
             l = m + 1
         else:
             r = m - 1
     return False
 
 
-def searchMatrix_efficient(matrix, target):
+def searchMatrix_efficient(matrix, target):  # O(log(nm)) and O(1)
     """
     using rows and cols as it is
     """
-     if len(matrix) == 0:
+    if len(matrix) == 0:
         return False
     l, r = 0, len(matrix) * len(matrix[0]) - 1
     while l <= r:
@@ -36,3 +60,5 @@ def searchMatrix_efficient(matrix, target):
             l = m + 1
     return False
 
+
+if __name__ == '__main__':
