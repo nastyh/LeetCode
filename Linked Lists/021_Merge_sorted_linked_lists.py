@@ -8,7 +8,7 @@ class Node:
 
 
 class Solution:
-    def mergeLinkedLists(self, l1: Node, l2: Node):
+    def mergeLinkedLists(self, l1: Node, l2: Node):  # O(MN) both, where MN are the lenghts of the respective linked lists
         curr = Node(-1)
         res = curr
         if not l1 and not l2: # edge cases
@@ -17,7 +17,6 @@ class Solution:
             return l1
         if not l1 and l2:
             return l2
-
         while l1 and l2:
             if l1.value <= l2.value:
                 curr.next = l1.value  # -1 -> l1.value
