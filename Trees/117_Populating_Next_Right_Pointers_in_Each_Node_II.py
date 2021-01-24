@@ -36,7 +36,7 @@ class Solution:
         d = deque()
         d.append(root) 
         while d:
-            prev = None
+            prev = None  # the key is to do this line inside the while loop, not outside
             for _ in range(len(d)):
                 t = d.popleft()
                 if prev:
@@ -50,7 +50,6 @@ class Solution:
 
 
     def connect_w_linked_list(self, root):  # O(n) and O(1)
-        
         def processChild(childNode, prev, leftmost):  # helper func
             if childNode:
                 # If the "prev" pointer is alread set i.e. if we
@@ -65,7 +64,6 @@ class Solution:
                     leftmost = childNode
                 prev = childNode 
             return prev, leftmost
-
         if not root:
             return root
         # The root node is the only node on the first level
