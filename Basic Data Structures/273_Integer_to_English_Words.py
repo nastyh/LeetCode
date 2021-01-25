@@ -1,4 +1,4 @@
- def numberToWords(self, num: int) -> str:
+ def numberToWords(num):  # O(N) and space? Keeping dictionaries? 
         ## RC ##
         ## APPROACH : BRUTE FORCE ##
         ## 1. For a two digit number if there is no ones digit 20 -> twenty + " " (number generally), dont leave the space behind, use if else case with "" (empty).
