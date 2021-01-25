@@ -1,3 +1,4 @@
+from collections import deque
 def numIslands(grid):
     ## RC ##
     ## APPROACH : DFS ##
@@ -13,7 +14,6 @@ def numIslands(grid):
         grid[i][j] = '0'
         for x,y in directions:
             convertLandToWater(grid, i + x, j + y)
-    
     if len(grid) == 0 : return 0
     isLandCount = 0
     directions = [(0,1), (0,-1), (-1,0), (1,0)]
@@ -25,7 +25,7 @@ def numIslands(grid):
     return isLandCount
 
 
-def numIslands_easy(grid):
+def numIslands_easy(grid):   # O(MN) both; DFS
     if len(grid) == 0: return 0
     res = 0
     def _helper(grid, i, j):
@@ -44,6 +44,29 @@ def numIslands_easy(grid):
     return res
 
 
+def numIslands_bfs_alt(grid):  # O(MN) and O(min(M,N))
+    if not grid: return 0
+    q = deque()
+    m, n = len(grid), len(grid[0])
+    ans = 0
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == '1':
+                q.append((i, j))
+                grid[i][j] = '2'
+                while q:
+                    x, y = q.popleft()
+                    for dx, dy in (0, 1), (0, -1), (1, 0), (-1, 0):
+                        xx, yy = x + dx, y + dy
+                        if 0 <= xx < m and 0 <= yy < n and grid[xx][yy] == '1':
+                            q.append((xx, yy))
+                            grid[xx][yy] = '2'
+                ans += 1            
+    return ans
+
+
 if __name__ == '__main__':
-    print(numIslands([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))
-    print(numIslands_easy([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))       
+    # print(numIslands([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))
+    # print(numIslands_easy([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))  
+    print(numIslands_bfs_alt([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))      
+    print(numIslands_bfs_alt([["1","1","1","1","0"], ["1","1","0","1","0"], ["1","1","0","0","0"], ["0","0","0","0","0"]]))
