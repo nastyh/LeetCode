@@ -32,7 +32,7 @@ def minDistance_dp_optimized(word1, word2): # O(mn) and O(2n) where n is the len
     for i in range(len(word2) + 1):
         dp[0][i] = i
     for i in range(1, len(word1) + 1):
-        dp[i%2][0] = i;
+        dp[i % 2][0] = i;
         for j in range(1, len(word2) + 1):
             cost = 1 if word1[i - 1] != word2[j - 1] else 0;
             dp[i%2][j] = min(dp[(i - 1) % 2][j - 1] + cost, dp[(i - 1) % 2][j] + 1, dp[i % 2][j - 1] + 1)
