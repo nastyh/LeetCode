@@ -21,10 +21,15 @@ class TreeNode:
             return res
         if root:
             res += root.val
-        return res + self.sumOfAllLeaves(root.left) + self.sumOfAllLeaves(root.right)
+        return res + self.sumOfAllLeaves(root.left) + self.sumOfAllLeaves(root.right)]
+
     
-    def binaryTreePaths(self, root):  # the main thing
-        
+    def binaryTreePaths(self, root):  # DFS. O(n) and O(n). Space to be exact is O(n*h^2), where h is the diameter, b/c of the overhead to build "->" lines
+        """
+        Just DFS using the helper function. 
+        Terminating condition first.
+        If no, add a current value to the path and append it at the end once you hit a leaf node. 
+        """
         def _allPaths(root, path):
             # res = []
             if root and not root.left and not root.right:
@@ -33,7 +38,6 @@ class TreeNode:
                 _allPaths(root.left, path + '->' + str(root.left.val))
             if root.right:
                 _allPaths(root.right, path + '->' + str(root.right.val))   
-
         self.res = []
         if not root:
             return res
@@ -41,11 +45,26 @@ class TreeNode:
         return self.res
 
 
+    def binaryTreePaths_stack(self, root):  # O(n) and O(n)
+        if not root:
+            return []
+        paths = []
+        stack = [(root, str(root.val))]
+        while stack:
+            node, path = stack.pop()
+            if not node.left and not node.right:
+                paths.append(path)
+            if node.left:
+                stack.append((node.left, path + '->' + str(node.left.val)))
+            if node.right:
+                stack.append((node.right, path + '->' + str(node.right.val)))
+        return paths
+
     def binaryTreePaths_alt(self, root):
         """
         More straigthforward:
         create a list of lists with values
-        Then turn it into a lish with strings as the question asks 
+        Then turn it into a list with strings as the question asks 
         """
         if not root: return None
         if root and not root.left and not root.right: return [str(root.val)]
