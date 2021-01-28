@@ -1,4 +1,4 @@
-def detectCycle(head):
+def detectCycle(head):  # O(n) and O(1)
     """
     use slow and fast pointers: slow which moves one step at a time and fast, which moves two times at a time.
     To find the place where loop started, we need to do it in two iterations: first we wait until fast pointe

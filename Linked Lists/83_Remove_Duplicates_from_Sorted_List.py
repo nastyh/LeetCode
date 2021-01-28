@@ -13,17 +13,20 @@ class ListNode:
         return head
 
     # a bit easier to understand
-    def deleteDuplicates_alt(self, head):
+    def deleteDuplicates_alt(self, head):  # O(n) and O(1)
+        """
+        Non-transparent thing here is when we find the same values and repoint pointers,
+        we only move current. 
+        And if the values are different, we move both pointers at the same time
+        """
         if head == None:
             return head
-
         current = head.next
         prev = head
-
-        while current != None:
+        while current:
             if current.val == prev.val:
                 prev.next = current.next
-                current = current.next
+                current = current.next  # move only current. Don't write prev = prev.next
             else:
                 current = current.next
                 prev = prev.next
