@@ -6,7 +6,6 @@ class ListNode:
     def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
         if not head:
             return
-
         zero = ListNode(-1)
         zero.next = head
 
@@ -14,7 +13,6 @@ class ListNode:
         for _ in range(1, m):
             prev = curr
             curr = curr.next
-
         for _ in range(n - m):
             next_n = curr.next
             curr.next = next_n.next
