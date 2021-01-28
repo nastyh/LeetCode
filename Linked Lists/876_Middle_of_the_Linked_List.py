@@ -31,6 +31,18 @@ class ListNode:
             slow = slow.next
             fast = fast.next.next
         return slow
+        
+
+    def middleNode_1_pointer(self, head): # O(n) and O(1)
+        """
+        Tiny variation: don't need a slow poiner, can move the head directly
+        """
+        if head and not head.next: return head
+        pointer = head
+        while pointer and pointer.next:
+            head = head.next
+            pointer = pointer.next.next
+        return head
 
     
     def middleNode_another(self, head):
