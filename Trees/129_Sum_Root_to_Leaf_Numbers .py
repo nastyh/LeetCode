@@ -8,7 +8,6 @@ class TreeNode:
     def sumNumbers(self, root):
         ans = 0
         res = []
-
         def _helper(root, paths):
             if not root: return []
             if not root.left and not root.right:
@@ -48,6 +47,22 @@ class TreeNode:
                 s.append(sum([v * 10 ** k for k, v in enumerate(list(reversed(element)))]))    
         return sum(s)
 
+    
+    def sumNumbers_stack(self, root):
+        res = 0
+        stack = [(root, 0) ]
+        while stack:
+            root, curr_number = stack.pop()
+            if root is not None:
+                curr_number = curr_number * 10 + root.val
+                # if it's a leaf, update root-to-leaf sum
+                if not root.left and not root.right:
+                    res += curr_number
+                else:
+                    stack.append((root.right, curr_number))
+                    stack.append((root.left, curr_number))        
+        return res
+
 
     def sumNumbers_BFS(self, root):
         if not root: return
@@ -65,9 +80,8 @@ class TreeNode:
         return res
 
 
-    def sumNumbers_DFS(self, root):
+    def sumNumbers_DFS(self, root):  #  O(N), O(h)
         if not root: return 0
-
         def _helper(root, cum_sum):
             cum_sum = cum_sum * 10 + root.val
             if root and not root.left and not root.right:
@@ -77,7 +91,7 @@ class TreeNode:
         return _helper(root, 0)
 
 
-    def sumNumbers_DFS_another(self, root):
+    def sumNumbers_DFS_another(self, root):   #  O(N), O(h)
         if not root: return 0
         def _helper(root, cum_sum):
             if not root: return cum_sum
@@ -90,7 +104,7 @@ class TreeNode:
         return _helper(root, 0)
 
     
-    def sumNumbers_global(self, root):  # another DFS, this time with a global variable 
+    def sumNumbers_global(self, root):  # another DFS, this time with a global variable O(N), O(h)
         if not root: return 0
         if root and not root.left and not root.right: return root.val
         res = 0
