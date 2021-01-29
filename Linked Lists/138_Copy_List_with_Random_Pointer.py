@@ -56,7 +56,6 @@ def copyRandomList_iter(self, head): # O(n) and O(n)
                 self.visited[node] = Node(node.val, None, None)
                 return self.visited[node]
         return None
-    
     if not head:
         return head
     old_node = head
@@ -71,7 +70,6 @@ def copyRandomList_iter(self, head): # O(n) and O(n)
         # Move one step ahead in the linked list.
         old_node = old_node.next
         new_node = new_node.next
-
     return self.visited[head]
 
 
