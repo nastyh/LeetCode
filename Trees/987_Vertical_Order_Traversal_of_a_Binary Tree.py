@@ -9,7 +9,7 @@ class TreeNode:
 # Create a dictionary: column: (row, node's value)
 # Append node's values to list res after sorting each key (which is a list itself)
 
-    def verticalTraversal_BFS(self, root): # BFS-based
+    def verticalTraversal_BFS(self, root): # BFS-based  O(nlogn) b/c of sorting and O(n) of the defaultdict
         if not root: return None
         d = defaultdict(list)
         min_col, max_col = 0, 0
