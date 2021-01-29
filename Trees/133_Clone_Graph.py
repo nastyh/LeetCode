@@ -3,8 +3,17 @@ class Node(object):
     def __init__(self, val, neighbors):
         self.val = val
         self.neighbors = neighbors
-
-    def cloneGraph(self, node):
+    def cloneGraph(self, node):  # O(N + M) and O(N) where N is nodes, M vertices
+        """
+        BFS approach
+        avoid cycles by having the dict visited
+        Start by putting a node into a queue
+        Pop it 
+        Iterate through its neighbors.
+        If a neighbor hasn't been visited, then put it into visited and initialize its own list of neighbors
+        Add the neighbor to the main queue
+         Populate the empty list of a node that is in visited 
+        """
         if not node:
             return node
         # Dictionary to save the visited node and it's respective clone
@@ -16,9 +25,7 @@ class Node(object):
         visited[node] = Node(node.val, [])
         # Start BFS traversal
         while queue:
-            # Pop a node say "n" from the from the front of the queue.
             n = queue.popleft()
-            # Iterate through all the neighbors of the node
             for neighbor in n.neighbors:
                 if neighbor not in visited:
                     # Clone the neighbor and put in the visited, if not present already
@@ -27,12 +34,11 @@ class Node(object):
                     queue.append(neighbor)
                 # Add the clone of the neighbor to the neighbors of the clone node "n".
                 visited[n].neighbors.append(visited[neighbor])
-
         # Return the clone of the node from visited.
         return visited[node]
 
 
-    def cloneGraph_recur(self, node):
+    def cloneGraph_recur(self, node):  # O(N + M) and O(N) where N is nodes, M vertices
         if not node: return node  
         cur_val = node.val
         if cur_val in self.new_nodes:
