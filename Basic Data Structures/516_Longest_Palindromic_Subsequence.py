@@ -46,7 +46,7 @@ def longestPalindromeSubseq_bottoms_up(s):  # O(n^2) and O(n^2)
             if s[st] != s[en]:
                 dp[st][en] = max(dp[st + 1][en], dp[st][en - 1])  # it chooses the max between either skipping the left or the right element 
             else:
-                dp[st][en] = 2 + dp[st + 1][en - 1]
+                dp[st][en] = 2 + dp[st + 1][en - 1]  # to what we already have add 2 (b/c 1 element to the left and 1 element to the right)
     return dp[0][-1]
 
 
