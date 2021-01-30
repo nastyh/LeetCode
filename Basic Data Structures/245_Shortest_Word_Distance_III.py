@@ -1,3 +1,4 @@
+import math
 def shortestWordDistance(words, word1, word2):  # O(n^2) and O(n)
     """
     Collect indices to two lists.
@@ -21,14 +22,14 @@ def shortestWordDistance(words, word1, word2):  # O(n^2) and O(n)
 
 def shortestWordDistance_optimized(words, word1, word2):
     i = j = -1
-    diff = len(words)
+    res = math.inf
     for k, v in enumerate(words):
         if v == word1:
             i = k
             if j != -1 and i != j:
-                diff = min(diff, abs(i - j))
+                res = min(res, abs(i - j))
         if v == word2:
             j = k
             if i != -1 and i != j:
-                diff = min(diff, abs(i - j))
-    return diff
+                res = min(res, abs(i - j))
+    return res
