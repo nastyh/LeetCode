@@ -1,5 +1,5 @@
 import math
-def shortestDistance(words, word1, word2):
+def shortestDistance(words, word1, word2):  # O(n) and O(1)
     """
     Key here is to initialize ix_1 and ix_2 w/ something weird and only calculate the difference 
     when both words are found
@@ -15,6 +15,23 @@ def shortestDistance(words, word1, word2):
         if ix_1 != math.inf and ix_2 != math.inf:
             res = min(res, abs(ix_1 - ix_2))
     return res
+
+
+def shortestDistance_brute_force(words, word1, word2):  # O(n^2) and O(1)
+    """
+    Collect indices into two lists and then iterate in a double loop over both lists looking for the smallest difference 
+    """
+    w1_list, w2_list = [],[]
+    res = math.inf
+    for k, v in enumerate(words):
+        if v == word1:
+            w1_list.append(k)
+        if v == word2:
+            w2_list.append(k)
+    for i in w1_list:
+        for j in w2_list:
+            res = min(res, abs(i - j))
+    return res 
 
 
 if __name__ == '__main__':
