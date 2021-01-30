@@ -1,4 +1,5 @@
 import heapq
+from collections import Counter
 def topKFrequent(nums, k):  # O(Nlog(N)) where n is the length of nums
     d = {}
     for n in nums:
@@ -9,6 +10,35 @@ def topKFrequent(nums, k):  # O(Nlog(N)) where n is the length of nums
     d_sorted = [k for k, v in sorted(d.items(), key = lambda x: x[1], reverse = True)]
     return d_sorted[:k]
 
+
+def topKFrequent_optimal(nums, k): # O(nlogk) and O(n)
+    if k == len(nums):
+        return nums
+    d = Counter(nums)   
+    return heapq.nlargest(k, d.keys(), key = d.get) 
+
+
+    # h, res = [], []
+    # d = Counter(nums)
+    # print(d)
+    # for ix, v in d.items():
+    #     if len(h) < k:
+    #         heapq.heappush(h, (-v, ix))
+    #         print(h)
+    #     else:
+    #         if -v < h[0][0]:
+    #             # print(-v)
+    #             heapq.heappop(h)
+    #             heapq.heappush(h, (-v, ix))
+    #         elif -v == h[0][0]:
+    #             heapq.heappush(h, (-v, ix))
+    #         else:
+    #             continue
+    #         # heapq.heappushpop(h, (-v, ix))
+    # print(h)
+    # for _ in range(k):
+    #     res.append(heapq.heappop(h)[1])
+    # return res
 
 #alt
     # if not nums: return []
@@ -59,5 +89,10 @@ def topKFrequent_heap(nums, k):
 if __name__ == '__main__':
     # print(topKFrequent([1,1,1,2,2,3], 2))
     # print(topKFrequent_heap([-1,-1], 1)) # [1,1,1,2,2,3], 2
-    print(topKFrequent_heap([1, 1, 1, 2, 2, 3], 2))
-    print(topKFrequent([1, 1, 1, 2, 2, 3], 2))
+    # print(topKFrequent_heap([1, 1, 1, 2, 2, 3], 2))
+    # print(topKFrequent_optimal([1, 1, 1, 2, 2, 3], 2))
+    # print(topKFrequent_optimal([3, 0, 1, 0], 1))
+    # print(topKFrequent_optimal([4, 1, -1, 2, -1, 2, 3], 2))
+    print(topKFrequent_optimal([5, 3, 1, 1, 1, 3, 73, 1], 2))
+    # print(topKFrequent_optimal([1], 1))
+    # print(topKFrequent([1, 1, 1, 2, 2, 3], 2))
