@@ -1,7 +1,6 @@
 def lengthLongestSubstring(s, k):
     if len(s) == 0 or not s:
         return 0
-
     count = [0] * 256
     i, numDistinct, maxLen = 0, 0, 0
     for j in range(len(s)):
@@ -25,7 +24,7 @@ def lengthLongestSubstring_another(s, k):
     Then the same thing as below:
     start building a dictionary. If it has more than k elements, start shrinking it by moving the left pointer and removing keys once the values become 0
     """
-       if len(s) == 0:
+    if len(s) == 0:
         if k == 0:
             return 0
     if len(s) == 1:
@@ -45,7 +44,7 @@ def lengthLongestSubstring_another(s, k):
             if d[s[l]] == 0:
                 del d[s[l]]
             l += 1
-        res = max(res, r  - l + 1)
+        res = max(res, r  - l + 1)  # important to do it here not above the while loop
         r += 1
     return res
                      
@@ -73,5 +72,29 @@ def lengthLongestSubstring_alt(s, k):
                 start += 1
     return result
 
+
+def lengthLongestSubstring_set(s, k):
+    if k == 0:
+        return 0
+    if len(s) == 0:
+        if k == 0:
+            return 0
+    if len(s) == 1:
+        if k == 0:
+            return 0
+        else:
+            return 1
+    res = 0
+    l, r, unique = 0, 0, set()
+    while r < len(s):
+        unique.add(s[r])
+        r += 1
+        res = max(res, r - l + 1)
+        if len(unique) >= k:
+            unique.remove(s[l])
+            l += 1
+    return res
+
 if __name__ == '__main__':
     print(lengthLongestSubstring_alt("abcadcacacaca", 3))
+    print(lengthLongestSubstring_set("abcadcacacaca", 3))
