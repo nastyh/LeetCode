@@ -19,7 +19,7 @@ def nextPermutation(nums):
     return nums
 
 
-def nextPermutation_alt(nums):
+def nextPermutation_alt(nums):  # O(n) and O(1)
     """
     Start from the end and look for the first occurance of nums[r] > nums[r - 1]
     It means we cannot rearrange anything to the right from r b/c the whole list is in the decreasing order
@@ -47,6 +47,25 @@ def nextPermutation_alt(nums):
         break
     _rev(i + 1)
     return 
+
+
+def nextPermutation_another(nums):
+    i = len(nums) - 1
+    while i-1 >= 0 and nums[i-1] >= nums[i]:
+        i -= 1
+    #>left
+    if i-1>=0:
+        j = i
+        while j<len(nums) and nums[j] > nums[i - 1]:
+            j += 1
+        #swap the min-max number
+        nums[i - 1], nums[j - 1] = nums[j - 1], nums[i - 1]
+    m = i
+    n = len(nums)-1
+    while m < n:
+        nums[m], nums[n] = nums[n], nums[m]
+        m += 1
+        n -= 1
 
 
 if __name__ == '__main__':
