@@ -7,8 +7,8 @@ class NumMatrix:
             sum += val
             prefix_sum.append(sum)
         return prefix_sum
-        
-    def __init__(self, matrix):
+         
+    def __init__(self, matrix):  # O(MN) space, M cols, N rows 
         #create this 
         self.matrix = matrix
         self.row_prefix_sum = []
@@ -17,7 +17,7 @@ class NumMatrix:
             self.row_prefix_sum.append(prefix_sum)
         
 
-    def update(self, row, col, val):
+    def update(self, row, col, val):  # O(logN * log M)
         if row < 0 or row >= len(self.matrix):
             return 
         if col < 0 or col >= len(self.matrix[0]):

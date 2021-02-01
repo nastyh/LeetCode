@@ -27,7 +27,7 @@ class TreeNode:
         return [v for v in d.values()][::-1]
 
 
-    def findLeaves_alt(self, root):
+    def findLeaves_alt(self, root):  # O(n) both
         res = []
         def helper(node):
 		    # When we read the leaf return -1 (to help start our levels at 0 - because we add 1 when returned).
@@ -43,7 +43,7 @@ class TreeNode:
             if len(res) <= level:
                 res.append([])
 			# Append node value at its given level.
-            res[level].append(node.val),
+            res[level].append(node.val)
             return level       
         helper(root)
         return res

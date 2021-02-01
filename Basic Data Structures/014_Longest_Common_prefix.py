@@ -21,6 +21,22 @@ def longestCommonPrefix_alt(strs):
             prefix_ix += 1
     return strs[0][:prefix_ix]
 
+
+def longestCommonPrefix_sorting(strs):  # O(nlogn) and O(1)
+    """
+    Longest will be the last after sorting
+    """
+    if len(strs) == 0:
+        return '' 
+    res = ''
+    strs = sorted(strs)
+    for i in strs[0]:
+        if strs[-1].startswith(res + i):
+            res += i
+        else:
+            break
+    return res
+
 if __name__ == '__main__':
     print(longestCommonPrefix(["flower","flow","flight"]))
     print(longestCommonPrefix_alt(["flower","flow","flight"]))

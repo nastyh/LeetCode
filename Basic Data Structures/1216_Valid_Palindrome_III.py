@@ -1,4 +1,4 @@
-def isValidPalindrome(self, s: str, k: int) -> bool:
+def isValidPalindrome(s, k):  # O(n^2) both 
     ## RC ##
     ## APPROACH : DP ##
     ## LOGIC ##
@@ -19,15 +19,29 @@ def isValidPalindrome(self, s: str, k: int) -> bool:
     #     [0, 0, 0, 0, 0, 0, 0, 0], 
     #     [0, 0, 0, 0, 0, 0, 0, 0]
     # ]
-
-    
     dp = [ [0 for _ in s ] for _ in s]
     
-    for i in range(len(dp)-1, -1, -1):
-        for j in range(i+1,len(dp)):
+    for i in range(len(dp) - 2, -1, -1):  # second last
+        for j in range(i + 1,len(dp)): # right from second last
             if s[i] == s[j]:
-                dp[i][j] = dp[i+1][j-1]
+                dp[i][j] = dp[i + 1][j - 1]
             else:
-                dp[i][j] = min( 1+dp[i][j-1], 1+dp[i+1][j], 2+dp[i+1][j-1] )
-    # print(dp)
+                dp[i][j] = min(1 + dp[i][j - 1], 1 + dp[i + 1][j], 2 + dp[i + 1][j - 1])
     return dp[0][-1] <= k
+
+    
+def isValidPalindrome_space_efficient(s, k): # O(n^2) and O(n)
+    """
+    Doesn't pass "abbababa" 1 
+    """
+    dp = [0] * len(s)
+    temp, prev = 0, 0
+    for i in range(len(s) - 2, -1, -1):
+        prev = 0
+        for j in range(i + 1, len(s)):
+            temp = dp[j]
+            if s[i] == s[j]:
+                dp[j] = prev
+                dp[j] = 1 + min(dp[j], dp[j - 1])
+            prev = temp
+    return dp[-1] <= k
