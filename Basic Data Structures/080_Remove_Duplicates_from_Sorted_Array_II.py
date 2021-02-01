@@ -1,10 +1,15 @@
-def removeDuplicates(nums):
-    length = 0
-    for idx, val in enumerate(nums):
-        if (length <= 1) or (nums[length - 2] != val):
-            nums[length] = val
-            length += 1
-    return length
+def removeDuplicates(nums):  # O(N) and O(1)
+    """
+    l points to the place where to put the new value
+    It's the right place if l is either 0 or 1 or if the element 2 steps back isn't equal to current num
+    Then put the value and move l to the right
+    """
+    l = 0
+    for i in range(len(nums)):
+        if (l <= 1) or (nums[l - 2] != nums[i]):
+            nums[l] = nums[i]
+            l += 1
+    return l
 
 
 def removeDuplicates_brute_force(nums):  # O(n^2) and O(1)
