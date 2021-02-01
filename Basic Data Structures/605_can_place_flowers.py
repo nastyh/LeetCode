@@ -1,8 +1,13 @@
-def canPlaceFlowers(flowerbed, n):
+def canPlaceFlowers(flowerbed, n):  # O(n) and O(1)
+    """
+    Calculate the # of flowers that can be plant given the arrangement. If it's >=n then True
+    For every 0 element, we check if its both adjacent positions are also empty.
+    If so, we can plant a flower at the current position without violating the no-adjacent-flowers-rule. 
+    """
     flowers = 0
     p, f = 0, 0 # previous, following
     for i, c in enumerate(flowerbed):
-            f = 0 if i + 1 >= len(flowerbed) else flowerbed[i+1]
+            f = 0 if i + 1 >= len(flowerbed) else flowerbed[i + 1]
             if p == c == f == 0:
                 flowers += 1
                 p = 1
@@ -11,7 +16,7 @@ def canPlaceFlowers(flowerbed, n):
     return flowers >= n
 
 
-def canPlaceFlowers_alt(flowerbed, n):
+def canPlaceFlowers_alt(flowerbed, n):  # O(n) both
     """
     create a dp list with 0 at the ends to handle left and right elements
     Start iterating from the element at index 1 to the second last element and do greedily:
@@ -26,7 +31,6 @@ def canPlaceFlowers_alt(flowerbed, n):
             n -= 1
             if n == 0: return True
     return False
-
 
 
 def canPlaceFlowers_dp(flowerbed, n):  # doesn't pass the edge cases + uses extra space
