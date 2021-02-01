@@ -104,3 +104,4 @@ if __name__ == '__main__':
     print(minWindow_alt("ab", "a"))
     print(minWindow_another("ADOBECODEBANC", "ABC"))
     print(minWindow_another("ab", "a"))
+    print(minWindow_alt("dcbefebce", "fd"))
