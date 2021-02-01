@@ -1,5 +1,5 @@
 from collections import Counter
-def checkInclusion(s1, s2):  # slow but works
+def checkInclusion(s1, s2):  # slow but works. Something like O(s1 * len(s2)//len(s1))
     if len(s2) < len(s1): return False
     def _isPerm(s1, s2):
         return Counter(s1) == Counter(s2)
@@ -57,7 +57,7 @@ def checkInclusion_dict(s1, s2):  # O(l1 + (l2 - l1)) and O(l2)
 
  
 
-def checkInclusion_alt(s1, s2):  # with sorting 
+def checkInclusion_alt(s1, s2):  # with sorting O(nlogn)
     s, e = 0, len(s1)
     s1 = sorted(s1)
     chars = list(set(s1))
@@ -71,7 +71,7 @@ def checkInclusion_alt(s1, s2):  # with sorting
 def checkInclusion_more(s1, s2):
     """
     Initialize the right pointer. The left pointer is right minus the length of s1
-    Accurate with the indicess
+    Accurate with the indices
     """
     if len(s2) < len(s1): return False
     def _isPal(st1, st2):
