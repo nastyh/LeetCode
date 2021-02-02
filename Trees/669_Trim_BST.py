@@ -5,7 +5,7 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def trimBST(self, root: TreeNode, L: int, R: int) -> TreeNode:
+    def trimBST(self, root: TreeNode, L: int, R: int) -> TreeNode:  # O(N) both
         if not root:
             return None
         if root.val == L:
@@ -24,7 +24,7 @@ class Solution:
         return root
 
        # iterative
-       def trimBST(self, root: TreeNode, L: int, R: int) -> TreeNode:
+       def trimBST(self, root: TreeNode, L: int, R: int) -> TreeNode:  # O(N) both
         if root is None: return None
 
         while root and (root.val < L or root.val > R):
