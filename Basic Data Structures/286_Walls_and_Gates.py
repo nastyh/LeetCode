@@ -14,6 +14,27 @@ def wallsAndGates(rooms):
                 _helper(i, j, 0, rooms)
 
 
+def wallsAndGates_bfs_optimal(rooms):  # O(mn) both. Space because in the worst case we'll instert everything to the deque
+    """
+    Throw all gates into the deque (b/c we need to start somewhere)
+    Then unpack the deck and look around:
+    if any of the cells around is empty, plant step into it and and add to the deque
+    b/c we want to explore everything around this cell and also pass an increased step
+    """
+    d, step = deque(), 0
+    for row in range(len(rooms)):
+        for col in range(len(rooms[0])):
+            if rooms[row][col] == 0:
+                d.append((row, col, 0))
+    while d:
+        x, y, step = d.popleft()
+        for x_offset, y_offset in [(x + 1, y), (x - 1, y), (x, y - 1), (x, y + 1)]:
+            if 0 <= x_offset < len(rooms) and 0 <= y_offset < len(rooms[0]) and\
+            rooms[x_offset][y_offset] == 2147483647:
+                rooms[x_offset][y_offset] = step + 1
+                d.append((x_offset, y_offset, step + 1))
+
+
 def wallsAndGates_alt(rooms):
     if not rooms: return
     m, n = len(rooms), len(rooms[0])
