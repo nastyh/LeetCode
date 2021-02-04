@@ -5,21 +5,21 @@ class ListNode:
         self.next = None
 
 class Solution:
-#     def reverseList(self, head: ListNode) -> ListNode:
-#         if head is None:
-#             return None
-#         if head.next is None:
-#             return head
+    def reverseList(self, head: ListNode) -> ListNode:
+        if head is None:
+            return None
+        if head.next is None:
+            return head
 
-#         cur = head
-#         prev = None
+        cur = head
+        prev = None
 
-#         while cur:
-#             next_n = cur.next
-#             cur.next = prev
-#             prev = cur
-#             cur = next_n
-#         return prev
+        while cur:
+            next_n = cur.next
+            cur.next = prev
+            prev = cur
+            cur = next_n
+        return prev
 
 #     def reverseList(self, head: ListNode) -> ListNode: # iteratively
 #         if head is None: #edge cases

@@ -4,7 +4,7 @@ class ListNode:
         self.val = val
         self.next = next
 
-def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+def addTwoNumbers(self, l1, l2):  # O(N1 + N2) and O(1)
     def _rev_helper(node):  # reverse a linked list
         if not node: return
         prev, curr = None, node
@@ -19,7 +19,7 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
     l4 = _rev_helper(l2)
     l5 = dummy = ListNode(-1)
     carry = 0
-    while l3 or l4:
+    while l3 or l4:  # important to do with or. With "and" will be hard to propagate further 
         val3 = l3.val if l3 else 0
         val4 = l4.val if l4 else 0
         value = (val3 + val4 + carry) % 10
@@ -33,7 +33,7 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
     return _rev_helper(dummy.next)
 
 
-def addTwoNumbers_no_reverse(self, l1, l2):
+def addTwoNumbers_no_reverse(self, l1, l2):  # O(N1 + N2) and O(1)
     """
     Follow-up w/o reversing lists
     """
@@ -46,14 +46,47 @@ def addTwoNumbers_no_reverse(self, l1, l2):
         n2 *= 10
         n2 += l2.val
         l2 = l2.next
-    n3=n1 + n2        
+    n3 = n1 + n2        
     
     ##turn n3 to linked list
     prev = ListNode(-1)
     head = prev
     for i in str(n3):
-        n=ListNode(i)
+        n = ListNode(i)
         head.next = n
         head = n
     return prev.next
+
+
+def addTwoNumbers_deque(self, l1, l2):
+    q1 = collections.deque()
+    q2 = collections.deque()
+    while l1 or l2:
+        if l1 and l2:
+            q1.append(l1.val)
+            q2.append(l2.val)
+            l1 = l1.next
+            l2 = l2.next
+        elif l1 and not l2:
+            q1.append(l1.val)
+            q2.appendleft(0)
+            l1 = l1.next
+        else:
+            q1.appendleft(0)
+            q2.append(l2.val)
+            l2 = l2.next
+    carry = 0
+    cur = None
+    while q1 and q1:
+        n1, n2 = q1.pop(), q2.pop()
+        if n1 + n2 + carry >= 10:
+            cur = ListNode(n1 + n2 + carry - 10, cur)
+            carry = 1
+        else:
+            cur = ListNode(n1 + n2 + carry, cur)
+            carry = 0
+    if carry == 1:
+        return ListNode(1, cur)
+    else:
+        return cur
         
