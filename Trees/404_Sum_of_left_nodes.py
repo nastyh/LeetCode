@@ -6,8 +6,7 @@ class TreeNode:
         self.left = left
         self.right = right
         
-
-    def sumOfLeftLeaves(self, root):
+    def sumOfLeftLeaves(self, root):  # O(N) both
         ls = 0
         if not root:
             return 0
@@ -45,7 +44,7 @@ class TreeNode:
         return self.res
 
 
-    def sumOfLeftLeaves_bfs_optimal(self, root):
+    def sumOfLeftLeaves_bfs_optimal(self, root):  # O(n) both
         """
         In the deck, keep the node and whether it's left. It's left, if it came to the deque
         from the earlier t.left statement.
@@ -65,6 +64,7 @@ class TreeNode:
                 if t.right:
                     d.append((t.right, False))
         return res
+        
 
     def sumOfLeftLeaves_bfs(self, root):
         res = 0
@@ -72,7 +72,6 @@ class TreeNode:
             return 0
         q = deque()
         q.append(root)
-
         while q:
             t = q.popleft()
             if t.left and (not t.left.left and not t.left.right):
@@ -82,6 +81,7 @@ class TreeNode:
             if t.right:
                 q.append(t.right)
         return res
+
 
     def sumOfLeftLeaves_bfs_slight(self, root):
         res = 0
