@@ -6,7 +6,27 @@ class TreeNode:
         self.left = left
         self.right = right
 
-    def isValidBST(self, root): # iteratively, BFS
+    
+    def isValid_inorder_stack(self, root):  # O(N) both
+        """
+        Just traverse inorder and save values to the list
+        If it's a BST, the list will be in an increasing order
+        Just check it 
+        """
+        res = []
+        def _inorder(node):
+            if not node: return
+            _inorder(node.left)
+            res.append(node.val)
+            _inorder(node.right)
+        _inorder(root)
+        if len(res) <= 1: return True
+        for ix in range(1, len(res)):
+            if res[ix] <= res[ix - 1]:
+                return False
+        return True
+
+    def isValidBST(self, root): # iteratively, BFS  O(N) both
         if not root:
             return True
         s = []
@@ -24,7 +44,7 @@ class TreeNode:
                 s.append([node.right, node.val, r_max])
         return True
 
-    def isValidVST_recursively(self, root):  # recursive approach
+    def isValidVST_recursively(self, root):  # recursive approach O(N) both
         def _helper(node, l, r):
             if not node:
                 return True
