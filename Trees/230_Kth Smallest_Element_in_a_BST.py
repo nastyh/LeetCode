@@ -23,6 +23,23 @@ class TreeNode:
         return out[k - 1]
 
 
+    def kthSmallest_dfs_early_stopping(self, root, k):  # O(h) and O(k)
+        """
+        Do a traditional inorder recursive traversal but add an extra check if we have k elements in the res
+        If so, make an early stopping and return the last item
+        """
+        res = []
+        def _inorder(node):
+            if not node: return
+            _inorder(node.left)
+            if len(res) == k:
+                return
+            res.append(node.val)
+            _inorder(node.right)
+        _inorder(root)
+        return res[-1]
+
+
     def kthSmallest_alt(self, root, k):  # just better time and space complexity: O(h + k) and O(k) in space b/c once we have k elements in res, we stop
         res, st = [], []
         if not root: return res
