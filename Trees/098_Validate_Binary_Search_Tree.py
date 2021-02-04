@@ -7,7 +7,7 @@ class TreeNode:
         self.right = right
 
     
-    def isValid_inorder_stack(self, root):  # O(N) both
+    def isValid_inorder_recurs(self, root):  # O(N) both
         """
         Just traverse inorder and save values to the list
         If it's a BST, the list will be in an increasing order
@@ -20,6 +20,29 @@ class TreeNode:
             res.append(node.val)
             _inorder(node.right)
         _inorder(root)
+        if len(res) <= 1: return True
+        for ix in range(1, len(res)):
+            if res[ix] <= res[ix - 1]:
+                return False
+        return True
+
+
+    def isValid_inorder_stack(self, root):
+        """
+        Same as above but build a list iteratively instead of recursively
+        """
+        res, st = [], []
+        def _inorder_stack(node):
+            if not node: return
+            while st or node:
+                if node:
+                    st.append(node)
+                    node = node.left
+                else:
+                    node = st.pop()
+                    res.append(node.val)
+                    node = node.right
+        _inorder_stack(root)
         if len(res) <= 1: return True
         for ix in range(1, len(res)):
             if res[ix] <= res[ix - 1]:
