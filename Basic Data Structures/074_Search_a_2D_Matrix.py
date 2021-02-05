@@ -51,7 +51,8 @@ def searchMatrix_efficient(matrix, target):  # O(log(nm)) and O(1)
     l, r = 0, len(matrix) * len(matrix[0]) - 1
     while l <= r:
         m = (l + r) // 2
-        m_ix = matrix[m // len(matrix[0])][m % len(matrix[0])]
+        # we cannot write matrix[m] and need to express m in terms of rows (or cols)
+        m_ix = matrix[m // len(matrix[0])][m % len(matrix[0])]  # row is (m // # of cols). col is (m % # of cols) 
         if target == m_ix:
             return True
         elif target < m_ix:
@@ -62,3 +63,5 @@ def searchMatrix_efficient(matrix, target):  # O(log(nm)) and O(1)
 
 
 if __name__ == '__main__':
+    print(searchMatrix_efficient([[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 23))
+    print(searchMatrix_efficient([[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 0))
