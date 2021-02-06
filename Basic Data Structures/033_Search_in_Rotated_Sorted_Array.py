@@ -1,12 +1,12 @@
-def search_one_pass(nums, target):
+def search_one_pass(nums, target): # O(logN) and O(1)
     begin = 0
     end = len(nums) - 1 
     while begin <= end:
-        mid = (begin + end)//2
-        if nums[mid] == target:
+        mid = begin + (end - begin) // 2
+        if nums[mid] == target:  # base case
             return mid
-        if nums[mid] > nums[end]: # Left side of mid is sorted
-            if  nums[begin] <= target and target < nums[mid]: # Target in the left side
+        if nums[mid] > nums[end]:  # means a break happened either at this element or to the right ==> Left side of mid is sorted
+            if  nums[begin] <= target and target < nums[mid]: # Target is within the boundaries of the left side
                 end = mid - 1
             else: # in right side
                 begin = mid + 1
