@@ -6,7 +6,7 @@ class TreeNode:
         self.right = right
 
 
-    def boundaryOfBinaryTree_alt(self, root):
+    def boundaryOfBinaryTree_alt(self, root):  # O(n) both
         if not root:
             return []
         if not root.left and not root.right:
@@ -42,7 +42,10 @@ class TreeNode:
         return left_boundary + leaves + right_boundary[::-1]  
 
 
-    def boundaryOfBinaryTree(self, root):  # had to write a weird return statement to make it work
+    def boundaryOfBinaryTree(self, root):  # O(n) both. Had to write a weird return statement to make it work
+        """
+        Three functions: left boundary, right boundary, leaves
+        """
         if not root: return []
         left_res = []
         right_res = []
