@@ -6,6 +6,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
     def rightSideView_efficient(self, root): # bit less space than the variant below, b/c it doesn't save everything in res. Space complexity is probably O(d), where d
     # is a diameter of a tree
         if not root: return []
@@ -23,6 +24,7 @@ class TreeNode:
                     d.append(t.right)
             res.append(curr[-1])
         return res
+        
 
     def rightSideView(self, root): # bfs
         res = []
@@ -44,7 +46,7 @@ class TreeNode:
         return [i[-1] for i in res]
 
     
-    def rightSideView_optimal(self, root):
+    def rightSideView_optimal(self, root):  # O(N) and O(d) to keep the queues, where d is the tree diameter. Level can contain up to N/2 nodes
         """
         When you loop through elements at a given level, if you hit the last element 
         at this level, add it to res
@@ -65,24 +67,39 @@ class TreeNode:
                     d.append(t.right)
         return res
 
+    
+    def rightSideView_dfs_short(self, root):  # O(N) and O(h) where h is the tree's height
+        if root is None:
+            return []
+        res = []
+        def helper(node, level):
+            if level == len(res):
+                res.append(node.val)
+            for child in [node.right, node.left]:
+                if child:
+                    helper(child, level + 1)
+        helper(root, 0)
+        return res
+
 
     def rightSideView_rec(self, root): # a bit different approach
-        if not root:
-            return []
-        ans = []
-        max_height = [-1] #I am defining this as a list to be able to change it in the recursive calls of helper
-        self.helper(root, 0, max_height, ans)
-        return ans
-
-    def helper(self, node, cur_height, max_height, ans):
+        def helper(node, cur_height, max_height, ans):
         if not node:
             return
         if cur_height > max_height[0]:
             ans.append(node.val)
             max_height[0] = cur_height
 
-        self.helper(node.right, cur_height+1, max_height, ans)
-        self.helper(node.left, cur_height+1, max_height, ans)
+        helper(node.right, cur_height + 1, max_height, ans)
+        helper(node.left, cur_height + 1, max_height, ans)
+        if not root:
+            return []
+        ans = []
+        max_height = [-1] #I am defining this as a list to be able to change it in the recursive calls of helper
+        helper(root, 0, max_height, ans)
+        return ans
+
+    
 
 
 if __name__ == '__main__':
