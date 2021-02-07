@@ -47,6 +47,7 @@ def longestConsecutive_left_right(nums):  # O(n) both
                 step += 1
             res = max(step, res)
     return res
+    
 
 def longestConsecutive_optimized(nums):  # O(n) and O(n)
     """

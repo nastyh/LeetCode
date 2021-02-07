@@ -84,8 +84,36 @@ def letterCombinations_another(digits):  # O(3^N * 4^M) both, where N is the num
     return _helper(digits, d, 0, '', [])
 
 
+def letterCombinations_one_more(digits):
+    d = {'2': 'abc',
+         '3': 'def',
+         '4': 'ghi',
+         '5': 'jkl',
+         '6': 'mno',
+         '7': 'pqrs',
+         '8': 'tuv',
+         '9': 'wxyz'
+         }
+    res = []
+    if len(digits) == 0: return []
+    if len(digits) == 1: return [digits[0]]
+    def _helper(digits, d, curr_ix, curr_res):
+        if len(curr_res) == len(digits):
+            res.append(curr_res)
+            return
+        for i in range(curr_ix, len(digits)):
+            for ch in d[digits[i]]:
+                curr_res += ch
+                _helper(digits, d, i + 1, curr_res)
+                curr_res = curr_res[:-1]
+    _helper(digits, d, 0, '')
+    return res
+
+
 if __name__ == '__main__':
-    print(letterCombinations('23'))
-    print(letterCombinations_alt('23'))
-    print(letterCombinations_iter('23'))
-    print(letterCombinations_another('23'))
+    # print(letterCombinations('23'))
+    # print(letterCombinations_alt('23'))
+    # print(letterCombinations_iter('23'))
+    # print(letterCombinations_another('23'))
+    print(letterCombinations_one_more('23'))
+    print(letterCombinations_one_more('2'))

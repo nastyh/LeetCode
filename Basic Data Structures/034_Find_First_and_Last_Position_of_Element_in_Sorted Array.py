@@ -93,10 +93,54 @@ def searchRange_another_binary(nums, target):  # the longest but easiest to comp
 	return [-1, -1]
 
 
+def searchRange_2_helpers(nums, target):  # O(logn) and O(1)
+	"""
+	Exactly like above but just some cosmetics cleaning
+	2 helper functions: to find the most left element and the most right element
+	Most left: if we found an element at nums[m], we need to store m at res and still go to the left side b/c there can be more elements that are the same
+	Most right: if we found an element at nums[m], we need to store m at res and still go to the right side b/c there can be more elements that are the same
+	"""
+	res = [-1, -1]
+
+	def _find_left(nums, target):
+		left_res = -1
+		l, r = 0, len(nums) - 1
+		while l <= r:
+			m = l + (r - l) // 2
+			if nums[m] == target:
+				left_res = m
+				r = m - 1
+			elif nums[m] > target:
+				r = m - 1
+			else:
+				l = m + 1
+		return left_res
+
+	def _find_right(nums, target):
+		right_res = -1
+		l, r = 0, len(nums) - 1
+		while l <= r:
+			m = l + (r - l) // 2
+			if nums[m] == target:
+				right_res = m
+				l = m + 1
+			elif nums[m] < target:
+				l = m + 1
+			else:
+				r = m - 1
+		return right_res
+
+	res[0] = _find_left(nums, target)
+	res[1] = _find_right(nums, target)
+	return res 
+
+
 if __name__ == '__main__':
-	print(searchRange([5, 7, 7, 8, 8, 10], 8))
-	print(searchRange([5, 7, 7, 8, 8, 10], 6))
-	print(searchRange_binary([5, 7, 7, 8, 8, 10], 8))
-	print(searchRange_binary([5, 7, 7, 8, 8, 10], 6))
-	print(searchRange_another_binary([5, 7, 7, 8, 8, 10], 8))
-	print(searchRange_another_binary([5, 7, 7, 8, 8, 10], 6))
+	# print(searchRange([5, 7, 7, 8, 8, 10], 8))
+	# print(searchRange([5, 7, 7, 8, 8, 10], 6))
+	# print(searchRange_binary([5, 7, 7, 8, 8, 10], 8))
+	# print(searchRange_binary([5, 7, 7, 8, 8, 10], 6))
+	# print(searchRange_another_binary([5, 7, 7, 8, 8, 10], 8))
+	# print(searchRange_another_binary([5, 7, 7, 8, 8, 10], 6))
+	print(searchRange_2_helpers([5, 7, 7, 8, 8, 10], 8))
+	print(searchRange_2_helpers([5, 7, 7, 8, 8, 10], 6))
