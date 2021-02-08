@@ -66,8 +66,7 @@ def subarraySum_running_sum_efficient(nums, k):  #  O(n^2) and O(1). TLE
     return res
 
 
-
-def subarraySum_dict(nums, k):
+def subarraySum_dict(nums, k):  # O(n) both
     d, curr_sum, res = {0 : 1}, 0, 0
     for num in nums:
         curr_sum += num
