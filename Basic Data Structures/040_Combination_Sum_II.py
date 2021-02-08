@@ -15,7 +15,13 @@ def combinationSum2_another(candidates, target):
     return res
 
 
-def combinationSum2_optimal(candidates, target):  # O(2^N) and O(N)
+def combinationSum2_optimal(candidates, target):  # O(2^N)  -- num either included or excluded and O(N)
+    """
+    Need to sort to handle dups
+    Base cases: left is 0. Exact match
+    left < 0: took to match, return one level higher
+    Then recursion 
+    """
     candidates.sort()
     res = []
     def _helper(nums, curr_res, curr_ix, left): 
