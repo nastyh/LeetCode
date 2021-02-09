@@ -7,7 +7,7 @@ class Node:
         self.right = right
         self.next = next
 from collections import deque
-class Solution:
+
     def connect(self, root):
         if root ==  None:
             return None
@@ -19,7 +19,6 @@ class Solution:
                 if size > 1 :
                     node.next = q[0]
                 size -= 1
-
                 if node.left:
                     q.append(node.left)
                 if node.right:
