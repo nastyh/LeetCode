@@ -1,5 +1,5 @@
 from collections import defaultdict
-def carPooling_dict(trips, capacity):
+def carPooling_dict(trips, capacity): # O(n) both
     trip_capacity = defaultdict(int)
     for i in range(len(trips)):
         no = trips[i][0]
@@ -12,7 +12,20 @@ def carPooling_dict(trips, capacity):
     return True
 
 
-def carPooling_greedy(trips, capacity):
+def carPooling_efficient(trips, capacity):  # O(nlogn) and O(1)
+    l = []
+    for person, st, end in trips:
+        l.append((start, person))
+        l.append((end, person))
+    l.sort()
+    for _, person in l:
+        capacity -= person
+        if capacity < 0:
+            return False
+    return True
+
+
+def carPooling_greedy(trips, capacity):  # O(nlogn) and O(1)
     starts = sorted([(trip[1], trip[0]) for trip in trips])
     ends = sorted([(trip[2], trip[0]) for trip in trips])
     pax = st = en = 0
