@@ -1,5 +1,16 @@
 from collections import defaultdict
-def countComponents(n, edges):
+def countComponents(n, edges):  # O(n) both
+    """
+    Create adj list. Will be like {0 : [1], 1 : [0, 2], 2: [1], 3: [4], 4: [3] }
+    Helper receives a node, adds it to visited, goes into its value and calls itself on the neighbors
+    Outside we start a loop from  0 to 4 (our vertices) and call helper on 0. 
+    It recursively visits 0, 1, 2. 
+    After that the whole recursion cycle ends. Increment res
+    Then the for loop calls helper on 1, 2 but nothing happens b/c they're already in visited.
+    Finally it gets to 3. helper does 3 and 4. 
+    The whole recursion cycle ends. Increment res
+    The for loop also ends. 
+    """
     adj_l = defaultdict(list)
     for el_ix in range(len(edges)):
         adj_l[edges[el_ix][0]].append(edges[el_ix][1])
