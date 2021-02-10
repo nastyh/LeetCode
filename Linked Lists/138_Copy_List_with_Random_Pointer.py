@@ -2,7 +2,7 @@ def copyRandomList_dict(self, head):  # O(n) and O(n) with a dictionary
     if not head: return
     # first pass copy the normal chain, remember the nodes
     memory = {None: None}
-    new_root = ListNode()
+    new_root = ListNode(-1)
     new_node, node = new_root, head
     while node:
         # append new node
@@ -21,6 +21,26 @@ def copyRandomList_dict(self, head):  # O(n) and O(n) with a dictionary
         node = node.next
         new_node = new_node.next
     return new_root.next
+
+
+def copyRandomList_short(self, head): # O(n) both
+    """
+    Create a dictionary. Has to be with None, won't work otherwise 
+    It will have elements: node from the original list : newly created node with this value
+    Keys (or new nodes) in this dictionary have "next" and "random." Need to fill them out
+    At the end, return the key that corresponds to the head of the new list
+    """
+    d = {None : None}
+    ptr = head
+    while ptr:
+        d[ptr] = ListNode(ptr.val)
+        ptr = ptr.next
+    ptr = head
+    while ptr:
+        d[ptr].next = d[ptr.next]
+        d[ptr].random = d[ptr.random]
+        ptr = ptr.next
+    return d[head]
 
 
 def copyRandomList_recursive(self, head): # O(n) and O(n)
