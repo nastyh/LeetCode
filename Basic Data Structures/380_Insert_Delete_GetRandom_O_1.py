@@ -1,9 +1,6 @@
 from random import choice
 class RandomizedSet():
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
         self.dict = {}
         self.list = []
 
@@ -25,6 +22,7 @@ class RandomizedSet():
         self.list.append(val)
         return True
 
+
     def remove(self, val: int) -> bool:
         """
         Removes a value from the set. Returns true if the set contained the specified element.
@@ -38,6 +36,7 @@ class RandomizedSet():
             del self.dict[val]
             return True
         return False
+        
 
     def getRandom(self) -> int:
         """
