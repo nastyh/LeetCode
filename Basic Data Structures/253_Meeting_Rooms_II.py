@@ -15,7 +15,7 @@ def minMeetingRooms(intervals):
     return res
 
 
-def minMeetingRooms_heap(intervals):
+def minMeetingRooms_heap(intervals):  # O(nlogn) b/c of sorting and O(n) to construct a min heap that will contain the whole list in the worst case 
     """
     maintain a min heap with end times as a key. The top element is the room that will be free the earliest.
     len(heap) shows how many meetings are taking place. This is how many rooms we need
