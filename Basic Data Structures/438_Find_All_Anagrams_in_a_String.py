@@ -36,6 +36,38 @@ from collections import Counter
 
 #     return res
 
+def findAnagrams_one_more(s, p):  # O(len(s) + len(p)) both. Pass through both strings and maintain dicts
+    """
+    Build original dictionaries: one for string p (it won't change)
+    another for string p (this will be updated)
+    Two pointers: start moving
+    If dictionaries are the same, it means palindromes, save the left index
+    Then need to move the left border one step right. Decrement the respective value in the dictionary,
+    if it becomes 0, delete the whole record
+    Now we also need to move the right pointer.
+    Be accurate with indices here. Check the letter at the index r + 1 but first check that r + 1 isn't out of bounds
+    Make an update to the dictionary and then actually move the right index.
+    """
+    res = []
+    p_d = Counter(p)
+    s_d = Counter(s[0: len(p)])
+    l = 0
+    r = l + len(p) - 1
+    while r < len(s):
+        if p_d == s_d:
+            res.append(l)
+        s_d[s[l]] -= 1
+        if s_d[s[l]] == 0:
+            del s_d[s[l]]
+        l += 1
+        if r + 1 < len(s):
+            if s[r + 1] not in s_d:
+                s_d[s[r + 1]] = 1
+            else:
+                s_d[s[r + 1]] += 1
+        r += 1
+    return res 
+
 
 def findAnagrams_sorted(s, p):
     len_p = len(p)
@@ -48,7 +80,7 @@ def findAnagrams_sorted(s, p):
     return res
 
 
-def findAnagrams_another_sorting(s, p):  # very slow but works
+def findAnagrams_another_sorting(s, p):  #  O(nlogn) and O(n); very slow but works
     """
     Start the loop from the index equal to the length of p
     slice the s by subtracting the length of p and adding 1, all the way to the current index
@@ -130,6 +162,28 @@ def findAnagrams_counter_another(s, p):  # times out but works
     return res 
 
 
+def findAnagrams_one_more(s, p):  # times out but works
+    res = []
+    p_d = Counter(p)
+    s_d = Counter(s[0: len(p)])
+    l = 0
+    r = l + len(p) - 1
+    while r < len(s):
+        if p_d == s_d:
+            res.append(l)
+        s_d[s[l]] -= 1
+        if s_d[s[l]] == 0:
+            del s_d[s[l]]
+        l += 1
+        if r + 1 < len(s):
+            if s[r + 1] not in s_d:
+                s_d[s[r + 1]] = 1
+            else:
+                s_d[s[r + 1]] += 1
+        r += 1
+    return res 
+
+
 if __name__ == '__main__':
     # print(findAnagrams('cbaebabacd', 'abc'))
     print(findAnagrams_dicts('cbaebabacd', 'abc'))
@@ -139,3 +193,5 @@ if __name__ == '__main__':
     print(findAnagrams_counter('abab', 'ab'))
     print(findAnagrams_counter_another('cbaebabacd', 'abc'))
     print(findAnagrams_counter_another('abab', 'ab'))
+    print(findAnagrams_one_more('cbaebabacd', 'abc'))
+    print(findAnagrams_one_more('abab', 'ab'))
