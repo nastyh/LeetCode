@@ -20,7 +20,9 @@ def closest(s, l1, l2):  # O(n) both
     start popping elements.
     Need to look at the neighbor from the left and the neighbor from the right.
     To avoid falling out of bounds, need to do it in two separate if statements. 
-    Inside each statement 
+    Inside each statement we'll check if there is a match. If there is a match, it's enough.
+    Otherwise keep going out and mark visited elements in visited.
+    Refill the queue 
     """
     d = deque()
     res = 1

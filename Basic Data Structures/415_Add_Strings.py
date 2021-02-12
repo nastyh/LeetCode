@@ -73,6 +73,34 @@ def addStrings_alt(num1, num2):  # O(max(len(num1), len(num2))) both
     return ''.join(str(i) for i in res)[::-1]  # ''.join(res)[::-1] won't work 
 
 
+def addStrings_another_one_by_one(num1, num2):  # O(max(len(num1), len(num2)))  and  O(max(len(num1), len(num2))) + 1 
+    """
+    Slightly better space-wise than above b/c we don't create lists and build res on the fly
+    """
+    i, j = len(num1) - 1, len(num2) - 1
+    res, carry = '', 0
+    while i >= 0 and j >= 0:
+        curr = int(num1[i]) + int(num2[j]) + carry
+        res += str(curr % 10)
+        carry = curr // 10
+        i -= 1
+        j -= 1
+    while i >= 0:
+        curr = int(num1[i]) + carry
+        res += str(curr % 10)
+        carry = curr // 10
+        i -= 1
+    while j >= 0:
+        curr = int(num2[j]) + carry
+        res += str(curr % 10)
+        carry = curr // 10
+        j -= 1
+    if carry != 0:
+        res += '1'
+    return res[::-1]
+
+
+
 def addStrings_power_tens(num1, num2):
     def _helper(num):
         l = num.split()
@@ -115,7 +143,11 @@ def addStrings_zip_longest(num1, num2):
 
 if __name__ == '__main__':
     # print(addStrings('31','29'))
-    print(addStrings_alt('31','29'))
-    print(addStrings_alt('1','9'))
-    print(addStrings_alt('0','0'))
-    print(addStrings_alt('1','99'))
+    # print(addStrings_alt('31','29'))
+    # print(addStrings_alt('1','9'))
+    # print(addStrings_alt('0','0'))
+    # print(addStrings_alt('1','99'))
+    print(addStrings_another_one_by_one('31','29'))
+    print(addStrings_another_one_by_one('1','9'))
+    print(addStrings_another_one_by_one('0','0'))
+    print(addStrings_another_one_by_one('1','99'))
