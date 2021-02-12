@@ -1,4 +1,4 @@
-def maxSubArrayLen(nums, k):
+def maxSubArrayLen(nums, k):  # O(n) both 
     if not nums:
         return 0
     curr_max = 0   # current record of max length
@@ -16,7 +16,14 @@ def maxSubArrayLen(nums, k):
 
 
 def maxSubArrayLen_alt(nums, k):
-    seen_sum = {0:0}
+    """
+    Dictionary will contain pairs running sum: end_index
+    Start building a running sum. If it becomes k, mark in largest_len
+    If it's not k, calculate the diff. If we've seen the difference already, choose 
+    the max b/w the current length and the length stored in the dictionary
+    Keep building the dict
+    """
+    seen_sum = {0: 0}
     total_sum, largest_len = 0, 0
     for i in range(len(nums)):
         total_sum += nums[i]
