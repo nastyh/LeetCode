@@ -40,16 +40,21 @@ def arrayStringsAreEqual_connecting(word1, word2):  # O(n) both
 
 
 def arrayStringsAreEqual_no_extra_space(word1, word2):  # O(n) and O(1)
+    """
+    Each list will have two pointers: one for words, another for a letter in a given word
+    Need to compare letter by letter and accurately deal with situations when words are of different lengths
+    and we arrive to the end of one word sooner than to the end of another
+    """
     n1, n2 = len(word1), len(word2)
     str_inx_1, char_inx_1, str_inx_2, char_inx_2 = 0, 0, 0, 0
     while str_inx_1 < n1 and str_inx_2 < n2:
-        if word1[str_inx_1][char_inx_1] != word2[str_inx_2][char_inx_2]:
+        if word1[str_inx_1][char_inx_1] != word2[str_inx_2][char_inx_2]:  # core check
             return False
-        char_inx_1, char_inx_2 = char_inx_1+1, char_inx_2+1
-        if char_inx_1 >= len(word1[str_inx_1]):
-            char_inx_1, str_inx_1 = 0, str_inx_1+1
-        if char_inx_2 >= len(word2[str_inx_2]):
-            char_inx_2, str_inx_2 = 0, str_inx_2+1
+        char_inx_1, char_inx_2 = char_inx_1 + 1, char_inx_2 + 1  # move letters inside words
+        if char_inx_1 >= len(word1[str_inx_1]):  # if we arrived to the end of the word in word1
+            char_inx_1, str_inx_1 = 0, str_inx_1 + 1  # move to the next word and put letter pointer to 0
+        if char_inx_2 >= len(word2[str_inx_2]):  # same if we arrived to the end of the word in word2
+            char_inx_2, str_inx_2 = 0, str_inx_2 + 1
     if str_inx_1 < n1 or str_inx_2 < n2:
         return False
     return True
