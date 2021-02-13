@@ -1,4 +1,11 @@
-def maximumSwap(num):  # brute force
+def maximumSwap(num):  # brute force  O(n*2) and O(n)
+    """
+    Convert integer into list of digits and create a current_max variable as a sort of checkpoint.
+    For each digit in num, swap that digit with every succeeding digit.
+    Compare the current swapped number with the current maximum value and swap if it's greater.
+    Make sure you undo the swap you did, since we're only allowed to swap once.
+    Return the final value as an integer format.
+    """
     digits = list(map(str, list(str(num))))
     current_max = digits.copy()
     for i in range(len(digits)):
@@ -23,7 +30,13 @@ def maximumSwap_greedy(num):
     return int("".join([str(i) for i in num]))
 
 
-def maximumSwap_dict(num):
+def maximumSwap_dict(num):  # O(n) both 
+    """
+    compute last[d] = i, the index i of the last occurrence of digit d (if it exists).
+    when scanning the number from left to right, if there is a larger digit in the future,
+    we will swap it with the largest such digit; if there are multiple such digits,
+    we will swap it with the one that occurs the latest.
+    """
     nums = [int(i) for i in str(num)]
     d = {}
     for k, v in enumerate(nums):
