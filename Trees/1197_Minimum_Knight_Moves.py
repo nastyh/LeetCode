@@ -59,8 +59,30 @@ def minKnightMoves_math(x, y):  # O(1)
     if (x == 2 and y == 2): return 4        
     delta = x - y
     if (y > delta): return delta - 2 * int((delta - y) // 3);
-    else: return delta - 2 * int((delta - y) // 4);
+    else: return delta - 2 * int((delta - y) // 4)
 
+
+def minKnightMoves_brute_force(x, y):  # O(xy) both 
+    """
+    Usual BFS but doesn't take advantage of the symmetry. Runs but slower 
+    """
+    d = deque()
+    visited = set()
+    if x == 0 and y == 0: return 0
+    d.append((0, 0, 0))
+    visited.add((0, 0))
+    x, y = abs(x), abs(y)
+    while d:
+        x_coord, y_coord, res = d.popleft()
+        visited.add((x_coord, y_coord))
+        if x_coord == x and y_coord == y:
+            return res
+        for x_offset, y_offset in [(x_coord - 2, y_coord - 1), (x_coord - 1, y_coord - 2), (x_coord + 1, y_coord - 2), (x_coord + 2, y_coord - 1), (x_coord + 2, y_coord + 1), (x_coord + 1, y_coord + 2), (x_coord - 1, y_coord + 2), (x_coord - 2, y_coord + 1)]:
+            if (x_offset, y_offset) not in visited:
+                if x_offset == x and y_offset == y:
+                    return res + 1
+                visited.add((x_offset, y_offset))
+                d.append((x_offset, y_offset, res + 1))
 
 if __name__ == '__main__':
     print(minKnightMoves(4, -7))
