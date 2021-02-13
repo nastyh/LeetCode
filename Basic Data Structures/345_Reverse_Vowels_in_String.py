@@ -1,4 +1,4 @@
-def reverseVowels(s):
+def reverseVowels(s):  # O(n) both 
     vowels = ['e','u','i','o','a', 'E', 'U', 'I', 'O','A']
     l = list(s)
     i, j = 0, len(l) - 1
@@ -40,4 +40,15 @@ def reverseVowels_alt(s):
         if s[consonant_ix] not in vowels:
             res[consonant_ix] = s[consonant_ix]
     return ''.join(res)
+
+
+def reverseVowels_stack(s):
+    stack = [i for i in s if i in "aeiouAEIOU"]
+    res = []
+    for i in s:
+        if(i in "aeiouAEIOU"):
+            res.append(stack.pop())
+        else:
+            res.append(i)
+    return("".join(res))
 
