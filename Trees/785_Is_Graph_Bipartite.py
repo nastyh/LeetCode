@@ -24,7 +24,7 @@ def isBipartite(graph):
         return True
 
         """
-        Time Complexity: O(N + E)O(N+E), where NN is the number of nodes in the graph, and EE is the number of edges
+        Time Complexity: O(N + E); O(N + E), where N is the number of nodes in the graph, and E is the number of edges
         Space Complexity: O(N); O(N), the space used to store the color
         """
 
