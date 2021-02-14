@@ -5,7 +5,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-    def subtreeWithAllDeepest_BFS(self, root):  # BFS
+    def subtreeWithAllDeepest_BFS(self, root):  # BFS  O(n) both 
         if not root: return
 
         def _helper(root):
