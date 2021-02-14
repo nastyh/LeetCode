@@ -37,6 +37,7 @@ def isNumber_alt(s):
     else:
         #treat the second string exceptionally
         return valid(parts[0]) and valid(parts[1],True)
+        
 
 if __name__ == '__main__':
     print(isNumber("0"))

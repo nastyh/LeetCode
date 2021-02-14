@@ -1,7 +1,6 @@
 # Serialization 
 class Codec:
-
-    def serialize(self, root):
+    def serialize(self, root):  # O(N) both 
         """ Encodes a tree to a single string.
         :type root: TreeNode
         :rtype: str

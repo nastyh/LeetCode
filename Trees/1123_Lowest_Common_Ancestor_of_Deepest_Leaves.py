@@ -1,10 +1,11 @@
 # Definition for a binary tree node.
+from collections import deque
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
-    def lcaDeepestLeaves(self, root):
+    def lcaDeepestLeaves(self, root):  # O(n) and O(n) in the worst case, but on average O(log(n))
         def helper(node):
             if not node:
                 return [node, 0]
@@ -45,10 +46,10 @@ class TreeNode:
                 return (l_node, l_depth + 1)
             else:
                 return (r_node, r_depth + 1)
-
         n, d = _helper(root)
-
         return n
+
+
 
 if __name__ == '__main__':
     l = TreeNode(11)
