@@ -23,7 +23,6 @@ def removeInvalidParentheses(s):  # O(2^n) and O(n)
                 ans = "".join(expr)
                 result[ans] = 1
         else:
-
             # The discard case. Note that here we have our pruning condition.
             # We don't recurse if the remaining count for that parenthesis is == 0.
             if (s[index] == '(' and left_rem > 0) or (s[index] == ')' and right_rem > 0):
@@ -34,7 +33,6 @@ def removeInvalidParentheses(s):  # O(2^n) and O(n)
                         right_rem - (s[index] == ')'), expr)
 
             expr.append(s[index])
-
             # Simply recurse one step further if the current character is not a parenthesis.
             if s[index] != '(' and s[index] != ')':
                 recurse(s, index + 1,
@@ -148,6 +146,51 @@ def removeInvalidParentheses_short(s):
                 if letter not in "()": continue
                 _next.add(candidate[:i] + candidate[i+1:])
         frontier = _next
+    return res
+
+
+def removeInvalidParentheses_short(s):
+    def isValid(self, s):
+        count = 0
+        for ch in s:
+            if ch == "(":
+                count += 1
+            elif ch == ")":
+                count -= 1
+                if count < 0:
+                    return False
+        return count == 0
+
+    if not s:
+        return [""]
+    q = [(s, 0)]
+    visited = set()
+    visited.add(s)
+    found = False
+    res = []
+    while q:
+        # see each level at a time
+        # if found is true, that means, this is the max numbers that could have
+        # been removed.
+        for i in range(len(q)):
+            top, idx = q.pop(0)
+            if (self.isValid(top)):
+                found = True
+                res.append(top)
+            if found:
+                continue
+            for j in range(idx, len(top)):
+                # there can be other chars too
+                if top[j] != "(" and top[j] != ')':
+                    continue
+                newStr = top[:j] + top[j+1:]
+                if newStr not in visited:
+                    visited.add(newStr)
+                    # I removed i, so new string will still start from the
+                    # ith index
+                    q.append((newStr, j))
+        if found:
+            break
     return res
 
 
