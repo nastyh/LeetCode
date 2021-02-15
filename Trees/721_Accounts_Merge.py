@@ -1,4 +1,4 @@
-def accountsMerge(accounts):
+def accountsMerge(accounts):  # O(sum(a_i * log(a_i))) and O(sum(a_i)) where a_i is the length of accounts[i]. Log is for sorting at the end
     """
     For each account, draw the edge from the first email to all other emails. Additionally, we'll remember a map from emails to names on the side.
      After finding each connected component using a depth-first search, we'll add that to our answer.

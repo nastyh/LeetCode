@@ -7,6 +7,9 @@ class BSTIterator:
         
     
     def _helper(self, root):  # helper to traverse the tree in order and save it in a list
+        """
+        Just normal recursive inorder traversal
+        """
         if not root: return
         self._helper(root.left)
         self.nodes.append(root.val)
@@ -20,7 +23,11 @@ class BSTIterator:
         if self.pointer < len(self.nodes) - 1:
             self.pointer += 1
             return self.nodes[self.pointer]
-        
+        """
+        Don't actually need to do this check (but probably a good thing to do anyway). Can rather go with
+        self.pointer += 1
+        return self.nodes[self.pointer]
+        """
 
     def hasNext(self) -> bool:
         """
@@ -30,6 +37,9 @@ class BSTIterator:
             return True
         else:
             return False
+        """
+        or just return self.pointer < len(self.nodes) - 1
+        """
 
 
 def inorder_generator(node):
