@@ -42,6 +42,41 @@ class BSTIterator:
         """
 
 
+
+class BSTIterator_Morris_Traversal:  # O(1) for next and hasnext. O(n) and O(1) for precomputation
+
+    def __init__(self, root: TreeNode):
+        self.root = self.increasingBST(root)
+    
+	
+    def increasingBST(self, node: TreeNode) -> TreeNode:
+        dummy = tail = TreeNode()
+        while node is not None:
+            if node.left is not None:
+                predecessor = node.left
+                while predecessor.right is not None:
+                    predecessor = predecessor.right
+                
+                predecessor.right = node
+                left, node.left = node.left, None
+                node = left
+            else:
+                tail.right = tail = node
+                node = node.right
+        
+        return dummy.right
+        
+
+    def next(self) -> int:
+        val = self.root.val
+        self.root = self.root.right
+        return val
+        
+
+    def hasNext(self) -> bool:
+        return self.root is not None
+
+
 def inorder_generator(node):
     if node:
         yield from inorder_generator(node.left)
