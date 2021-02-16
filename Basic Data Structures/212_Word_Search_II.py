@@ -1,28 +1,49 @@
-def findWords(board, words):
-    rows, cols = len(board), len(board[0])
-    trie = {}
-    for word in words:
-        node = trie
-        for letter in word:
-            node = node.setdefault(letter, {})
-        node['$'] = True
-    result = []
-    def backtrack(i: int, j: int, node = trie, prefix: str = ''):
-        letter = board[i][j]
-        if letter in node:
-            board[i][j] = '#'
-            node = node[letter]
-            if '$' in node:
-                result.append(prefix + letter)
-                del node['$']
-            for r, c in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
-                if 0 <= r < rows and 0 <= c < cols:
-                    backtrack(r, c, node, prefix + letter)
-            board[i][j] = letter
-    for i in range(rows):
-        for j in range(cols):
-            backtrack(i, j)
-    return result
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.endOfWord = False
+
+class Trie:
+    def __init__(self):
+        self.rootNode = TrieNode()
+
+    def get_rootNode(self):
+        return self.rootNode
+    
+    # Inserts a word into the trie.
+    def insert(self, word: str) -> None:
+        currNode = self.rootNode
+        for idx, ch in enumerate(word):
+            if( ch not in currNode.children ):
+                currNode.children[ch] = TrieNode()
+            currNode = currNode.children[ch]        
+        currNode.endOfWord = True
+
+def findWords_trie(board, words):  # (M(4x3^(L-1))) (M is the number of cells in the board and L is the maximum length of words.) and O(N)
+    def dfs(i, j, curr, currNode):
+        ch = board[i][j]
+        if( ch not in currNode.children or (i, j) in visited ):
+            return
+        if currNode.children[ch].endOfWord:
+            res.add(curr)
+            # return                            # edge case
+        visited.add((i,j))
+        for x,y in directions:
+            if 0 <= i + x < m and 0 <= j + y < n:
+                dfs( i + x, j + y, curr + board[i + x][j + y], currNode.children[ch])
+        visited.remove((i,j))   # edge case
+    # buid trie data structure
+    my_trie = Trie()
+    [ my_trie.insert(word) for word in words ]
+    rootNode = my_trie.get_rootNode()
+    m, n = len(board), len(board[0])
+    directions = [(0,1), (1,0), (0,-1), (-1,0)]
+    res = set()                     
+    for i in range(len(board)):
+        for j in range(len(board[i])):
+            visited = set()
+            dfs(i, j, board[i][j], rootNode)
+    return res
 
 
 def findWords_backtracking(board, words):  # O(N * 3^L), N is the number of letters, L length of the longest word
