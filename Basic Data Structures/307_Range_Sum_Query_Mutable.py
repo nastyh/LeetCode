@@ -32,7 +32,7 @@ class NumArray:  # works but TLE  O(N) both
         return self.running[right] - self.running[left] + self.nums[left]
 
 
-class NumArray_segment_tree:
+class NumArray_segment_tree:  # O(n) to calculate the sum of one node during each iteration of the for loop. Space is O(n): O(2n) to store the segment tree
     """
     The segment tree for array a[o..n] is a binary tree in which each node contains aggregate information (min, max, sum, etc.)
     for a subrange [i...j] of the array, as its left and right child hold information for range [i...(i + j) / 2] and [(i + j) / 2 + 1, j]
