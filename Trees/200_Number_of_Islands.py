@@ -24,6 +24,28 @@ def numIslands(grid):
                 convertLandToWater(grid, i, j)
     return isLandCount
 
+def numIslands_optimal_bfs(grid):  # O(MN) and O(1)
+    """
+    Explore in a DFS manner as always. The key here is to increment res
+    when the deque becomes empty. Means no more land within the reach.
+    Then the main double for loop continues by finding the next land (if any)
+    """
+    res, d = 0, deque()
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            if grid[row][col] == '1':
+                d.append((row, col))
+                grid[row][col] = '-1'
+                while d:
+                    r, c = d.popleft()
+                    for row_offset, col_offset in [(r, c - 1), (r - 1, c), (r, c + 1), (r + 1, c)]:
+                        if 0 <= row_offset < len(grid) and 0 <= col_offset < len(grid[0]) and grid[row_offset][col_offset] == '1':
+                            d.append((row_offset, col_offset))
+                            grid[row_offset][col_offset] = '-1'
+                res += 1
+    return res
+        
+
 
 def numIslands_easy(grid):   # O(MN) both; DFS
     if len(grid) == 0: return 0
