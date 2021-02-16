@@ -1,4 +1,5 @@
- def exist(board, word):  # o(N * 3^L), N - num of cells, L, length of the word; O(L)
+from collections import deque
+def exist(board, word):  # o(N * 3^L), N - num of cells, L, length of the word; O(L)
     def dfs(word, i, j, match_idx, directions, board, visited):
         if match_idx == len(word) - 1:
             return True
@@ -33,7 +34,6 @@ def exist_dfs(board, word):
         return False
     h, w = len(board), len(board[0])
     def dfs_search(idx, x, y):
-        
         if x < 0 or x == w or y < 0 or y == h or word[idx] != board[y][x]:
             # Reject if out of boundary, or current grid cannot match the character word[idx]
             return False
@@ -49,3 +49,10 @@ def exist_dfs(board, word):
         board[y][x] = cur
         return found
     return any(dfs_search(0, x, y) for y in range(h) for x in range(w))      
+
+
+if __name__ == '__main__':  
+    print(exist([['A','B','C','E'], ['S','F','C','S'], ['A','D','E','E']], 'ABCCED'))
+    print(exist([['A','B','C','E'], ['S','F','C','S'], ['A','D','E','E']], 'SEE'))
+    print(exist([['A','B','C','E'], ['S','F','C','S'], ['A','D','E','E']], 'ABCB'))
+    print(exist([['a', 'b'], ['c', 'd']], 'abcd'))
