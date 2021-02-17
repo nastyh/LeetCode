@@ -1,5 +1,9 @@
 import math
-def maxArea(height):
+def maxArea(height):  # O(n) and O(1)
+    """
+    Start w/ the widest possible rectangle
+    We will trade the width if we can benefit from obtaining a better heigth value
+    """
     l, r = 0, len(height) - 1
     curr_sq, glob_sq = 0, -math.inf
     while l < r:
@@ -19,7 +23,16 @@ def maxArea(height):
     return glob_sq
 
 
+def maxArea_brute_force(height):  # O(n*2) b/c calculating the area for n(n - 1)/2 height pairs and O(1)
+    res = 0
+    for i in range(len(height) - 1):
+        for j in range(i + 1, len(height)):
+            res = max(res, min(height[i], height[j]) * (j - i))
+    return res
+
+
 if __name__ == '__main__':
     print(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]))
-    # print(maxArea([[1, 3, 2, 5, 25, 24, 5]]))
+    print(maxArea([[1, 3, 2, 5, 25, 24, 5]]))
+    print(maxArea_brute_force([1, 8, 6, 2, 5, 4, 8, 3, 7]))
     
