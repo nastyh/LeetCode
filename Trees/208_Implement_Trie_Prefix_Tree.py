@@ -44,6 +44,9 @@ class Trie(object):
         
 
 class Trie_another:
+    """
+    More classical implementation
+    """
     def __init__(self):
         self.endOfWord = False
         self.children = [None] * 26
@@ -51,9 +54,9 @@ class Trie_another:
     def insert(self, word):
         curr = self
         for w in word:
-            if curr.children[ord(w) - ord('a')]  == None:
+            if curr.children[ord(w) - ord('a')]  == None:  # if the letter isn't present, create an instance for it
                 curr.children[ord(w) - ord('a')] = Trie_another()
-            curr = curr.children[ord(w) - ord('a')]
+            curr = curr.children[ord(w) - ord('a')]  # step into this letter
         curr.endOfWord = True
     
     def search(self, word):
