@@ -37,6 +37,44 @@ def longestCommonPrefix_sorting(strs):  # O(nlogn) and O(1)
             break
     return res
 
+
+class Trie:  # O(S) preprocessing wher S is the number of all chars in the array. Trie build O(S), space O(S)
+        self.end_of_word = False
+        self.children = {}
+        
+    def insert(self, word):
+        curr = self
+        idx = 0
+        while(idx < len(word)):
+            if(word[idx] not in curr.children):
+                curr.children[word[idx]] = Trie()
+            curr = curr.children[word[idx]]
+            idx += 1
+        curr.end_of_word = True
+
+    def getLongest(self):
+        curr = self
+        res = ""
+        while(len(curr.children) == 1):
+            if(curr.end_of_word):
+                break
+            val = list(curr.children.keys())
+            res += val[0]
+            curr = curr.children[val[0]]
+        return res
+
+
+def longestCommonPrefix_trie(strs):
+    if len(strs) == 0:
+        return ''
+    if len(strs) == 1:
+        return strs[0]
+    t = Trie()
+    for word in strs:
+        t.insert(word)
+    return t.getLongest()
+
+
 if __name__ == '__main__':
     print(longestCommonPrefix(["flower","flow","flight"]))
     print(longestCommonPrefix_alt(["flower","flow","flight"]))
