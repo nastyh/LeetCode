@@ -20,7 +20,7 @@ def isAlienSorted(words, order):
     return True
 
 
-def isAlienSorted_naive(words, order):
+def isAlienSorted_naive(words, order):  # O(n) both to iterate and store a dictionary (technically it's just the length of order )
     d = {}
     for k, v in enumerate(order):
         d[v] = k
