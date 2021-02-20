@@ -31,7 +31,7 @@ def productExceptSelf(nums):  # O(N) and O(N)
 
 def productExceptSelf_space_efficient(nums):  # O(N) and O(1)
     length = len(nums)
-    answer = [0]*length
+    answer = [0] * length
     answer[0] = 1
     for i in range(1, length):
         # answer[i - 1] already contains the product of elements to the left of 'i - 1'
