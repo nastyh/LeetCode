@@ -4,12 +4,12 @@ def sortList(head):
         # Simply count the length of linked list
         counter = 0
         while head:
-            counter +=1
+            counter += 1
             head = head.next
         return counter   
     def split(head, size):
         # given the head & size, return the the start node of next chunk
-        for i in range(size-1): 
+        for i in range(size - 1): 
             if not head: 
                 break 
             head = head.next
@@ -47,3 +47,37 @@ def sortList(head):
             dummy_start = merge(left, right, dummy_start)  # returned tail = next dummy_start 
         size *= 2
     return dummy.next
+
+
+class Solution:  # O(nlogn) and O(1)
+    def sortList(self, head: ListNode) -> ListNode:
+        def mergeSort(head):
+            if not head or not head.next : 
+                return head                 # as we branch and move left, left ... when only one node is left, we return it
+            
+            left = slow = fast = head
+            fast = fast.next                # for [1,2,3,4] as mid will be node 3, if this statement not used
+            while fast and fast.next:
+                slow = slow.next
+                fast = fast.next.next
+            right = slow.next               # slow is at middle, next elements are considered right
+            slow.next = None                # this makes left has only left part
+            
+            left_sorted = mergeSort(left)
+            right_sorted = mergeSort(right)
+            return merge(left_sorted, right_sorted)
+        
+        def merge(l1, l2):
+            dummy = ListNode(-1)
+            prev = dummy
+            while l1 and l2:
+                if l1.val <= l2.val:
+                    prev.next = l1
+                    l1 = l1.next
+                else:
+                    prev.next = l2
+                    l2 = l2.next            
+                prev = prev.next
+            prev.next = l1 or l2    # one of l1 and l2 can be non-null at this point
+            return dummy.next
+        return mergeSort(head)

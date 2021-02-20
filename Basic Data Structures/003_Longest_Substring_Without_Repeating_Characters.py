@@ -17,7 +17,6 @@ def lengthOfLongestSubstring_optimal(s):  # O(n) both
 def lengthOfLongestSubstring(s):
     m = set()
     res, l, i = 0, 0, 0
-
     while i < len(s):
         if s[i] not in m:
             m.add(s[i])
@@ -75,7 +74,7 @@ def lengthOfLongestSubstring_stack(s):
                 stack.append(s[i])
                 res=max(res, len(stack))
             elif s[i] in stack:
-                stack=stack[stack.index(s[i]) + 1:] + [s[i]]
+                stack = stack[stack.index(s[i]) + 1:] + [s[i]]
         return res
 
 
@@ -96,6 +95,27 @@ def lengthOfLongestSubstring_any(s):   # works but slow
     return res
 
 
+def lengthOfLongestSubstring_test(s):  # Same as above but with not all instead of any
+    if len(s) <= 1: return len(s)
+    if len(set(s)) == 1: return 1
+    if len(set(s)) == len(s): return len(s)
+    l, r, d = 0, 0, {}
+    res = 0
+    while r < len(s):
+        if s[r] not in d:
+            d[s[r]] = 1 
+            res = max(res, r - l + 1)
+        else:
+            d[s[r]] += 1
+        while not all(i == 1 for i in d.values()):
+            d[s[l]] -= 1
+            if d[s[l]] == 0:
+                del d[s[l]]
+            l += 1
+        r += 1
+    return res
+
+
 if __name__ == '__main__':
     print(lengthOfLongestSubstring_optimal('abcabcbb'))
     print(lengthOfLongestSubstring_optimal('abcbbcbb'))
@@ -106,3 +126,5 @@ if __name__ == '__main__':
     print(lengthOfLongestSubstring_set('pwwkew'))
     print(lengthOfLongestSubstring_any('pwwkew'))
     print(lengthOfLongestSubstring_dict('abcabcbb'))
+    print(lengthOfLongestSubstring_test('abcabcbb'))
+    print(lengthOfLongestSubstring_test('pwwkew'))

@@ -1,5 +1,5 @@
 from collections import defaultdict
-def subarraySum_d(nums, k):
+def subarraySum_d(nums, k):  # O(n) and O(n)
     count = s = 0
     Map = {}
     Map[0] = 1
