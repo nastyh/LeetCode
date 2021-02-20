@@ -14,7 +14,7 @@ At each iteration, we remove the current leaves nodes from the queue. While remo
 
 The iteration terminates when there are no more than two nodes left in the graph, which are the desired centroids nodes.
 """
-def findMinHeightTrees(n, edges):
+def findMinHeightTrees(n, edges):  # O(V) both where V is the number of nodes in the graph, thus, the number of edges is V - 1
     # base cases
     if n <= 2:
         return [i for i in range(n)]
