@@ -1,4 +1,4 @@
-def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+def reverseKGroup(self, head: ListNode, k: int) -> ListNode:  # O(n) and O(1)
     def reverse_list(node, end):
         prev = None
         tail = node
@@ -51,5 +51,31 @@ def reverseKGroup_alt(head, k):
     if flag:
         for i in range(len(nodes) - len(nodes) % k, len(nodes) - 1):
             nodes[i].next = nodes[i + 1]
-            
     return nodes[k - 1]
+
+
+def reverseKGroup_recursion(head, k): # O(n) and O(k) b/c of the recursion stack
+    dumb_head = pointer = ListNode()
+    pointer.next = head
+    def _reverseSubGroup(head_pointer, last_pointer, num):
+        if num == 0:
+            return head_pointer, last_pointer, True
+        if num > 0 and last_pointer is None:
+            return None, None, False
+        if num > 0:
+            h, l, is_changed = _reverseSubGroup(head_pointer, last_pointer.next, num - 1)
+            if is_changed:
+                next_node = h.next
+                h.next = l
+                return next_node, h, True
+            else:
+                return None, None, False
+    is_changed = True
+    while is_changed and pointer is not None:
+        h, l, is_changed = _reverseSubGroup(pointer.next, pointer.next, k)
+        if is_changed:
+            next_pointer = pointer.next
+            pointer.next = l
+            pointer = next_pointer
+        
+    return dumb_head.next

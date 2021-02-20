@@ -10,6 +10,22 @@ def lengthOfLIS(nums): # O(n^2), DP
     return max(dp)
 
 
+def lengthOfLIS_reverse_order(nums):  # O(n^2) and O(n)
+    """
+    It's a bit easier to do in the reversed order.
+    Each number on its own is a subsequence that has a length of 1 (that's why dp is filled w/ ones)
+    We start from the second last element and will move to the left.
+    For every element we will check if there is a number to the right that is larger than the current number.
+    If so, we'll update dp at the respective index by choosing the max between what is already there or adding 1 to dp at the right index
+    """
+    dp = [1] * len(nums)
+    for i in range(len(nums) - 2, -1, -1):
+        for j in range(i + 1, len(nums)):
+            if nums[i] < nums[j]:
+                dp[i] = max(dp[i], 1 + dp[j])
+    return max(dp)
+
+
 def lengthOfLIS_log(nums):  # O(nlogn)
     if len(nums) == 0:
         return 0 
