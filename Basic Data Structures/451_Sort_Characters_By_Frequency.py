@@ -36,6 +36,20 @@ def frequencySort_heap(s):
     return res
 
 
+def frequencySort_heap_fastest(s):  # O(nlogn) b/c we add all elements to the heap. O(n) space 
+    """
+    It's faster to maintain a normal heap and reverse the string at the end so that more frequent lettes go first
+    """
+    d = Counter(s)
+    h, res = [], ''
+    for k, v in d.items():
+        heapq.heappush(h, (v, k))
+    while h:
+        ch, freq = heapq.heappop(h)
+        res += ch * freq
+    return res[::-1]
+
+
 if __name__ == '__main__':
     print(frequencySort('tree'))
     print(frequencySort_heap('tree'))
