@@ -1,7 +1,7 @@
 import math
 def maxProduct(nums):
     maxval = float('-inf')
-    imax, imin= 1, 1
+    imax, imin = 1, 1
     for i in range(len(nums)):
         if nums[i] < 0:
             imax, imin = imin, imax
@@ -9,14 +9,6 @@ def maxProduct(nums):
         imin = min(imin * nums[i], nums[i])
         maxval = max(maxval, imax)
     return maxval
-
-
-def maxProduct_Kadane(nums):
-    dp = [None] * len(nums)
-    dp[0] = nums[0]
-    for i in range(1, len(nums)):
-        dp[i] = max(nums[i], nums[i] * dp[i - 1])
-    return max(dp)
 
 
 def maxProduct_reversal(nums):  # O(2n) and O(1)
@@ -29,11 +21,11 @@ def maxProduct_reversal(nums):  # O(2n) and O(1)
     return max(max(nums), max(nums_rev))  # return the abs max
 
 
-def maxProduct_alt(nums):
+def maxProduct_alt(nums):  # O(n) and O(1)
     if not nums: return 0
     cur_max = final_max = cur_min = nums[0]
     for i in range(1, len(nums)):
-        temp = cur_max
+        temp = cur_max  # need temp b/c we want the unchanged cur_max in two lines below
         cur_max = max(max(cur_max * nums[i], cur_min * nums[i]), nums[i])
         cur_min = min(min(temp * nums[i] , cur_min * nums[i]), nums[i])
         if cur_max > final_max:

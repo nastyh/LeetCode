@@ -1,11 +1,12 @@
-def reorganizeString(s):
+def reorganizeString(s):  # O(nlogn) b/c of sorting and O(n) 
+    """
+    Need to process greedily: most frequently occured char is mixed with the second most frequently occured character, etc. 
+    """
     if len(s) == 0:
         return ''
     if len(s) == 1:
         return s
-
     i, res, n = 0, [None] * len(s), len(s)
-
     d = {}
     for ch in s:
         if ch in d:
@@ -25,21 +26,17 @@ def reorganizeString(s):
 
 # with heap
 import heapq
-def reorganizeStringHeap(S):
+def reorganizeStringHeap(S):  # O(NLog A) and O(A) where A is the size of the alphabet. If A is fixed, than time is O(N)
     dictionary = {}
     heap = []
-
     for value in S:
         dictionary[value] = dictionary.get(value, 0) + 1
-
     for k,v in dictionary.items():
         heap.append([-v,k]) # most frequent is on top
-
     heapq.heapify(heap)
-
     res = ''
     while(heap):
-        if len(heap)>=2:
+        if len(heap) >= 2:
             value_1 = heapq.heappop(heap)
             res += value_1[1]
             value_2 = heapq.heappop(heap)
@@ -52,18 +49,14 @@ def reorganizeStringHeap(S):
                 heapq.heappush(heap, [value_1[0], value_1[1]])
             if value_2[0] != 0:
                 heapq.heappush(heap, [value_2[0], value_2[1]])
-
         elif len(heap) == 1:
             value_1 = heapq.heappop(heap)
             res+=value_1[1]
             value_1[0] += 1
             if value_1[0] != 0:
                 return ""
-
             return res
     return res
-
-
 
     # return sorted(d, key = d.get, reverse = True)
 
