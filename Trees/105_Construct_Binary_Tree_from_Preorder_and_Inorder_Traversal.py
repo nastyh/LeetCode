@@ -5,32 +5,28 @@ class TreeNode:
         self.left = left
         self.right = right
 
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+
+    def buildTree(self, preorder, inorder):  # O(N) and O(N)
         if len(inorder) == 0:
             return None
-
         root_val = preorder.pop(0)
-        # root_ix = 0
         inorder_ix_of_root = inorder.index(root_val)
-
         l = self.buildTree(preorder, inorder[:inorder_ix_of_root])
         r = self.buildTree(preorder, inorder[inorder_ix_of_root + 1:])
-
         res = TreeNode(root_val)
         res.left = l
         res.right = r
-
         return res
+
 
     def buildTree_Iter(self, preorder: List[int], inorder: List[int]) -> TreeNode:
     if not len(preorder) or not len(inorder):
         return None
-
     root = TreeNode()
     #create a hash table of indexes and use it instead of array for faster access
     inorder_index = {inorder[i]:i for i in range(0, len(inorder))}
     #a stack of nodes and its corresponding ranges
-    nodes = [[root, 0, len(preorder)-1]]
+    nodes = [[root, 0, len(preorder) - 1]]
 
     for i in range(len(preorder)):
         curr_node, l, h = nodes.pop()
@@ -38,15 +34,14 @@ class TreeNode:
         #find the index of the node in inorder, then use the divide and conquere technique
         mid = inorder_index[curr_node.val]
 
-        if mid<h:
+        if mid < h:
             curr_node.right = TreeNode()
             #appent the right subtree first, as stack follows LIFO approach
-            nodes.append([curr_node.right, mid+1, h])
-        if l<mid:
+            nodes.append([curr_node.right, mid + 1, h])
+        if l < mid:
             curr_node.left = TreeNode()
             #this will be popped before the right subtree
-            nodes.append([curr_node.left, l, mid-1])
-
+            nodes.append([curr_node.left, l, mid - 1])
     return root
 
     def buildTree_iter_another(self, preorder, inorder):
