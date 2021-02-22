@@ -55,7 +55,7 @@ def highest_peak(landscape):
         
 
         # q = deque([i, j, 0]) # first pass
-        # while q: # second pass
+        # while q: # second passO
         #     i_step, j_step, step = q.popleft()
         #     for r, c in (i_step + 1, j_step), (i_step - 1, j_step), (i_step, j_step - 1), (i_step, j_step + 1):
         #         if 0 <= r < len(matrix) and 0 <= c < len(matrix[0]):
@@ -73,7 +73,7 @@ def highest_peak(landscape):
                 q.append([y, x, 0])
                 dp[y][x] = 0
     while q:
-        # _helper_print(dp)
+        # _helper_print(dp)O
         i_step, j_step, step = q.popleft()
         # print(i_step, j_step, step)
         for r, c in [(i_step + 1, j_step), (i_step - 1, j_step), (i_step, j_step - 1), (i_step, j_step + 1)]:
