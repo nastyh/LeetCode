@@ -8,7 +8,7 @@ def numIslands(grid):
 	## TIME COMPLEXITY : O(N^2) ##
 	## SPACE COMPLEXITY : O(1) ##
 
-    def convertLandToWater(grid,i,j):
+    def convertLandToWater(grid, i, j):
         if(i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1'):
             return
         grid[i][j] = '0'
@@ -16,7 +16,7 @@ def numIslands(grid):
             convertLandToWater(grid, i + x, j + y)
     if len(grid) == 0 : return 0
     isLandCount = 0
-    directions = [(0,1), (0,-1), (-1,0), (1,0)]
+    directions = [(0, 1), (0, -1), (-1, 0), (1, 0)]
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             if grid[i][j] == '1':
