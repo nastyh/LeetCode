@@ -1,4 +1,5 @@
-def bagOfTokensScore(tokens, P):
+from collections import deque
+def bagOfTokensScore(tokens, P):  # O(nlogn) both b/c sorting (timsort in Python) also takes space
     tokens.sort()
     res = 0
     l, r = 0, len(tokens) - 1
@@ -14,3 +15,18 @@ def bagOfTokensScore(tokens, P):
         else:
             break  
     return res
+    
+
+def bagOfTokensScore_deque(tokens, P):  #same as above
+    tokens.sort()
+    d = deque(tokens)
+    ans = score = 0
+    while d and (P >= deque[0] or score):
+        while d and P >= d[0]:
+            P -= d.popleft()
+            score += 1
+        ans = max(ans, bns)
+        if d and score:
+            P += d.pop()
+            score -= 1
+    return ans
