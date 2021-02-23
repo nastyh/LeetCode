@@ -14,7 +14,7 @@
         res += n
         dividend -= val
     if sign == 1:
-        return min(res, 2**31 -1)
+        return min(res, 2**31 - 1)
     else: 
         return max(-res, -2**31)
 
@@ -33,11 +33,9 @@ def divide_alt(dividend, divisor):
             sums +=  sums
             quotient += quotient
         return quotient + divide_helper(dividend - sums, divisor)  # looking for next divisible part
-
     self.min = -2147483648
     if dividend == self.min and divisor == -1:
         return 2147483647
-    
     # we store the sign so we can return the proper number in the end
     # since we're working entirely in negatives (see bloe)
     sign = (dividend < 0) == (divisor < 0)
@@ -50,3 +48,11 @@ def divide_alt(dividend, divisor):
         divisor = -divisor
     res = divide_helper(dividend, divisor)
     return res if sign else -res
+    
+
+from math import log10
+def divide_log(D, d):
+    D, d, s, t = abs(D), abs(d), (D > 0)-(D < 0), (d > 0)-(d < 0)
+    if D < d: return 0
+    a = int(round(10**(log10(D) - log10(d)),3))
+    return min(a,2**31 - 1) if s > 0 and t > 0 or s < 0 and t < 0 else max(0 - a, 0 - 2**31)
