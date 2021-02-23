@@ -1,4 +1,10 @@
-def calculate(s):
+def calculate(s):  # O(n) both 
+    """
+    Go one by one
+    If there is a digit, try building a number of the digit by multiplying by 10 what's there and adding the digit
+    Then take care of different signs by updating values in a stack
+    Accurately with division 
+    """
     stack = []
     tem = 0
     sign = '+'
