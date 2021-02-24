@@ -27,7 +27,7 @@ class TreeNode:
         return [max(i) for i in res]
 
 
-    def largestValues_optimal(self, root): # without keeping the whole level of values in a given level 
+    def largestValues_optimal(self, root): # without keeping the whole level of values in a given level O(n) and O(d) where d is the level of the tree
         if not root:
             return None
         res = []
