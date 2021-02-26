@@ -5,8 +5,11 @@ class TreeNode:
         self.left = left
         self.right = right
     
-    
-    def maxPathSum_postorder(self, root):
+    def maxPathSum_postorder(self, root):  # O(n) and O(h)
+        """
+        Max between 0 and helper b/c if a node doesn't have children, we want to add 0 from the non-existing children 
+        For every node we want to find the max possible contribution of its children and take a larger one
+        """
         self.res = -math.inf
         def _helper(root):
             if not root:  return 0
