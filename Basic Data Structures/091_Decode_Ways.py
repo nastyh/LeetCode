@@ -34,6 +34,27 @@ def numDecodings_top_down(s):
     return _helper(s, {})
 
 
+def numDecodings_constant_space(s):  # O(n) and O(1):
+    """
+    To calculate the i-th element, we need to know i-2nd and i-1st
+    """
+    if s[0] == "0":
+        return 0
+    two_back = 1
+    one_back = 1
+    for i in range(1, len(s)):
+        current = 0
+        if s[i] != "0":
+            current = one_back
+        two_digit = int(s[i - 1: i + 1])
+        if two_digit >= 10 and two_digit <= 26:
+            current += two_back
+        two_back = one_back
+        one_back = current
+    
+    return one_back
+
+
 if __name__ == '__main__':
     print(numDecodings('226'))
     print(numDecodings_top_down('226'))
