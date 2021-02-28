@@ -1,4 +1,4 @@
-def exclusiveTime(n, logs):
+def exclusiveTime(n, logs):  # O(n) both
     total = [0 for i in range(n)]
     s = []
     i = 0
@@ -10,14 +10,14 @@ def exclusiveTime(n, logs):
         nextTime = int(curLog[2])
         if (status ==  "start"):
             if (s):
-                total[s[-1]] += nextTime - curTime
+                total[s[-1]] += nextTime - curTime  # updating the last value on the fly 
             s.append(curId)
             curTime = nextTime
         else:
             total[s[-1]] += nextTime - curTime + 1
             s.pop()
             curTime = nextTime + 1
-        i +=1
+        i += 1
     return total
 
 
@@ -34,6 +34,7 @@ def exclusiveTime_another(n, logs):
             if s:
                     s[-1][1] = timestamp + 1                    # if s is not empty, udpate start time of previous id; 
     return ans
+
 
 
 if __name__ == '__main__':
