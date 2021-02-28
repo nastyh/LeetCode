@@ -1,3 +1,29 @@
+def sortedSquares_best_shortest(nums):  # O(n) both (if we count res)
+    """
+    Cover edge cases 
+    We will fill out res from right to left b/c the most right number is the largest
+    It will be filled out by either the most left or the most right number from nums.
+    Have three pointers, l, r, and i. 
+    Compare the absolute values at the left and right ends of nums. Take the higher, plant into res[i]
+    Move indices accordingly 
+    """
+    if len(nums) == 0: return
+    if len(nums) == 1: return [x**2 for x in nums]
+    if all([x >= 0 for x in nums]): return  [x**2 for x in nums]
+    l, r, i, res = 0, len(nums) - 1, len(nums) - 1, [None] * len(nums)
+    while l <= r:
+        if abs(nums[l]) >= abs(nums[r]):
+            res[i] = nums[l]**2
+            l += 1
+            i -= 1
+        else:
+            res[i] = nums[r]**2
+            r -= 1
+            i -= 1
+    return res
+
+
+
 def sortedSquares(nums): # pythonic  O(nlogn) and O(N)
     return sorted([i**2 for i in nums])
 
