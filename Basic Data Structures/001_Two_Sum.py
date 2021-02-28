@@ -6,12 +6,15 @@ def twoSum(nums, target):
     """
     for i, n in enumerate(nums):
         r = target - n
-        if r in nums[i+1:]:
-            j = nums.index(r, i+1)
+        if r in nums[i + 1:]:
+            j = nums.index(r, i + 1)
             return [i, j]
 
 
-def twoSum_dict(nums, target):
+def twoSum_dict(nums, target):  # O(n) both
+    """
+    Maintain dictionary: complement: index of the number to which the key is a complement
+    """
     d = {}
     for k, v in enumerate(nums):
         if v not in d:
