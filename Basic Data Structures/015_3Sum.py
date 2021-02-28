@@ -5,7 +5,7 @@ def threeSum(nums):  # O(n^2) and O(n)
     for i in range(0, l - 2):
         d = set()
         s = 0 - nums[i]
-        for j in range(i + 1,l):
+        for j in range(i + 1, l):
             x = s - nums[j]
             if x not in d:
                 d.add(nums[j])
@@ -14,7 +14,7 @@ def threeSum(nums):  # O(n^2) and O(n)
     return list(ans)
 
 
-def Sum3_with_helper(nums): # with pointers, easier to comprehend
+def Sum3_with_helper(nums): # with pointers, easier to comprehend  O(nlogn) and O(n)
     nums.sort()
     res = []
     def _helper(array, ix, res):
@@ -71,6 +71,7 @@ def threeSum_sorting(nums):  # O(n^2 + nlogn) and O(n)
     return res
 
 
+
 if __name__ == '__main__':
     # print(threeSum_pointers([-1, 0, 1, 2, -1, -4]))
     # print(threeSum_pointers([0,0,0,0]))
@@ -79,4 +80,4 @@ if __name__ == '__main__':
     # print(Sum3_with_helper([-1, 0, 1, 2, -1, -4]))
     print(threeSum_sorting([-1, 0, 1, 2, -1, -4]))
     print(threeSum_sorting([-2, 0, 0, 2, 2]))
-    # print(threeSum_sorting([0, 0, 0, 0]))
+    print(threeSum_sorting([0, 0, 0, 0]))
