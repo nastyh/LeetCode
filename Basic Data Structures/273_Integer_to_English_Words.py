@@ -3,7 +3,6 @@
         ## APPROACH : BRUTE FORCE ##
         ## 1. For a two digit number if there is no ones digit 20 -> twenty + " " (number generally), dont leave the space behind, use if else case with "" (empty).
         # Similarly for 20,000 etc.
-        
     one_digit = {
         1: 'One',
         2: 'Two',
@@ -15,7 +14,6 @@
         8: 'Eight',
         9: 'Nine'
     }
-
     two_digit = {
         10: 'Ten',
         11: 'Eleven',
@@ -28,7 +26,6 @@
         18: 'Eighteen',
         19: 'Nineteen'
     }
-    
     tens = {
         2: 'Twenty',
         3: 'Thirty',
@@ -39,7 +36,6 @@
         8: 'Eighty',
         9: 'Ninety'
     }
-    
     def get_three_digit_num(num):
         if( not num ) : return ""
         if( not num// 100 ): return get_two_digit_num(num)
@@ -78,7 +74,7 @@
         result += get_three_digit_num(last_three)
     return result
 
-def numberToWords(num):
+def numberToWords_another(num):
     def convert(n):
         units_words = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
         tens_words = ['', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
