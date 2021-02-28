@@ -1,4 +1,4 @@
-def minAddToMakeValid(S):
+def minAddToMakeValid(S):  # O(n) both 
     if len(set(S)) == 1: return len(S)
     if len(S) == 0: return 0
     opening, closing = 0, 0
@@ -15,11 +15,14 @@ def minAddToMakeValid(S):
 def minAddToMakeValid_stack(S):
     stack = []
     for ch in S:
-        if ch == '(': stack.append(ch)
+        if ch == '(':
+            stack.append(ch)
         else:
-            if len(stack) and stack[-1] == '(': stack.pop()
-            else: stack.append(ch)
+            if stack and stack[-1] == '(':  # mean a legit pair
+                stack.pop()
+            else: stack.append(ch)  # append whatever 
     return len(stack)
+
 
 def minAddToMakeValid_alt(s): # easier to understand
     if len(set(s)) == 1: return len(s)
