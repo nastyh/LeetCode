@@ -1,4 +1,4 @@
-def addOperators(self, num, target):
+def addOperators(self, num, target):  # O(4^N * N) b/c of 4 recursive paths and need to build a string every time. Space O(N)
     L = len(num)
     ans = set()
     
