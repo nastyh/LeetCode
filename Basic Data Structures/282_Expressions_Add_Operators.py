@@ -13,9 +13,9 @@ def addOperators(self, num, target):  # O(4^N * N) b/c of 4 recursive paths and 
             if i == 0:
                 backtrack(j+1, n, n, str(n))
             else:
-                backtrack(j+1, total + n, n, expr + '+' + str(n))
-                backtrack(j+1, total - n, -n, expr + '-' + str(n))
-                backtrack(j+1, total - last + last * n, last * n, expr + '*' + str(n))
+                backtrack(j + 1, total + n, n, expr + '+' + str(n))
+                backtrack(j + 1, total - n, -n, expr + '-' + str(n))
+                backtrack(j + 1, total - last + last * n, last * n, expr + '*' + str(n))
             if n == 0:
                 break
                 
