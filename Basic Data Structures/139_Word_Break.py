@@ -1,10 +1,10 @@
-def wordBreak(s, wordDict):
+from collections import deque
+def wordBreak(s, wordDict):  # O(n^3) b/c of two loops and checking if elements in a dictionary. O(n)
     """
     The DP part of the problem can be like this: the substring up to but not including index i satisfies the question. To solve this, we can further divide
     the substring (up to i) into two parts, s[0:j] and s[j:i]. dp[j] provides the answer for s[0:j] and we only need to verify s[j:i] is in wordDict or not.
     If there exists a j that satisfies both requirements, then dp[i] is True.
     """
-
     wordDict = set(wordDict)
     # a substring [0:i] satisfies the requirement
     dp = [False for _ in range(len(s) + 1)]
@@ -16,6 +16,35 @@ def wordBreak(s, wordDict):
                 break
     return dp[-1]
 
+
+def wordBreak_dp_another(s, wordDict):
+    dp = [False] * (len(s) + 1)
+    dp[0] = True
+    for ix in range(1, len(s) + 1):
+        for word in wordDict:
+            if dp[ix - len(word)] and s[:ix].endswith(word):
+                dp[ix] = True
+    return dp[-1]
+
+
+def wordBreak_bfs(s, wordDict):
+    word_set = set(wordDict)
+    q = deque()
+    visited = set()
+    q.append(0)
+    while q:
+        start = q.popleft()
+        if start in visited:
+            continue
+        for end in range(start + 1, len(s) + 1):
+            if s[start:end] in word_set:
+                q.append(end)
+                if end == len(s):
+                    return True
+            visited.add(start)
+    return False
+
+
 def wordBreak_alt(s, wordDict):  #w/ recursion
     words = set(wordDict)
     memo = {} 
@@ -24,12 +53,10 @@ def wordBreak_alt(s, wordDict):  #w/ recursion
         
         if idx == len(s):
             return True 
-        
         ret = False 
-        for i in range(idx, len(s)+1): 
+        for i in range(idx, len(s) + 1): 
             if s[idx:i] in words: 
-                ret |= recurse(i)
-                
+                ret |= recurse(i)  # inplace operation: combination of operation and assignment (think, +=)
         memo[idx] = ret 
         return ret 
     return recurse(0)
