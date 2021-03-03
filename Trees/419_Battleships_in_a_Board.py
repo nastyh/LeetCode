@@ -38,3 +38,31 @@ def countBattleships_no_space(board):  # O(MN) and O(1)
                             board[row_offset][col_offset] = 'Y'
                 res += 1 
     return res 
+
+
+def countBattleships_no_change(board):  # O(MN) and O(1)
+    """
+    If above cell and left cell is empty, increment ship count
+    If they are not empty, we know they are part of a ship so leave the count as is
+    """
+    col_above = [0] * len(board[0])
+    c = 0
+    for i in range(len(board)):
+        for j in range(len(board[i])):
+            if board[i][j] == "X":
+                above_empty = False
+                left_empty = False
+                if col_above[j] == 0:
+                    col_above[j] = 1
+                    above_empty = True
+                if j > 0:
+                    if board[i][j - 1] != "X":
+                        left_empty = True
+                else:
+                    left_empty = True
+                    
+                if above_empty and left_empty:
+                    c += 1
+            else:
+                col_above[j] = 0        
+    return c
