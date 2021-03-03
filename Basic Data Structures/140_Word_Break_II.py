@@ -1,14 +1,12 @@
 from collections import Counter
-def wordBreak(s, wordDict):
+def wordBreak(s, wordDict):  # O(N^2 + 2^N + W) where N the length of the input string, W is the number of words in the dictionary 
     # quick check on the characters,
     #   otherwise it would exceed the time limit for certain test cases.
     if set(Counter(s).keys()) > set(Counter("".join(wordDict)).keys()):
         return []
     wordSet = set(wordDict)
-
     dp = [[]] * (len(s) + 1)
     dp[0] = [""]
-
     for endIndex in range(1, len(s) + 1):
         sublist = []
         # fill up the values in the dp array.
@@ -17,10 +15,10 @@ def wordBreak(s, wordDict):
             if word in wordSet:
                 for subsentence in dp[startIndex]:
                     sublist.append((subsentence + ' ' + word).strip())
-
         dp[endIndex] = sublist
 
     return dp[len(s)]
+
 
 def wordBreak_another(s, wordDict):
     if len(s) <= 1:
@@ -33,7 +31,7 @@ def wordBreak_another(s, wordDict):
     
     for i in range(len(s)):
         if mem[i]:
-            for j in range(i,len(s)):
+            for j in range(i, len(s)):
                 if s[i:j + 1] in wordDict: 
                     mem[j + 1] = True
                     parents[j].append(i)
@@ -42,32 +40,31 @@ def wordBreak_another(s, wordDict):
         if k < 0: return [""]
         res = []
         for i in parents[k]:
-            u = s[i:k+1]
-            if k != len(s)-1:
-                u+= " "
-            a = build(i-1)
+            u = s[i:k + 1]
+            if k != len(s) - 1:
+                u += " "
+            a = build(i - 1)
             for x in a:
-                res.append(x+u)
+                res.append(x + u)
         return res
     ans = build()       
     return [] if ans == [""] else ans
 
 
 def wordBreak_more(s, wordDict):
-    cache={}
+    cache = {}
     def wordbr(s):
         if s not in cache: 
-            result=[]
+            result = []
             for w in wordDict:
                 if s[:len(w)] == w:
                     if len(s) == len(w):
                         result.append(w)
                     else:
                         for word in wordbr(s[len(w):]):
-                            result.append(w+" "+word)
+                            result.append(w + " " + word)
             cache[s] = result
         return cache[s]
-    
     return wordbr(s)
 
 

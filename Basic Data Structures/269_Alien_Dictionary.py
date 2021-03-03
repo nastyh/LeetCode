@@ -1,9 +1,8 @@
 from collections import defaultdict, Counter, deque
-def alienOrder(words):
+def alienOrder(words):  # O(C) where C the total length of all the words together, space O(1) or O(U + min(U^2, N)), U total # of letters in the alphabet, N -- edges
      # Step 0: create data structures + the in_degree of each unique letter to 0.
     adj_list = defaultdict(set)
     in_degree = Counter({c : 0 for word in words for c in word})
-
     # Step 1: We need to populate adj_list and in_degree.
     # For each pair of adjacent words...
     for first_word, second_word in zip(words, words[1:]):
