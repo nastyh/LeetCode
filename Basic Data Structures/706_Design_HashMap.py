@@ -1,5 +1,5 @@
 class ListNode:
-    def __init__(self, key, value):
+    def __init__(self, key, value):  # All times are O(N/K) where N is the number of all possible keys and K is the number of buckets (these are basically collisions)
         self.key = key
         self.value = value
         self.next = None
@@ -27,15 +27,12 @@ class ListNode:
 
     def get(self, key: int) -> int:
         index = key % self.size 
-        
         curr_node = self.hash_table[index]
-        
         while curr_node:
             if curr_node.key == key:
                 return curr_node.value 
             else:
                 curr_node = curr_node.next
-        
         return -1
         
 
