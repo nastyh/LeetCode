@@ -5,7 +5,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-    def averageOfLevels(self, root):
+    def averageOfLevels(self, root):  # O(n) to traverse the tree once, O(m) where m is the max number of nodes in a level
         d, res = deque(), []
         d.append(root)
         while d:
