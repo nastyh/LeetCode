@@ -1,4 +1,4 @@
-def minCost(costs):
+def minCost(costs):  # O(n) and O(1)
     a, b, c = 0, 0, 0 # red, blue, green
     for i in range(len(costs) - 1, -1, -1):
         # need update a, b and c simultaneously
@@ -35,8 +35,29 @@ def minCost_no_space(costs): # O(n) and O(1)
     return min(previous_row)
 
 
+# def minCost_alt(costs):  # DOESN'T WORK 
+#     if len(costs) == 0:
+#         return 0
+#     if len(costs) == 1:
+#         return min(costs[0])
+#     dp = [[] for _ in range(len(costs))]
+#     # pass
+#     # print(dp)
+#     dp[0].append(min(costs[0]))
+#     dp[0].append(costs[0].index(min(costs[0])))
+#     # print(dp)
+#     # pass
+#     for i in range(1, len(costs)):
+#         dp[i].append(min(costs[i][:dp[i - 1][1]] + costs[i][dp[i - 1][1] + 1:]))
+#         dp[i].append(costs[i].index(dp[i][0]))
+#     res = 0
+#     print(dp)
+#     return sum(dp[i][0] for i in range(len(dp)))
+
+
 if __name__ == '__main__':
     # print(minCost([[17,2,17],[16,16,5],[14,3,19]]))
     # print(minCost([[7, 6, 2]]))
-
     # print(minCost_dp_working([[3,5,3],[6,17,6],[7,13,18],[9,10,18]]))
+    # print(minCost_alt([[17,2,17],[16,16,5],[14,3,19]]))
+    # print(minCost_alt([[3, 5, 3],[6, 17, 6],[7, 13, 18],[9, 10, 18]]))
