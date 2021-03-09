@@ -1,13 +1,11 @@
 from collections import Counter
 import math
-def minWindow(s, t):
+def minWindow(s, t):  # O(S + t) both where S and T are respective lengths
     d = {}
     for c in t:
-        d[c] = d.get(c,0) + 1
-
+        d[c] = d.get(c, 0) + 1
     ToFind, ind = len(t), []
     L, R, head = -len(s)-1, -1, 0
-
     for i, c in enumerate(s):
         if c in d:
             ind.append(i)
@@ -24,16 +22,12 @@ def minWindow(s, t):
                 d[s[ind[head]]] += 1
                 ToFind += 1
                 head += 1
-
     return s[L:R + 1]
 
     """
-
 go through the string, record the positions of the characters we want to find.
 Whenever we find all the characters, keep updating the start position to find a substring with local minimum length. After this, update the start position to next one and then keep looking for the missing character.
-
 Implentation:
-
 use a dictionary d to store the number of each character we need to find. (negative values mean we have some extra!) 
 ToFind is the total number of characters we still need to find. ind is a list of indices of the characters in d. head is a pointer in ind so ind[head] is the start position of the substring and s[ind[head]] is that character).
     """
@@ -58,6 +52,7 @@ def minWindow_alt(s,  t): # easier to follow
         r += 1   
     return glob_ans
 
+
 def minWindow_another(s, t):
     if not t or not s:
         return ""
@@ -72,9 +67,7 @@ def minWindow_another(s, t):
     l, r = 0, 0
     formed = 0
     window_counts = {}
-
     ans = float("inf"), None, None
-
     # Look for the characters only in the filtered list instead of entire s. This helps to reduce our search.
     # Hence, we follow the sliding window approach on as small list.
     while r < len(filtered_s):
@@ -85,7 +78,6 @@ def minWindow_another(s, t):
         # If the current window has all the characters in desired frequencies i.e. t is present in the window
         while l <= r and formed == required:
             character = filtered_s[l][1]
-
             # Save the smallest window until now.
             end = filtered_s[r][0]
             start = filtered_s[l][0]
@@ -98,6 +90,7 @@ def minWindow_another(s, t):
 
         r += 1    
     return "" if ans[0] == float("inf") else s[ans[1] : ans[2] + 1]
+
 
 if __name__ == '__main__':
     print(minWindow_alt("ADOBECODEBANC", "ABC"))
