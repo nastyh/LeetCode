@@ -1,4 +1,4 @@
-def partition(s):
+def partition(s):  # O(N * 2^N) and O(N)
     def isPar(s):
         return s == s[::-1]
     def dfs(s, path, res):
@@ -54,7 +54,6 @@ def partition_memo(s):
             li += 1
             ri -= 1
         return True
-    
     cache = {}  
     def helper(string):
         if string in cache:
@@ -68,7 +67,6 @@ def partition_memo(s):
                     subs = helper(string[i + 1:])
                     for sub in subs:
                         res.append([string[:i + 1]] + sub)
-
         cache[string] = res
         return res
     res = helper(s)

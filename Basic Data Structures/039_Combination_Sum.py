@@ -19,15 +19,12 @@ def combinationSum_alt(candidates, target):
     def helper(candidates, target, _sum, start, path):
         result = []
         for i in range(start, len(candidates)):
-
             total = _sum + candidates[i]
             if total < target:
                 result += helper(candidates, target, total, i, path + (candidates[i],))
             elif total == target:
                 result.append(list(path + (candidates[i],)))
-
         return result
-
     return helper(candidates, target, 0, 0, ())
 
 
