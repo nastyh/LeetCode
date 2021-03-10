@@ -1,4 +1,4 @@
-def intToRoman(num):
+def intToRoman(num):  # O(1) both
     values = {
         'M': 1000,
         'CM': 900,
@@ -46,6 +46,37 @@ def intToRoman_another(num):
         # Append "count" copies of "symbol" to roman_digits.
         roman_digits.append(symbol * count)
     return "".join(roman_digits)
+
+
+def intToRoman_one_more(num):
+    """
+    The dictionary is sorted, actually. When we do num // base and base is larger than num, it returns 0
+    So we get 0 times roman_symbol and nothing is being added to the resulting string 
+    But at some point, we get to something like (67 // 50) = 1. And we get 1 * mapping_table[50] = L
+    """
+    mapping_table = {
+        1000 : "M",
+        900  : "CM",
+        500  : "D",
+        400  : "CD",
+        100  : "C",
+        90   : "XC",
+        50   : "L",
+        40   : "XL",
+        10   : "X",
+        9    : "IX",
+        5    : "V",
+        4    : "IV",
+        1    : "I"
+        }
+        roman_string = ''
+		# represent input num in roman number system
+        for base, roman_symbol in mapping_table.items():
+			# update roman string with corresponding roman symbol
+            roman_string += (num // base) * roman_symbol
+			# update num as remainder
+            num = num % base
+        return roman_string
     
 
 if __name__ == '__main__':
