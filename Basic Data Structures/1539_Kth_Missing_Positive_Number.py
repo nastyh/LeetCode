@@ -20,6 +20,19 @@ def findKthPositive(arr, k):  # O(n) and O(1)
     return res
 
 
+def findKthPositive_alt(arr, k):  # O(n) both. Faster than above b/c of the set 
+    unique = set(arr)
+    res = None
+    all_nums = [i for i in range(1, max(arr) + 1)]
+    for num in all_nums:
+        if num not in unique:
+            k -= 1
+            if k == 0:  # this if should be inside the previous if. Otherwise won't work for edge cases
+                res = num
+    if not res:
+        res = max(arr) + k
+    return res
+
 def findKthPositive_bin_search(arr, k):  # O(logn) and O(1)
     """
     ideally, arr[i] should hold i + 1 value i.e arr[0] = 1, arr[1] = 2..etc
@@ -40,7 +53,8 @@ def findKthPositive_bin_search(arr, k):  # O(logn) and O(1)
     return hi + k + 1
 
 if __name__ == '__main__':
-    print(findKthPositive([2, 3, 4, 7, 11], 5))
-    print(findKthPositive([1, 2, 3, 4], 2))
-    print(findKthPositive_bin_search([2, 3, 4, 7, 11], 5))
-    print(findKthPositive_bin_search([1, 2, 3, 4], 2))
+    # print(findKthPositive([2, 3, 4, 7, 11], 5))
+    # print(findKthPositive([1, 2, 3, 4], 2))
+    print(findKthPositive_alt([3, 10], 2))
+    # print(findKthPositive_bin_search([2, 3, 4, 7, 11], 5))
+    # print(findKthPositive_bin_search([1, 2, 3, 4], 2))
