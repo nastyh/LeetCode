@@ -1,3 +1,31 @@
+def insert_one_by_one(intervals, newInterval):  # O(n) both
+    """
+    Add all elements from intervals that happen before the start of newInterval
+    Main part:
+    while there is any overlap, try to build the longest consecutive solution that is in curr_res
+    We need the most left as a starting point and the most right as an ending point.
+    After overlaps are done, add curr_res to res
+    Finally, add everything that is left in intervals
+    """
+    res = []
+    if len(intervals) == 0: return [newInterval]
+    i = 0
+    while i < len(intervals) and intervals[i][1] < newInterval[0]:
+        res.append(intervals[i])
+        i += 1
+    curr_res = newInterval
+    while i < len(intervals) and intervals[i][0] <= newInterval[1]:
+        curr_res[0] = min(curr_res[0], intervals[i][0])
+        curr_res[1] = max(curr_res[1], intervals[i][1])
+        i += 1
+    res.append(curr_res)
+    
+    while i < len(intervals):
+        res.append(intervals[i])
+        i += 1
+    return res
+
+
 def insert(intervals, newInterval):
     res, t  = [], 0
     for interval in intervals:
@@ -9,13 +37,10 @@ def insert(intervals, newInterval):
         else:
             newInterval[0] = min(newInterval[0], interval[0])
             newInterval[1] = max(newInterval[1], interval[1])
-
         t += 1
-
         res.append(newInterval)
         return res + intervals[t:] if t < len(intervals) else res
         # takes care of the situation when we still have elements on the right that need to be in the result
-
 
 # another possible to understand
 

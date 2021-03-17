@@ -1,9 +1,36 @@
 import math
+
+def maxProfit_optimal(prices):  # O(n) and O(1)
+    """
+    Cover an edge case
+    Then we need to start somewhere. Let's say that the first number is the potential buy price.
+    Then let's traverse the rest of the list.
+    Every time we will calculate potential profit
+    If this profit is positive, we need to make a transaction (kinda a greedy approach)
+    After the transaction is done, we need to nullify our potential profit and update our current buying price
+    Otherwise (if the potential profit is negative and we don't engage in a transaction),
+    we need to decide if we want to hold to our current buying price or we rather take a smaller price (we prefer lower)
+    """
+    if len(prices) == 1: return 0
+    res = 0
+    curr_buy = prices[0]
+    for i in range(1, len(prices)):
+        pot_profit = prices[i] - curr_buy
+        if pot_profit > 0:
+            res += pot_profit
+            curr_buy = prices[i]
+            pot_profit = 0
+        else:
+            curr_buy = min(curr_buy, prices[i])
+    return res
+
+
+
 def maxProfit(prices):
     m_profit = 0
     for i in range(1, len(prices)):
-        if prices[i] > prices[i-1]:
-            m_profit += prices[i] - prices[i-1]
+        if prices[i] > prices[i - 1]:
+            m_profit += prices[i] - prices[i - 1]
     return m_profit
 
 
