@@ -1,4 +1,47 @@
-class Buffer(object):
+from collections import deque
+
+class Buffer_deque:
+
+    def __init__(self, capacity):
+        self.buffer = deque()
+        self.size, self.capacity = 0, capacity
+    
+    def write(self, chars):
+        for i, c in enumerate(chars):
+            if self.size >= self.capacity: return i
+            self.buffer.append(c)
+            self.size += 1
+        return len(chars)
+    
+    def read(self, n: int) -> str:
+        buffer=''
+        while n > 0 and self.size > 0:
+            buffer += self.buffer.popleft()
+            n -= 1
+            self.size -= 1
+        return buffer
+
+
+class Buffer_list:
+ 
+    def __init__(self, size):
+        self.size = size
+        self.queue = []
+    def write(self, content):
+        count = 0
+        for c in content:
+            if len(self.queue) < self.size:
+                self.queue.append(c)
+                count += 1
+        return count
+    def read(self, n):
+        res = ''
+        for _ in range(min(n, len(self.queue))):
+            res += self.queue.pop(0)
+        return res
+
+
+class Buffer:
 
     def __init__(self, k):
         self.k = k
@@ -11,20 +54,16 @@ class Buffer(object):
 
     def write(self, string):
         i, n = 0, len(string)
-
         # while buffer is not full
         # full is read_i == write_i and self.size == k
         # NOT full is read_i != write_i or self.size != k
 
         while i < n and \
                 (self.read_i != self.write_i or self.size != self.k):
-
             self.buf[self.write_i] = string[i]
-
             self.write_i = (self.write_i + 1) % self.k
             self.size += 1
             i += 1
-
         return i
 
 
@@ -32,7 +71,6 @@ class Buffer(object):
         """returns the string read.
         """
         i, ret = 0, ''
-
         # while buffer is NOT empty:
         while i < n and \
                 (self.read_i != self.write_i or self.size):
@@ -43,7 +81,6 @@ class Buffer(object):
             self.read_i = (self.read_i + 1) % self.k
             self.size -= 1
             i += 1
-
         return ret
 
 
