@@ -1,4 +1,9 @@
-def nextGreaterElement(nums1, nums2): # brute force
+def nextGreaterElement(nums1, nums2): # brute force  O(n^2) and O(1)
+    """
+    Double loop that starts from the index + 1 of the element from nums1 when it was found in nums2
+    Key here is to use the break statement, b/c we need the first greater element (the most left)
+    Otherwise it will be rewritten with potentially later greater element
+    """
     res = [-1] * len(nums1)
     for ix in range(len(nums1)):
         if nums1[ix] in nums2:
@@ -7,6 +12,7 @@ def nextGreaterElement(nums1, nums2): # brute force
                     res[ix] = nums2[j]
                     break
     return res
+    
 
 def nextGreaterElement_brute_force_another(nums1, nums2):
     """
@@ -24,7 +30,8 @@ def nextGreaterElement_brute_force_another(nums1, nums2):
                 break
     return res
 
-def nextGreaterElement_alt(nums1, nums2):
+
+def nextGreaterElement_alt(nums1, nums2):  # O(n) O(len(nums2))
     """
     Build a dictionary d:
     {element in nums2: next greater element to the right}
@@ -57,6 +64,7 @@ def _helper(nums2): # return the next larger element to the right from a given e
     if len(res) != len(nums2):
         res.extend([-1 for i in range(len(nums2) - len(res))])
     return res
+
 
 if __name__ == '__main__':
     # print(nextGreaterElement([4, 1 ,2], [1, 3, 4, 2]))
