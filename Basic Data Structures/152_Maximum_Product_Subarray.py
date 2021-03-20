@@ -33,7 +33,7 @@ def maxProduct_alt(nums):  # O(n) and O(1)
     return final_max
     
 
-def maxProduct_brute_force(nums):  # O(n^2)
+def maxProduct_brute_force(nums):  # O(n^2) and O(1)
         res, curr = -math.inf, 1
         for i in range(len(nums)):
             curr = nums[i]
@@ -69,8 +69,7 @@ def maxProduct_find_indices(nums):
         max_so_far = temp_max
         if max_so_far > result:
             result = max_so_far
-            end_index = i 
-    
+            end_index = i  
     cur = nums[end_index]
     j = end_index - 1
     # no change in complexity
@@ -79,6 +78,24 @@ def maxProduct_find_indices(nums):
         j -= 1
     print(nums[j + 1:i + 1]) 
     return result
+
+
+def maxProduct_dp(nums):  # O(n) and O(1)
+    """
+    curr_min and curr_max are updated every time. Need to account for all possible cases:
+    when these variables have positive and negative values and when they're multiplied by positive and negative numbers
+    """
+    res = max(nums)
+    curr_min, curr_max = 1, 1 
+    for num in nums:
+        if num == 0:
+            curr_min, curr_max = 1, 1 
+            continue
+        tmp = curr_max * num  # need to have tmp b/c otherwise the line for curr_max will mess up the calculations for curr_min
+        curr_max = max(num * curr_max, num * curr_min, n)
+        curr_min = min(tmp, num * curr_min, n)
+        res = max(res, curr_max, curr_min)
+    return res
 
 
 if __name__ == '__main__':
