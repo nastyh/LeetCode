@@ -7,6 +7,7 @@ def sortList(head):
             counter += 1
             head = head.next
         return counter   
+        
     def split(head, size):
         # given the head & size, return the the start node of next chunk
         for i in range(size - 1): 
@@ -17,6 +18,7 @@ def sortList(head):
         if not head: return None
         next_start, head.next = head.next, None  #disconnect   
         return next_start    
+
     def merge(l1, l2, dummy_start):
         # Given dummy_start, merge two lists, and return the tail of merged list
         curr = dummy_start
@@ -81,3 +83,25 @@ class Solution:  # O(nlogn) and O(1)
             prev.next = l1 or l2    # one of l1 and l2 can be non-null at this point
             return dummy.next
         return mergeSort(head)
+
+
+class Solution_brute_force:  # O(nlogn) and O(n) 
+    def sortList(self, head)
+        """
+        iterate over the linked list, save the values
+        Sort them and create another linked list based off of these values
+        """
+        if not head: return head
+        if head and not head.next: return head
+        nums = []
+        while head:
+            nums.append(head.val)
+            head = head.next
+        nums.sort()
+        ans = ListNode(nums[0])
+        dummy = ListNode(-1)
+        dummy.next = ans
+        for val in nums[1:]:
+            ans.next = ListNode(val)
+            ans = ans.next
+        return dummy.next
