@@ -15,7 +15,7 @@ def pivotIndex(nums):  # O(n) and O(n)
     return -1
     
 
-def pivotIndex_alt(nums):
+def pivotIndex_alt(nums):  # O(n) and O(1)
     """
     Same but without building dp
     """
@@ -28,7 +28,7 @@ def pivotIndex_alt(nums):
     return -1
 
 
-def pivotIndex_another(nums):
+def pivotIndex_another(nums):  # O(n) both 
     """
     with two running sums.
     from_left is the running sums from the left
@@ -44,8 +44,6 @@ def pivotIndex_another(nums):
         from_left[i] = from_left[i - 1] + nums[i]
     for j in range(len(nums) - 2, -1, -1):
         from_right[j] = from_right[j + 1] + nums[j]
-    print(from_left)
-    print(from_right)
     for k in range(len(nums)):
         if from_left[k] == from_right[k]:
             res = k

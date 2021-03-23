@@ -15,6 +15,23 @@ def checkSubarraySum(nums, k):
         sum_mod_dict[sum_mod] = i
     return
 
+def checkSubarraySum_optimal(nums, k): # O(n) both
+    """
+    make 0 as -1, now we have to find subarray sum equals 0 
+    """
+    sum_map = {0: -1}
+    running_sum = 0
+    for index, num in enumerate(nums):
+        running_sum += num
+        if k != 0:
+            running_sum = running_sum % k
+        if running_sum in sum_map and index - sum_map[running_sum] > 1:
+            return True
+        
+        if not running_sum in sum_map:
+            sum_map[running_sum] = index
+    return False
+
 def checkSubarraySum_alt(nums, k):
     mp = {0: -1}
     prefix_sum = 0
