@@ -1,4 +1,4 @@
-def numSubarrayProductLessThanK(nums, k):
+def numSubarrayProductLessThanK(nums, k):  # O(N) both
     l, r, res, prods = 0, 0, 0, 1
     while r < len(nums):
         prods *= nums[r]
@@ -6,7 +6,7 @@ def numSubarrayProductLessThanK(nums, k):
             prods /= nums[l]
             l += 1
         if prods < k:
-            res += r - l + 1
+            res += r - l + 1  # need this line in order to account for elements themselves if they're < k
         r += 1
     return res
 
