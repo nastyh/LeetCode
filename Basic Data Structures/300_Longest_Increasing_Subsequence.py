@@ -1,5 +1,10 @@
 import bisect
 def lengthOfLIS(nums): # O(n^2), DP
+    """
+    Two pointers: left (i) and right (j). i covers everything up to j.
+    Every time, if we see that the number at the j-th index is > number at the i-th index, it means that we can extend our LIS
+    We will make a choice between what is already in the dp at the index j vs. taking whatever at index i plus one (because we're extending)
+    """
     if len(nums) <= 1: return len(nums)
     i, j, dp, res = 0, 1, [1] * len(nums), 1
     for j in range(1, len(nums)):
@@ -41,7 +46,7 @@ def lengthOfLIS_log(nums):  # O(nlogn)
 
 def lengthOfLIS_tail(nums): # O(nlogn)
     """
-    tails is an array storing the smallest tail of all increasing subsequences with length i+1 in tails[i].
+    tails is an array storing the smallest tail of all increasing subsequences with length i + 1 in tails[i].
     nums = [4,5,6,3], then all the available increasing subsequences are:
     len = 1   :      [4], [5], [6], [3]   => tails[0] = 3
     len = 2   :      [4, 5], [5, 6]       => tails[1] = 5
