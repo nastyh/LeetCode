@@ -23,6 +23,12 @@ def longestValidParentheses(s):  # O(n) and O(1)
 
 
 def longestValidParentheses_dp(s):  # O(n) both 
+    """
+    dp keeps the length of the longest substring that ends at a current ix
+    Obviously, a good substring is the one that ends with an ')'
+    So dp at indices where the symbol is '(' will always have 0
+    Then start filling out
+    """
     n = len(s)
     if n < 2:
         return 0
