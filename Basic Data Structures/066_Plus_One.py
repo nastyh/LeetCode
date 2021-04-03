@@ -1,3 +1,21 @@
+def plusOne_short(digits):
+    """
+    Add 1 seperately
+    Then process the rest starting from the second last digit in digits
+    """
+    res, carry = [], 0
+    new_num = digits[-1] + 1
+    res.append(new_num % 10)
+    carry = new_num // 10
+    for i in range(len(digits) - 2, -1, -1):
+        new_num = carry + digits[i]
+        res.append(new_num % 10)
+        carry = new_num // 10
+    if carry == 1:
+        res.append(1)
+    return res[::-1] 
+
+
 def plusOne_optimal(digits):  # O(n) both
     """
     Solved in two steps
