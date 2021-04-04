@@ -1,3 +1,60 @@
+class MyCircularQueue_short:  # O(1) for everything except init. O(N)
+    """
+    Given a fixed size array, any of the elements could be considered as a head in a queue.
+    tail_ix = (head_ix + count - 1) % capacity
+    """
+    def __init__(self, k: int):
+        self.q = [None] * k  # queue itself
+        self.size = k  # so that we don't call len(self.q) all the time 
+        self.taken = 0  # how many values are inserted so far
+        self.front = -1 # insertion index. Start with -1, so that after inserting the first value we're at index 0
+
+    def enQueue(self, value: int) -> bool:
+        """
+        Insert an element into the circular queue. Return true if the operation is successful.
+        """
+        if self.isFull(): return False
+        self.front = (self.front + 1) % self.size
+        self.q[self.front] = value
+        self.taken += 1
+        return True
+
+    def deQueue(self) -> bool:
+        """
+        Delete an element from the circular queue. Return true if the operation is successful.
+        """
+        if self.isEmpty(): return False
+        self.taken -= 1
+        return True
+
+    def Front(self) -> int:
+        """
+        Get the front item from the queue.
+        """
+        if self.isEmpty(): return -1
+        return self.q[(self.front - self.taken + 1) % self.size]  # this is the key of the question here 
+
+    def Rear(self) -> int:
+        """
+        Get the last item from the queue.
+        """
+        if self.isEmpty(): return -1
+        return self.q[self.front]  # value at an index at which we inserted the value 
+        
+    def isEmpty(self) -> bool:
+        """
+        Checks whether the circular queue is empty or not.
+        """
+        return self.taken == 0  # if we haven't taken anyting, it should be 0
+        
+    def isFull(self) -> bool:
+        """
+        Checks whether the circular queue is full or not.
+        """
+        return self.taken == self.size  # if we took every possible empty slot
+
+
+
 class MyCircularQueue:
     def __init__(self, k):
         """
