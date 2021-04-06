@@ -7,7 +7,7 @@ def rob(nums):
     return curr
 
 
-def rob_linear(nums):
+def rob_linear(nums):  # O(n) and O(1)
     """
     no need for the whole dp list. Need to keep track of the second house from the left
     and from the first house to the left. Then make updates
@@ -16,6 +16,23 @@ def rob_linear(nums):
     for num in nums:
         max_from_second_left_house, max_from_first_left_house = max_from_first_left_house, max(max_from_first_left_house, max_from_second_left_house + num)
     return max_from_first_left_house
+
+
+def rob_no_space(nums):
+    """
+    Same as above essentially
+    We only need two values to keep: l (two elements to the left from the current)
+    and right (one element to the left from the current)
+    """
+    res = nums[0]  # can be initialized as -math.inf as well 
+    if len(nums) == 0: return 0
+    if len(nums) == 1: return nums[0]
+    if len(nums) == 2: return max(nums)
+    l, r = nums[0], max(nums[0], nums[1])
+    for i in range(2, len(nums)):
+        res = max(r, l + nums[i])
+        l, r = r, res
+    return res
 
 
 def rob_dp(nums):
