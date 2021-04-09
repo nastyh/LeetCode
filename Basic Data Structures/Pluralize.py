@@ -2,8 +2,6 @@ from collections import Counter
 def pluralize_pythonic(words):
     res = []
     d = Counter(words)
-    if all(v == 1 for v in d.values()):
-        return [k for k in d.keys()]
     res.append([k + 's' if v > 1 else k for k, v in d.items()])    
     return res[0]
 
