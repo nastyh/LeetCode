@@ -20,6 +20,22 @@ def pluralize_straigthforward(words):
             res.append(k)
     return res 
 
+
+def pluralize_Nick(ll):
+    nlist, ndic = [], {}
+    for x in ll:
+        if x not in ndic:
+            count = 1
+            ndic[x] = count
+        else:
+            ndic[x] = ndic[x] + 1 
+    for candidate in ndic:
+        if ndic[candidate] > 1:
+            nlist.append(candidate + 's')
+        else:
+            nlist.append(candidate)
+    return nlist
+
 if __name__ == '__main__':   
     print(pluralize_pythonic(['cow', 'pig', 'cow', 'cow']))
     print(pluralize_pythonic(['table', 'table', 'table']))
@@ -27,3 +43,6 @@ if __name__ == '__main__':
     print(pluralize_straigthforward(['cow', 'pig', 'cow', 'cow']))
     print(pluralize_straigthforward(['table', 'table', 'table']))
     print(pluralize_straigthforward(['chair', 'pencil', 'arm']))
+    print(pluralize_Nick(['cow', 'pig', 'cow', 'cow']))
+    print(pluralize_Nick(['table', 'table', 'table']))
+    print(pluralize_Nick(['chair', 'pencil', 'arm']))
