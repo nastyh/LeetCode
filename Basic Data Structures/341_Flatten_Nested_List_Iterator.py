@@ -1,3 +1,29 @@
+class NestedIterator_optimal:
+    """
+    Main portion is done in __init__
+    _helper takes an element. If it's an integer, we append this integer to the list l
+    If it's another list, we call _helper on this list
+    next() pops from the left side of the list
+    hasNext() checks if there is anything left to pop
+    """
+    def __init__(self, nestedList: [NestedInteger]):
+        self.l = []
+        def _helper(nestedList):
+            for element in nestedList:
+                if element.isInteger():
+                    self.l.append(element.getInteger())
+                else:
+                    _helper(element.getList())
+        _helper(nestedList)
+    
+    def next(self) -> int:
+        return self.l.pop(0)
+        
+    def hasNext(self) -> bool:
+        return len(self.l) > 0
+
+
+
 class NestedIterator:
     """
     To flatten the list recursively, notice that we can look at the input as a tree.
