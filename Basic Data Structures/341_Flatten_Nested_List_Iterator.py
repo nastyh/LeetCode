@@ -6,7 +6,7 @@ class NestedIterator_optimal:
     next() pops from the left side of the list
     hasNext() checks if there is anything left to pop
     """
-    def __init__(self, nestedList: [NestedInteger]):
+    def __init__(self, nestedList: [NestedInteger]):  # O(N + L), N is the number of integers within the nested list, L is the total number of lists
         self.l = []
         def _helper(nestedList):
             for element in nestedList:
@@ -16,12 +16,11 @@ class NestedIterator_optimal:
                     _helper(element.getList())
         _helper(nestedList)
     
-    def next(self) -> int:
+    def next(self) -> int:  # O(1)
         return self.l.pop(0)
         
-    def hasNext(self) -> bool:
+    def hasNext(self) -> bool:  # O(1)
         return len(self.l) > 0
-
 
 
 class NestedIterator:
