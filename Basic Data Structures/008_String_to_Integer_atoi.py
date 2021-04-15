@@ -60,7 +60,5 @@ def myAtoi_alt(str):
         return -2**31
 
 
-
-
 if __name__ == '__main__':
     print(myAtoi_alt('-91283472332'))
