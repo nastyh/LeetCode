@@ -1,5 +1,16 @@
 import math
-def dominantIndex(nums):
+def dominantIndex_pythonic(nums):  # O(n) and O(1)
+    """
+    Check all elements to the left and to the right from the largest number 
+    """
+    res = -1
+    max_ix = nums.index(max(nums))
+    if all(2 * x <= nums[max_ix] for x in nums[:max_ix] + nums[max_ix + 1:]):
+        res = max_ix
+    return res
+
+
+def dominantIndex(nums):  # O(n) and O(1)
     if len(nums) == 0:
         return -1
     if len(nums) == 1:
@@ -28,6 +39,8 @@ def dominantIndex_1pass(nums): # doesn't work well with zeroes based on Leetcode
     return m_ix
 
 if __name__ == '__main__':
+    print(dominantIndex_pythonic([3, 6, 1, 0]))
+    print(dominantIndex_pythonic([1, 2, 3, 4]))
     print(dominantIndex([3, 6, 1, 0]))
     print(dominantIndex([1, 2, 3, 4]))
     print(dominantIndex_1pass([3, 6, 1, 0]))
