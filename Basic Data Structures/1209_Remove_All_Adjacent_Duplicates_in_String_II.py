@@ -15,7 +15,7 @@ def removeDuplicates_alt(s, k):  # O(n) both
     return ''.join(st_char[i] * st_count[i] for i in range(len(st_char)))
 
 
-def removeDuplicates_alt2(s, k):
+def removeDuplicates_alt2(s, k):  # O(n) both
     """
     A bit cleaner
     Keep two stacks: for characters and frequencies
@@ -44,8 +44,6 @@ def removeDuplicates_alt2(s, k):
                         st_count.pop()
     # print(st, st_count)
     return ''.join(st[i] * st_count[i] for i in range(len(st)))
-        
-   
 
 
 if __name__ == '__main__':
@@ -53,4 +51,4 @@ if __name__ == '__main__':
     # print(removeDuplicates_alt('abcd', 2))
     # print(removeDuplicates_alt('pbbcggttciiippooaais', 2))
     # print(removeDuplicates_alt('yfttttfbbbbnnnnffbgffffgbbbbgssssgthyyyy', 4))
-    print(removeDuplicates_alt2('deeedbbcccbdaa', 3))
+    # print(removeDuplicates_alt2('deeedbbcccbdaa', 3))

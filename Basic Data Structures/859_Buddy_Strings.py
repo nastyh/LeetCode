@@ -1,4 +1,10 @@
 def buddyStrings(A, B):
+    """
+    Collect indices of letters that are different
+    If nothing to collect, then False
+    If it has anything but 2 elements, then False
+    Check whether you can swap elements at these indices
+    """
     if A == B:
         if len(A) > len(set(A)):
             return True
