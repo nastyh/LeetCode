@@ -6,6 +6,22 @@ class Tree:
         self.left = left
         self.right = right
 
+    
+    def isSameTree_helper(self, p, q):  # O(N) and O(N) in the worst case (in the best case it's O(logN))
+        """
+        Everything is done inside the helper
+        If two trees has been the same, at some point we'll arrive to if not a and not b: return True and that's enough for obtaining True
+        In all other cases it shouild become False at some point earlier.
+        """
+        def _helper(a, b):
+            if not a and not b: return True
+            if a and not b: return False
+            if b and not a: return False
+            if a.val != b.val:
+                return False
+            return _helper(a.left, b.left) and _helper(a.right, b.right)
+        return _helper(p, q)
+
     def isSameTree(self, p, q):
         if not p and not q: return True
         if not p and q: return False
