@@ -23,7 +23,15 @@ def minFallingPathSum_alt(arr):
     return min(arr[-1])
 
 
-def minFallingPathSum_straigthforward(arr):
+def minFallingPathSum_straigthforward(arr):  # O(MN) both 
+    """
+    DP of the same size
+    First row is equal to the first row from arr
+    Then we need to fill out the first and last columns separately starting from row 1
+    For the first column, we take the current element and add the min of dp one row above and above one step right
+    For the last column, we take the current element and add the min of dp one row above and above one step left
+    For everything else, it's the current element + min of elements from the row above: one left, just above, one right 
+    """
     dp = [[0] * len(arr) for i in range(len(arr[0]))]  # dp with zeroes
     for col in range(len(arr[0])):  # filling out the first row with original numbers
         dp[0][col] = arr[0][col]
