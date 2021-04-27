@@ -8,7 +8,7 @@ def is_there_consecutive(nums, n, times):
     for num in nums:
         if num == n:
             res += 1
-        elif nums != n:
+        elif num != n:
             if res != times:
                 res = 0 
     return res == times
