@@ -20,7 +20,7 @@ def leastBricks(wall):
             sum_bricks += brick
             if sum_bricks < width:
                 d[sum_bricks] += 1
-    max_edges = d
-    for hash in brick_hash:
+    max_edges = 0
+    for hash in d:
         max_edges = max(max_edges, d[hash])
     return layers - max_edges
