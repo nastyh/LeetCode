@@ -3,7 +3,6 @@ takes nums, n, times
 Return True if the number n is in nums exactly times times in a row.
 False otherwise
 """
-from collections import Counter
 def is_there_consecutive(nums, n, times):
     res = 0
     for num in nums:
