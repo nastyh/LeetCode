@@ -1,3 +1,32 @@
+def uniquePathsWithObstacles_optimal(obstacleGrid):  # O(mn) both
+    """
+    The key here is to fill out dp with zeroes 
+    When we fill out the first row (and the first column) as soon as we come across a 1 (an obstacle),
+    we need to put zero into the cell and stop the loop b/c everything to the right (or below) should be zero
+    After that a normal loop from (1, 1)
+    If the current cell is not a obstacle, put the sum of cells to the left and on top
+    """
+    if obstacleGrid[0][0] == 1: return 0
+    dp = [[0] * len(obstacleGrid[0]) for _ in range(len(obstacleGrid))]
+    for col in range(len(dp[0])):
+        if obstacleGrid[0][col] != 1:
+            dp[0][col] = 1
+        else:
+            break
+    for row in range(len(dp)):
+        if obstacleGrid[row][0] != 1:
+            dp[row][0] = 1
+        else:
+            break
+    
+    for row in range(1, len(dp)):
+        for col in range(1, len(dp[0])):
+            if obstacleGrid[row][col] != 1:
+                dp[row][col] = dp[row - 1][col] + dp[row][col - 1]
+            else:
+                dp[row][col] = 0 
+    return dp[-1][-1]
+
 def uniquePathsWithObstacles(obstacleGrid):
     obstacleGrid[0][0] ^= 1 # binary XOR
     col, row = len(obstacleGrid[0]), len(obstacleGrid)
@@ -25,13 +54,13 @@ def uniquePathsWithObstacles_another(obstacleGrid): # with filling out the corne
 	if obstacleGrid[0][0] == 1: return 0
 	obstacleGrid[0][0] = 1
 	for i in range(1, col):
-		obstacleGrid[i][0] = int(obstacleGrid[i][0] == 0 and obstacleGrid[i-1][0] == 1)
+		obstacleGrid[i][0] = int(obstacleGrid[i][0] == 0 and obstacleGrid[i-  1][0] == 1)
 	for j in range(1, row):
-		obstacleGrid[0][j] = int(obstacleGrid[0][j] == 0 and obstacleGrid[0][j-1] == 1)
+		obstacleGrid[0][j] = int(obstacleGrid[0][j] == 0 and obstacleGrid[0][j - 1] == 1)
 	for i in range(1, row):
 		for j in range(1, col):
 			if obstacleGrid[i][j] == 0:
-			    obstacleGrid[i][j] = obstacleGrid[i-1][j] + obstacleGrid[i][j-1]
+			    obstacleGrid[i][j] = obstacleGrid[i - 1][j] + obstacleGrid[i][j - 1]
 			else:
 			    obstacleGrid[i][j] = 0
 	return obstacleGrid[-1][-1]
