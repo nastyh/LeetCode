@@ -99,6 +99,7 @@ def searchRange_2_helpers(nums, target):  # O(logn) and O(1)
 	2 helper functions: to find the most left element and the most right element
 	Most left: if we found an element at nums[m], we need to store m at res and still go to the left side b/c there can be more elements that are the same
 	Most right: if we found an element at nums[m], we need to store m at res and still go to the right side b/c there can be more elements that are the same
+	The key here is to have left_res and right_res in helper functions instead of returning l (or r) at the end.
 	"""
 	res = [-1, -1]
 
