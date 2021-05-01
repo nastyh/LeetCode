@@ -1,4 +1,31 @@
 from collections import defaultdict
+
+def countComponents_optimal(n, edges):
+    """
+    Build an adjacency list 
+    The helper function just visits neighbors and adds them to visited
+    We increment res in the main portion of the function every time when we get out of the _trav function
+    and need to start processing another unconnected portion (i.e. an island)
+    """
+    adj_list = defaultdict(list)
+    visited = set()
+    res = 0
+    for edge in edges:
+        adj_list[edge[0]].append(edge[1])
+        adj_list[edge[1]].append(edge[0])
+    def _trav(node, d):
+        nonlocal visited
+        for neighbor in d[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                _trav(neighbor, d)
+    for element in range(n):
+        if element not in visited:
+            _trav(element, adj_list)
+            res += 1
+    return res
+
+
 def countComponents(n, edges):  # O(n) both
     """
     Create adj list. Will be like {0 : [1], 1 : [0, 2], 2: [1], 3: [4], 4: [3] }
@@ -48,6 +75,17 @@ def countComponents_another(n, edges): # instead of a set, have an extra diction
             flags[el] = 0
             res += 1
     return res
+
+
+def countComponents_union_find(n, edges):
+    p = range(n)
+    def find(v):
+        if p[v] != v:
+            p[v] = find(p[v])
+        return p[v]
+    for v, w in edges:
+        p[find(v)] = find(w)
+    return len(set(map(find, p)))
 
 if __name__ == '__main__':
     print(countComponents(5, [[0, 1], [1, 2], [3, 4]]))
