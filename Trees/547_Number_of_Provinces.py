@@ -1,5 +1,31 @@
 import numpy as np
 from collections import defaultdict, deque
+def findCircleNum_DFS(M):
+    """
+    Key here is to properly build an adjacency list w/o adding elements that are on the main diagonal
+    After that, it's a traditional DFS with a helper function 
+    """
+    adj_list = defaultdict(list)
+    visited = set()
+    res = 0
+    for row in range(len(M)):
+        for col in range(len(M[0])):
+            if M[row][col] == 1 and row != col:
+                adj_list[row].append(col)
+                adj_list[col].append(row)
+    def _trav(node, d):
+        nonlocal visited
+        for neighbor in d[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                _trav(neighbor, d)
+    for element in range(len(M)):
+        if element not in visited:
+            _trav(element, adj_list)
+            res += 1
+    return res
+    
+
 def findCircleNum(isConnected):  # O(n^2) to traverse the matrix and build an adj_list. O(n^2) for storage. Worst case: all nodes are connected
     """
     DFS approach
