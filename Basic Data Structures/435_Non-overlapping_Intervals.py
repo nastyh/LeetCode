@@ -16,7 +16,7 @@ def eraseOverlapIntervals(intervals):  # don't know what is wrong here
     return res 
 
 
-def eraseOverlapIntervals_alt(intervals):
+def eraseOverlapIntervals_alt(intervals):  # O(nlogn) and O(1)
     intervals.sort()
     result, prev = 0, -math.inf
     for l, r in intervals:
@@ -26,6 +26,20 @@ def eraseOverlapIntervals_alt(intervals):
                 continue
         prev = r
     return result
+
+
+def eraseOverlapIntervals_from_the_end(intervals):
+    """
+    Find the number of maximum number of non-overlapping intervals and subtract it from the number of intervals.
+    Sort by interval end time. Iterate and keep track of the previous interval's end time.
+    """
+    previous_interval_end, max_non_overlapping = float("-inf"), 0
+	intervals.sort(key = lambda x: x[1])
+	for interval in intervals:
+		if interval[0] >= previous_interval_end:
+			previous_interval_end = interval[1]
+			max_non_overlapping += 1
+	return len(intervals) - max_non_overlapping
 
 
 def eraseOverlapIntervals_2_pointers(intervals):  # o(nlogn) and O(1)
@@ -56,14 +70,14 @@ def eraseOverlapIntervals_2_pointers(intervals):  # o(nlogn) and O(1)
 
 
 if __name__ == '__main__':
-    print(eraseOverlapIntervals([[1,2],[2,3],[3,4],[1,3]]))
-    print(eraseOverlapIntervals([[1,2],[1,2],[1,2]]))
-    print(eraseOverlapIntervals([[1,2],[2,3]]))
-    print(eraseOverlapIntervals([[1,100],[11,22],[1,11],[2,12]]))
-    print(eraseOverlapIntervals([[0,2],[1,3],[2,4],[3,5],[4,6]]))
+    print(eraseOverlapIntervals([[1, 2],[2, 3],[3, 4],[1, 3]]))
+    print(eraseOverlapIntervals([[1, 2],[1, 2],[1, 2]]))
+    print(eraseOverlapIntervals([[1, 2],[2, 3]]))
+    print(eraseOverlapIntervals([[1, 100],[11, 22],[1, 11],[2, 12]]))
+    print(eraseOverlapIntervals([[0, 2],[1, 3],[2, 4],[3, 5],[4, 6]]))
 
-    print(eraseOverlapIntervals_alt([[1,2],[2,3],[3,4],[1,3]]))
-    print(eraseOverlapIntervals_alt([[1,2],[1,2],[1,2]]))
-    print(eraseOverlapIntervals_alt([[1,2],[2,3]]))
-    print(eraseOverlapIntervals_alt([[1,100],[11,22],[1,11],[2,12]]))
-    print(eraseOverlapIntervals_alt([[0,2],[1,3],[2,4],[3,5],[4,6]]))
+    print(eraseOverlapIntervals_alt([[1, 2],[2, 3],[3, 4],[1, 3]]))
+    print(eraseOverlapIntervals_alt([[1, 2],[1, 2],[1, 2]]))
+    print(eraseOverlapIntervals_alt([[1, 2],[2, 3]]))
+    print(eraseOverlapIntervals_alt([[1, 100],[11, 22],[1, 11],[2, 12]]))
+    print(eraseOverlapIntervals_alt([[0, 2],[1, 3],[2, 4],[3, 5],[4, 6]]))
