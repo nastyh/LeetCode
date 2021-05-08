@@ -1,5 +1,22 @@
 import heapq
 from collections import Counter
+
+def topKFrequent_optimal_heap(nums, k):  # O(nlogk) both
+    """
+    Optimal solution: maintain a max heap of size k
+    """
+    d, h, res = Counter(nums), [], []
+    for key, v in d.items():
+        if len(h) < k:
+            heapq.heappush(h, (v, key))
+        else:
+            heapq.heappushpop(h, (v, key))
+    # return [heapq.heappop(h)[1] for _ in range(k)]
+    for _ in range(k):
+        res.append(heapq.heappop(h)[1])
+    return res
+        
+
 def topKFrequent(nums, k):  # O(Nlog(N)) where n is the length of nums
     d = {}
     for n in nums:
@@ -69,15 +86,10 @@ def topKFrequent_heap(nums, k):
     Heap push/pop is O(logK) and we do it N - K times --> O((N - K)logK)
     Overall end up with O(KlogK) in time complexity
     """
-    d = {}
-    for n in nums:
-        if n not in d:
-            d[n] = 1
-        else:
-            d[n] += 1
+    d = Counter(nums)
     hp = []
-    for key,v in d.items():
-        heapq.heappush(hp,(-v,key))
+    for key, v in d.items():
+        heapq.heappush(hp, (-v, key))
     # Popping out all the number for  value k
     res = []
     for _ in range(k):
