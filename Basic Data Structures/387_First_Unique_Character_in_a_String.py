@@ -1,4 +1,16 @@
 from collections import OrderedDict, defaultdict
+def firstUniqChar_optimal(s):  # O(n) and O(1) b/c it's alphabet of size 26
+    """
+    Iterate over s. As soon as you see a character with a frequency of 1, return its index.
+    If nothing, return -1 at the end 
+    """
+    d = Counter(s)
+    for ix, ch in enumerate(s):
+        if d[ch] == 1:
+            return ix
+    return -1
+
+
 def firstUniqChar(s):   # loveleetcode
     if len(s) == 0:
         return -1
