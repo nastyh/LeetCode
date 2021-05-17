@@ -15,7 +15,7 @@ def minKnightMoves(x, y):  # O(xy) both
         if coord_x == x and coord_y == y:
             return step
         for dx, dy in directions:
-            if ((coord_x + dx, coord_y + dy) not in visited) and ( step < 2 or (coord_x + dx >= 0 and coord_y + dy >= 0)): # d < 2, for x,y = (1,1) ans will be 4 without this ans is 2
+            if ((coord_x + dx, coord_y + dy) not in visited) and (step < 2 or (coord_x + dx >= 0 and coord_y + dy >= 0)): # d < 2, for x,y = (1,1) ans will be 4 without this ans is 2
                 if coord_x + dx == x and coord_y + dy == y:
                     return step + 1
                 d.append((coord_x + dx, coord_y + dy, step + 1))
@@ -29,7 +29,7 @@ def minKnightMoves_pruning(x, y):  # O(|x| * |y|) both
         a, b, step = q.popleft()
         if (a, b) == (x, y): return step
         for dx, dy in [(1, 2),(2, 1),(1, -2),(2, -1),(-1 ,2),(-2 ,1)]:  # no need to have (-1, -2) and (-2, -1) since it only goes 1 direction
-            if (a + dx, b + dy) not in visited and -1 <= a + dx <= x + 2 and -1 <= b  +dy <= y  2:
+            if (a + dx, b + dy) not in visited and -1 <= a + dx <= x + 2 and -1 <= b + dy <= y + 2:
                 visited.add((a + dx, b + dy))
                 q.append((a + dx, b + dy, step + 1))
     return -1 
@@ -83,6 +83,28 @@ def minKnightMoves_brute_force(x, y):  # O(xy) both
                     return res + 1
                 visited.add((x_offset, y_offset))
                 d.append((x_offset, y_offset, res + 1))
+
+
+def minKnightMoves_another_brute_force(x, y):  # O(xy) both
+    """
+    Simplest BFS
+    Only one return condition 
+    The tricky thing is x_step + direction[0] >= 0 and y_step + direction[1] >= 0 (without it, it'll TLE)
+    """
+    if x == 0 and y == 0: return 0
+    d = deque()
+    d.append((0, 0, 0))
+    visited = set((0, 0))
+    directions = [(-2, -1), (-1, -2), (1, -2), (2, -1), (2, 1), (1, 2), (-1, 2), (-2, 1)]
+    for _ in range(len(d)):
+        x_step, y_step, st = d.popleft()
+        if x_step == x and y_step == y:
+            return st
+        for direction in directions:
+            if (x_step + direction[0], y_step + direction[1]) not in visited and x_step + direction[0] >= 0 and y_step + direction[1] >= 0:
+                visited.add((x_step + direction[0], y_step + direction[1]))
+                d.append((x_step + direction[0], y_step + direction[1], st + 1))                    
+
 
 if __name__ == '__main__':
     print(minKnightMoves(4, -7))
