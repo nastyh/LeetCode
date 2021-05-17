@@ -14,6 +14,22 @@ def groupAnagrams_alt(strs):  # O(NKlogK) where N is the length of strs, K is th
     return [v for v in d.values()]
 
 
+def groupAnagrams_easy_to_understand(strs):
+    """
+    anagrams, when sorted, are the same word
+    So, this sorted word will be a key in the dictionary
+    Iterate over and either create a new key-value pair or append to the existing one
+    """
+    d = defaultdict(list)
+    for s in strs:
+        temp = ''.join(sorted(s))
+        if temp not in d:
+            d[temp] = [s]
+        else:
+            d[temp].append(s)
+    return d.values()
+
+
 def groupAnagrams_another(strs):  # same as above but slightly different implementation
     if len(strs) == 0: return [[""]]
     if len(strs) == 1: return [strs]
