@@ -5,7 +5,7 @@ class TreeNode:
         self.right = right
 
     
-    def inorderTraversal(self, root):
+    def inorderTraversal(self, root):  #O(n) both 
         st, res = [], []
         if not root: return res
         while st or root:
@@ -16,6 +16,17 @@ class TreeNode:
                 root = st.pop()
                 res.append(root.val)
                 root = root.right
+        return res
+        
+    
+    def inorderTraversal_recur(self, root):  #O(n) both 
+        if not root: return []
+        res = []
+        def _helper(node, res):
+            if not node: return
+            _helper(node.left, res)
+            _helper(node.right, res)
+        _helper(root, res)
         return res
 
 
