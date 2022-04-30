@@ -25,6 +25,7 @@ class TreeNode:
         def _helper(node, res):
             if not node: return
             _helper(node.left, res)
+            res.append(node.val)
             _helper(node.right, res)
         _helper(root, res)
         return res
