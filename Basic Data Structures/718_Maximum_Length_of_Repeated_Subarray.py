@@ -1,3 +1,32 @@
+def findLength_comments(self, nums1: List[int], nums2: List[int]) -> int:
+        """
+        # O(nums1 * nums2) both 
+        create a 2d dp of the size nums1 times nums2
+        it's filled with zeroes first but add on more extra col and row
+        It's needed to process the first element and not fall out of bounds
+        We will have two for loops 
+        We start with (1, 1) and say that if at these indices there is a match,
+        we go to our matrix and update the element by taking the value from the prev cell
+        and adding one. We look to the prev element b/c it's a subarray, so the matches should be
+        next to each other
+        And we can update the res here or run max(dp) at the end
+        """
+        dp = [[0] * (len(nums1) + 1) for _ in range((len(nums2) + 1))]  # A cols, B rows
+        res = 0
+        for row in range(1, len(nums2) + 1):
+            for col in range(1, len(nums1) + 1):
+                if nums1[col - 1] == nums2[row - 1]:
+                    dp[row][col] = 1 + dp[row - 1][col - 1]
+                    res = max(res, dp[row][col])
+        return res
+        """
+        or we don't need to update res in the loop 
+        and can just return at the end:
+        return max([max(i) for i in dp])
+        internals will return a list with the max value from each row
+        and then we take the max value from them 
+        """
+
 def findLength(A, B):
     dp = [[0] * (len(A) + 1) for _ in range(len(B) + 1)]
     for a_ix in range(len(A)):
