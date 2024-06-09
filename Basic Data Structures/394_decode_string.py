@@ -29,3 +29,23 @@ class Solution:
             curr_str = stack.pop() + curr_str
         
         return curr_str
+
+    def decodeString_another(self, s: str) -> str:
+        st, curr_str = [], ""
+        for c in s:
+            # put everything into a stack till the first closing
+            if c != "]":
+                st.append(c)
+            else:
+            # now we need to build a portion of the answer 
+                curr_str = ""
+                # keep taking out everything that is inside a sq bracket in the stack
+                while st[-1] != "[":
+                    # add to the current portion of the answer
+                    curr_str += st.pop()
+                st.pop() # once it's processed, get rid of the last input
+                curr_mult = ""  # need to have numbers 
+                while st and st[-1].isdigit():
+                    curr_mult += st.pop()
+                st.append(curr_str * int(curr_mult[::-1])) # since it's  in the opposite direction
+        return ''.join([w[::-1] for w in st])
