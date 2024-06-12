@@ -28,6 +28,47 @@ def exist(board, word):  # o(N * 3^L), N - num of cells, L, length of the word; 
                 visited[i][j] = False
     return False
 
+def exist_clean(self, board: List[List[str]], word: str) -> bool:
+        """
+        O(rows * cols * 4^length of word)
+        Space is O(rows * cols)
+        """
+        seen, rows, cols = set(), len(board), len(board[0])
+        # edge cases 
+        if len(word) > rows * cols: return False
+        # False if the count of any letter in the word > the frequency of this letter on the board
+        count = Counter(sum(board, []))
+        for c, countWord in Counter(word).items():
+            if count[c] < countWord:
+                return False
+        # # Start the search from lower frequency of characters     
+        if count[word[0]] > count[word[-1]]:
+            word = word[::-1]
+        def _helper(word_position, i, j):
+            # don't fall out the bounds:
+            if i < 0 or i >= rows or j < 0 or j >= cols or board[i][j] != word[word_position] or (i, j) in seen:
+                    return False
+            if word_position == len(word) - 1:
+                    return True
+            found = False
+            seen.add((i, j))
+            # Search upward
+            found = found or _helper(word_position + 1, i-1, j)
+            # Search rightward
+            found = found or _helper(word_position + 1, i, j+1)
+            # Search downward
+            found = found or _helper(word_position + 1, i+1, j)
+            # Search Leftward
+            found = found or _helper(word_position + 1, i, j-1)
+            seen.remove((i, j))
+            return found
+        # call the helper on each cell 
+        for i in range(rows):
+            for j in range(cols):
+                if board[i][j] == word[0]:
+                    if _helper(0, i, j):
+                        return True
+        return False
 
 def exist_dfs(board, word):
     if not board:
