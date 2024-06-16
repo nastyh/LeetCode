@@ -1,5 +1,93 @@
 from collections import defaultdict
 from heapq import heappush, heappop, heapify
+
+   # use linkedin list + heapq
+class Node:
+    def __init__(self, val: int, pre: 'Node', next: 'Node', cnt: int, removed: bool=False) -> None:
+        self.val = val
+        self.pre = pre
+        self.next = next
+        self.cnt = cnt
+        self.removed = False
+
+    def __lt__(self, other):
+        if self.val == other.val:
+            return self.cnt > other.cnt
+        return self.val > other.val
+
+class MaxStack:
+    def __init__(self):
+        self.head = Node(0, None, None, 0)
+        self.tail = Node(0, None, None, 0)
+        self.head.next = self.tail
+        self.tail.pre = self.head
+        self.cnt = 0
+
+        self.q = []
+        heapq.heapify(self.q)
+
+    def push(self, x: int) -> None:
+        self.cnt += 1
+
+        # insert to doubly list
+        pretail = self.tail.pre
+        node = Node(x, pretail, self.tail, self.cnt)
+        pretail.next = node
+        self.tail.pre = node
+
+        # insert to heapq
+        heapq.heappush(self.q, node)
+
+    def pop(self) -> int:
+        # delete from doubly list
+        pretail = self.tail.pre
+        if pretail == self.head:
+            return -1
+        
+        prepretail = pretail.pre
+        prepretail.next = self.tail
+        self.tail.pre = prepretail
+
+        # delete from heapq (lasy removal)
+        pretail.removed = True
+        
+        return pretail.val
+
+
+    def top(self) -> int:
+        pretail = self.tail.pre
+        if pretail == self.head:
+            return -1
+        return pretail.val
+
+    def peekMax(self) -> int:
+        # delete top lazy removed elements
+        while len(self.q) > 0 and self.q[0].removed:
+            t = heapq.heappop(self.q)
+
+        if len(self.q) == 0:
+            return -1
+        return self.q[0].val
+
+    def popMax(self) -> int:
+        # delete top lazy removed elements
+        while len(self.q) > 0 and self.q[0].removed:
+            t = heapq.heappop(self.q)
+
+        # delete from heapq
+        node = heapq.heappop(self.q)
+        node.removed = True
+
+        # delete from doubly list
+        prenode = node.pre
+        nextnode = node.next
+        prenode.next = nextnode
+        nextnode.pre = prenode
+
+        return node.val
+
+
+
 class MaxStack:  # O(n)
 	def __init__(self):
 		"""
