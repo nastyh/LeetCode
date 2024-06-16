@@ -1,4 +1,42 @@
 from collections import defaultdict
+ def findItinerary_recursion_explained(self, tickets: List[List[str]]) -> List[str]:
+        """
+        O(E*log(E/V)), where E is the num of edges/flights and V is the num of airports. Log due to sorting
+        O(∣V∣+2⋅∣E∣)=O(∣V∣+∣E∣): V + E for the graph, E if for the recursion stack, we run recursion for the number of flights 
+ 
+        we will sort by the origin b/c of the lexical order in the task
+        default dict of the shape: origin: [destinations] 
+        by the lexical order (how the question wants it)
+
+        """
+        d, res = defaultdict(list), []
+        for origin, dest in sorted(tickets, reverse = True): # from larger to smaller
+            # in this order b/c popping happens from the end of the list and we want to process
+            # airports that have a a smaller lexographic order first (smaller letter first)
+            # d[sorted origins] = [all destinations]
+            d[origin].append(dest)
+        def _helper(d, location, res):
+            if location in d and len(d[location]) > 0: 
+                # means we departed from here and have somewhere to go
+                while len(d[location]) > 0: # while we have somewhwere to go
+                    destination = d[location].pop() # to make sure we covered this destination and then get rid of it
+                    _helper(d, destination, res) # this destination becomes our departure point 
+            res.append(location)  # keep building our answer: current locations goes into the list 
+        _helper(d, "JFK", res) 
+        # b/c based on the question, everyone departs from JFK
+        return res[::-1] # b/c recursion built the answer from the end: from the airport from which we don't travel anywhere
+
+    def findItinerary_iter(self, tickets: List[List[str]]) -> List[str]:
+        d, res = defaultdict(list), []
+        # same dict 
+        for origin, dest in sorted(tickets, reverse = True):
+            d[origin].append(dest)
+        st = ["JFK"] # since everyone starts here
+        while st:
+            while d[st[-1]]: # while we have somewhere to go from a given airport
+                st.append(d[st[-1]].pop()) # take it and process the destinations to go from this airport
+            res.append(st.pop()) # build the result 
+        return res[::-1]
 def findItinerary_DFS(tickets):  # O(E log(E/V)) and O(E+V) log is here b/c of sorting
     res = []
     def _helper(location):
