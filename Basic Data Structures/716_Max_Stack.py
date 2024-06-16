@@ -3,6 +3,7 @@ from heapq import heappush, heappop, heapify
 
    # use linkedin list + heapq
 class Node:
+	# O(logn) for push and O(1) for everything else
     def __init__(self, val: int, pre: 'Node', next: 'Node', cnt: int, removed: bool=False) -> None:
         self.val = val
         self.pre = pre
