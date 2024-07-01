@@ -26,6 +26,29 @@ def wordBreak_dp_another(s, wordDict):
                 dp[ix] = True
     return dp[-1]
 
+def wordBreak_explained(self, s: str, wordDict: List[str]) -> bool:
+        """
+        O(n^2 * m) and O(n)
+        Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+        Output: 5
+        Explanation: One shortest transformation sequence is "hit" -> "hot" -> "dot" -> "dog" -> cog", which is 5 words long.
+        Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"]
+        Output: 0
+        Explanation: The endWord "cog" is not in wordList, therefore there is no valid transformation sequence.
+        """
+        dp = [False] * (len(s) + 1)
+        dp[-1] = True
+        # fill out from the back
+        for i in range(len(s) -1, -1, -1):
+            # assess each word
+            for w in wordDict:
+                # if there are enough elements to work with and everything before has already matched
+                if (i + len(w)) <= len(s) and s[i:i + len(w)] == w:
+                    dp[i] = dp[i + len(w)]
+                if dp[i]:  # means the word w from wordDict is found
+                    break
+        return dp[0]
+
 
 def wordBreak_bfs(s, wordDict):
     word_set = set(wordDict)
