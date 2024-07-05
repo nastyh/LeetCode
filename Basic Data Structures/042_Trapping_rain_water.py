@@ -1,3 +1,51 @@
+def trap_explained(self, height: List[int]) -> int:
+        """
+        O(n) and O(1)
+        two pointers: from left and from right
+        need to track the max size from left and from right
+        try to store the water from the highest point to maximize the result
+        but we're limited by the min height
+        """
+        l, r, res = 0, len(height) - 1, 0
+        l_max, r_max = 0, 0 
+        while l < r:
+            if height[l] < height[r]:
+                if height[l] > l_max:
+                    l_max = height[l] # we found a better candidate, a taller one
+                else:
+                    res += l_max - height[l] # limited by the left side, take whatever we can
+                l += 1 # since it's the limit, we are tied to the smaller one, let's keep moving
+            else:
+                if height[r] > r_max:
+                    r_max = height[r] # better candidate
+                else:
+                    res += r_max - height[r] # the diff is what we can keep
+                r -= 1
+        return res 
+
+    def trap_with_space(self, height: List[int]) -> int:
+        """
+        height = []
+        max_left = list of the same size, in each cell contains the max number to the left
+        max_right = list of the same size, in each cell contains the max number to the right
+        min(max_left, max_right) = same size, obvious
+        We can also keep it in variables, thus, saving some space
+        """
+        l, r = 0, len(height) - 1
+        res = 0
+        l_max, r_max = height[l], height[r]
+        while l < r:
+            if l_max < r_max: 
+                l += 1
+                l_max = max(l_max, height[l])
+                res += l_max - height[l]
+            else:
+                r -= 1
+                r_max = max(r_max, height[r])
+                res += r_max - height[r]
+        return res
+
+
 def trap(height):
     if not height:
         return 0
