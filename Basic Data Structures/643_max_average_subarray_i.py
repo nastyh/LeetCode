@@ -16,3 +16,24 @@ class Solution:
         l_ix += 1
         r_ix += 1
     return glob_sum / k
+
+
+    def findMaxAverage_cleaner(self, nums: List[int], k: int) -> float:
+            """
+            O(n) and O(1)
+            """
+            if len(nums) == k:
+                return sum(nums) / k 
+            l, r = 0, k
+            curr_sum = sum(nums[:r]) # if k = 4, then it's including the third element 
+            glob_res = curr_sum / k
+            while r < len(nums):
+                """
+                minus the most left value + the new right value b/c r is one 
+                larger than the indices of the lists 
+                """
+                curr_sum = curr_sum - nums[l] + nums[r]
+                glob_res = max(glob_res, curr_sum / k)
+                l += 1
+                r += 1
+            return glob_res
