@@ -13,6 +13,7 @@ def longestPalindrome(s):
 
 def longestPalindrome_set(s):
     ss = set()
+    # set contains letters that have odd frequency
     for letter in s:
         if letter not in ss:
             ss.add(letter)
