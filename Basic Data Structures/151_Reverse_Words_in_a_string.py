@@ -3,6 +3,17 @@ def reverseWords(s):  # Pythonic
     r = [i for i in s.split()]
     return ' '.join(j for j in r[::-1])
 
+def reverseWords(s):  # Pythonic
+    """
+    We can build the answer in a for loop adding a space
+    When returning, don't return the last space
+    """
+    res = ''
+    words = s.split()[::-1]
+    for w in words:
+            res += w + ' '
+    return res[:-1]
+
 
 def reverseWords_manually(s):
     """
