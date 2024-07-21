@@ -1,4 +1,24 @@
 from collections import Counter
+def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+    """
+    O(2^n) both
+    """
+    res = []
+    wordSet = set(wordDict) # fast lookups
+    def backtrack(start, i, curr):
+        if i == len(s): # reached the end of the string, add the curr to the results
+            if len("".join(curr)) == len(s):
+                res.append(" ".join(curr))
+            return
+
+        backtrack(start, i + 1, curr) #skip
+        if s[start:i + 1] in wordSet:
+            curr.append(s[start:i + 1])
+            backtrack(i + 1,i + 1, curr) #don't skip but rather add
+            curr.pop() # done with the current candidate
+    backtrack(0, 0, [])
+    return res
+
 def wordBreak(s, wordDict):  # O(N^2 + 2^N + W) where N the length of the input string, W is the number of words in the dictionary 
     # quick check on the characters,
     #   otherwise it would exceed the time limit for certain test cases.
