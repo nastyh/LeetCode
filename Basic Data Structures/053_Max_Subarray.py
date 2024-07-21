@@ -20,6 +20,14 @@ def maxSubArray_2(nums):
             maxSum = dp
     return maxSum
 
+def maxSubArray_kadane(nums):
+    if len(nums) == 1: return nums[0]
+        res = -math.inf
+        max_at_ix = 0 # best result of a subarray ending at this index
+        for num in nums:
+            max_at_ix = max(num, max_at_ix + num) # consider or not consider the current element num
+            res = max(res, max_at_ix)  # update the global result every time
+        return res
 
 def maxSubArray_another_dp(nums):
     if len(nums) <= 1: return sum(nums)
