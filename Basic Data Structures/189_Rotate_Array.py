@@ -1,3 +1,10 @@
+def rotate(self, nums: List[int], k: int) -> None:
+	k %= len(nums)  # if k > len(nums), we don't need to do the full circle(s)
+	nums.reverse()  # reverse the whole thing
+	nums[:k] = nums[:k][::-1]  # reverse the first k elements. List are 0-indexed
+	nums[k:] = nums[k:][::-1]  # reverse the rest of the list 
+
+
 def rotate(nums, k):
     """
     Do not return anything, modify nums in-place instead.
