@@ -1,5 +1,5 @@
 from collections import Counter
-def containsDuplicate(nums): # with a dicionary
+def containsDuplicate(nums): # with a dictionary
     if len(nums) <= 1: return False
     d = Counter(nums)
     return sum(d.values()) / len(d) != 1
