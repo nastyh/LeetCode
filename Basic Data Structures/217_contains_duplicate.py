@@ -25,7 +25,7 @@ class Solution:
 
     def containsDuplicate_xor(self, nums: List[int]) -> bool:
         """
-        O(nlogn) and O(1)
+        O(n) and O(1). O(n) b/c we need to go over the list to XOR everything
         xor of a number with itself gives 0
         xor of a zero with a number gives a number
         sort nums
