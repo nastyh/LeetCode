@@ -7,6 +7,21 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def closestValue_dfs_recursion(self, root, target): 
+        self.res = float('inf')
+        def _helper(node):
+            if not node: return 
+            if abs(node.val - target) < abs(self.res - target):
+                self.res = node.val
+            elif abs(node.val - target) == abs(self.res - target):
+                self.res = min(self.res, node.val)  #  If there are multiple answers, print the smallest.
+            if target < node.val:
+                _helper(node.left)
+            if target > node.val:
+                _helper(node.right)
+        _helper(root)
+        return self.res
+
     def closestValue(self, root, target):  # creating a list of lists where the first element is node's values, the second is the difference
         st, res = [], []
         st.append(root)
