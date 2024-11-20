@@ -1,3 +1,44 @@
+class Solution:
+    def canJump_greedy(self, nums: List[int]) -> bool:
+        """
+        O(n) and O(1)
+        We’ll define the variable last_reach_ix as the last element's index of the array.
+        After each iteration, we’ll update the last_reach_ix variable by checking whether
+        the last_reach_ix variable is reachable from that index. If yes, the current index becomes the new last_reach_ix.
+        We keep on doing this until we reach the first element of the array.
+        Now, we’ll check whether the last_reach_ix variable is equal to zero (index of the first variable),
+        which means we could have reached the last element had we started from the first one.
+        """
+        last_reach_ix = len(nums) - 1
+        for i in range(len(nums)-2, -1, -1):
+            if i + nums[i] >= last_reach_ix:
+                last_reach_ix = i
+        if last_reach_ix == 0:
+            return True
+        else: return False
+
+     def canJump_back(self, nums: List[int]) -> bool:
+        """
+        O(n) and O(1)
+        greedy approach
+        if we go from the left, every time we want to arrive to the end asap
+        to do so, we want to take the longest steps 
+        But it can bring us to a bad situation. 
+        max_reach_ix is the largest index of where we can get from a current cell
+        if we are at ix=2 and the nums[ix] = 4, we can go to 2+1, 2+2, 2+3, 2+4
+        The max here is 2+4=6
+        If max_reach_ix is not less than i, it means we can reach this position,
+        and therefore we update max_reach_ix to be the maximum of its current value and i + x, where
+        x is the maximum jump length from the current position. 
+        """
+        max_reach_ix = 0
+        for index, jump_length in enumerate(nums):
+            if max_reach_ix < index: return False
+        # best of where we are vs. where we can get 
+            max_reach_ix = max(max_reach_ix, index + jump_length)
+        return True
+
+
 def canJump(nums):  # optimal
     if len(nums) == 0: return False
     i = 0
