@@ -16,8 +16,8 @@ def letterCombinations_recur(digits):
             "7" : ["p" , "q" , "r" , "s"],
             "8" : ["t" , "u" , "v"],
             "9" : ["w" , "x" , "y" , "z"]}
-    if len(digits) == 0: return ''
     res = []
+    if len(digits) == 0: return res
     def _recur(digits, d, curr_res, curr_ix):
         if len(curr_res) == len(digits):
             res.append(curr_res)
