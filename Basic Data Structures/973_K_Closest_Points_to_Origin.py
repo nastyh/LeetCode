@@ -1,4 +1,16 @@
 import math, heapq, random
+def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+    distances = []
+    h = []
+    res = []
+    for point in points:
+        curr_dist = math.sqrt((point[0]-0)**2+(point[1]-0)**2)
+        distances.append((curr_dist, point)) # looks as [[distance],[given_point]]
+    heapq.heapify(distances) # heapify based on the first values inside distances
+    for _ in range(k):
+        res.append(heapq.heappop(distances)[1]) # take out the k points, they are at index 1
+    return res
+
 def kClosest(points, K):
     if K > len(points):
         return None
