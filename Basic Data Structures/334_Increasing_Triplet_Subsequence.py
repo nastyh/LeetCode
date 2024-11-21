@@ -27,7 +27,7 @@ def increasingTriplet_brute_force(nums):  # O(n^2) and O(1)
             return True
     return False 
 
-
+# not always working
 def increasingTriplet_stack(nums):   # O(n) and O(n % 3) --> O(n)
     """
     Start with a stack, put the first element
