@@ -1,3 +1,4 @@
+import heapq
 def sortedSquares_best_shortest(nums):  # O(n) both (if we count res)
     """
     Cover edge cases 
@@ -38,6 +39,19 @@ def sortedSquares_list(nums):  # O(N) both
         else:
             res[i] = nums[r]**2
             r -= 1
+    return res
+    
+def sortedSquares_heap(nums): 
+    h = []
+    res = [0] * len(nums)
+    for num in nums:
+        h.append(abs(num))
+    heapq.heapify(h)
+    ix = 0
+    while len(h) > 0:
+        curr = heapq.heappop(h)
+        res[ix] = curr*curr
+        ix += 1
     return res
 
 
