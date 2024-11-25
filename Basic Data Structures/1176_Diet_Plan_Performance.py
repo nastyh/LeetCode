@@ -1,3 +1,22 @@
+def dietPlanPerformance_optimal(calories, k, lower, upper):
+    """
+    O(n) and O(1)
+    get a window of size k, calculate the sum, make a first decision updating res
+    now move l, r to the right and update the current sum, make another decision
+    return the result
+    """
+    res, curr_cals = 0, sum(calories[:k])
+    l, r = 0, k
+    if curr_cals > upper: res+= 1
+    if curr_cals < lower: res-= 1
+    while r < len(calories):
+        curr_cals = curr_cals + calories[r] - calories[l]
+        if curr_cals > upper: res += 1
+        if curr_cals < lower: res -= 1
+        l += 1
+        r += 1
+    return res
+
 def dietPlanPerformance(calories, k, lower, upper):
     if len(calories) == 0: return
     l = 0
