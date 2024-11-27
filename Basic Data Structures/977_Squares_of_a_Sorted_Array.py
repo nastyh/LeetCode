@@ -30,6 +30,9 @@ def sortedSquares(nums): # pythonic  O(nlogn) and O(N)
 
 
 def sortedSquares_list(nums):  # O(N) both
+    """
+    Fill out from the end: from the largest element
+    """
     res = [None] * len(nums)
     l, r = 0, len(nums) - 1
     for i in range(len(nums) - 1, -1, -1):
