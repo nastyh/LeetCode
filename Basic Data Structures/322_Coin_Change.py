@@ -4,7 +4,7 @@ def coinchange(coins, target):  # O(mn) and O(n) where m is len(coins) and n is 
 	dp[0] = 0
 	for coin in coins:
 		for x in range(coin, target + 1):
-			dp[x] = min(dp[x], dp[x - coin] + 1)
+			dp[x] = min(dp[x], dp[x - coin] + 1) # +1 means taking one more coin and working with the rest of the sum
 	return dp[target] if dp[target] != float('inf') else -1 
 
 
