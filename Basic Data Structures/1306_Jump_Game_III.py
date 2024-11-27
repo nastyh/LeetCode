@@ -1,3 +1,19 @@
+def canReach_optimal(self, arr: List[int], start: int) -> bool:
+    """
+    O(n) both 
+    """
+    vis = [0] * len(arr) # where we have already been
+    q = deque([start])
+    while q:
+      x = q.popleft()
+      if arr[x] == 0: # arrived to zero
+        return True
+      vis[x] = 1
+      for y in (x - arr[x], x + arr[x]): # what we can reach from a given spot
+        if 0 <= y < len(arr) and not vis[y]: 
+          q.append(y)
+    return False
+
 def canReach_bfs(arr, start):  # O(n) and O(n)
     """
      iterate all the possible routes and check if there is one reaches zero.
