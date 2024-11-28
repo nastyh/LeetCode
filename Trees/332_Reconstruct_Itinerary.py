@@ -88,27 +88,21 @@ def findItinerary_recur(tickets):
     return res[::-1]
 
 
-def findItinerary_doesnt_work(tickets):
-    d = defaultdict(list)
-    for ticket in tickets:
-        d[ticket[0]].append(ticket[1])
-    if 'JFK' not in d: return []
-    visited = set()
-    res = ["JFK"]
-    def _helper(node, d):
-        nonlocal visited
-        nonlocal res
-        if node != "JFK":
-            visited.add(node)
-        for neighbor in d[res[-1]]:
-            if neighbor not in visited:
-                if neighbor == 'JFK': continue
-                else:
-                    visited.add(neighbor)
-                res.append(neighbor)
-                _helper(neighbor, d)
-        return res
-    return _helper("JFK", d)
+def findItinerary_another(self, tickets: List[List[str]]) -> List[str]:
+     odds = [0] * len(graph) # node's value is odd --> 1, otherwise -1
+      def _helper(i):
+          if odds[i]: return True
+          q = deque([i]) 
+          odds[i] = -1 
+          while q:
+              curr = q.popleft()
+              for neighbor in graph[curr]:
+                  if odds[curr] == odds[neighbor]: # contradiction, should be different 
+                      return False 
+                  elif not odds[neighbor]:
+                      q.append(neighbor)
+                      odds[neighbor] = -1 * odds[curr] # making a neighbor of a different color
+          return True 
 
 
 
