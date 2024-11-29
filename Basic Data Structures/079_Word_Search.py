@@ -28,6 +28,54 @@ def exist(board, word):  # o(N * 3^L), N - num of cells, L, length of the word; 
                 visited[i][j] = False
     return False
 
+def exist_another(self, board: List[List[str]], word: str) -> bool:
+    seen = set()
+    # if word is longer than the whole board, it's a no
+    if len(word) > len(board)*len(board[0]): return False
+    # if there are more specific letters in word than in board, it's a no
+    d_word = {} # counts of letters from word
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r][c] not in d_word:
+                d_word[board[r][c]] = 1
+            else:
+                d_word[board[r][c]] += 1
+    # go over board, make sure we have enough letters to meet the requirements of word
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r][c] not in d_word: continue # ch in board but not in word, it's ok to pass 
+            if d_word[board[r][c]] < 0: 
+                return False  
+            d_word[board[r][c]] -= 1
+    def _helper(word_position, i, j):
+        """
+        first, check the borders
+        """
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or board[i][j] != word[word_position] or (i, j) in seen:
+            return False 
+        # arrived to the solution
+        if word_position == len(word) - 1:
+            return True 
+        found = False
+        seen.add((i, j)) # so that we don't process the same cells 
+        # Search upward
+        found = found or _helper(word_position + 1, i-1, j)
+        # Search rightward
+        found = found or _helper(word_position + 1, i, j+1)
+        # Search downward
+        found = found or _helper(word_position + 1, i+1, j)
+        # Search Leftward
+        found = found or _helper(word_position + 1, i, j-1)
+        seen.remove((i, j)) # nothing found, return the cell to the current state
+        return found
+    # go cell by cell 
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if board[i][j] == word[0]:
+                if _helper(0, i, j):
+                    return True
+    return False
+
 def exist_clean(self, board: List[List[str]], word: str) -> bool:
         """
         O(rows * cols * 4^length of word)
