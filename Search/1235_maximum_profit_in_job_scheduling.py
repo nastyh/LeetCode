@@ -73,21 +73,23 @@ class Solution:
 
     def jobScheduling_dp(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
         """
-        NOT EVERYTHING PASSES
+        Order jobs by either start time or end time so that overlapping jobs will be closer to each other
+        We could solve the subproblem first then work toward the final solution
+        O(nlogn)
+        O(n)
         """
-        n, res = len(startTime), 0
-        helper = []
-        for i in range(len(startTime)):
-            helper.append([endTime[i], startTime[i], profit[i]])
-        helper = sorted(helper)
-        dp  = [0] * len(startTime)
-        dp[0] = helper[0][2] # profit from the first element
-        for i in range(1, n):
-            # locates the insertion point for helper[i][i] + 1 in helper so the sorting is maintained
-            prevIndex=bisect.bisect_left(helper, [helper[i][1]+1])
-            if prevIndex == 0:
-                dp[i]=max(dp[i - 1],helper[i][2])
-            else:
-                dp[i]=max(dp[i - 1], dp[prevIndex - 1] + helper[i][2])
-            res = max(res, dp[i])
-        return res
+        jobs = [(a,b,c) for a,b,c in zip(startTime,endTime,profit)]
+        # sort by end time
+        jobs = sorted(jobs,key=lambda a:a[1])
+        end_time_sorted = [a[1] for a in jobs]
+        """
+        dp[i] = maximum profit ending at i's end time
+        dp[i] = max(dp[i-1],dp[k]+profit[i]) where k
+        is the biggest index with endTime[k] <= startTime[i]
+        """
+        dp = [0]*(len(jobs)+1)
+        for i, job in enumerate(jobs):
+            start_time, end_time, p = job
+            j = bisect.bisect_right(end_time_sorted, start_time, hi=i+1) #  returns an insertion point which comes after (to the right of) any existing entries of start_time in end_time_sorted.
+            dp[i] = max(p, dp[i - 1], dp[j-1] + p)
+        return dp[len(jobs)-1]
