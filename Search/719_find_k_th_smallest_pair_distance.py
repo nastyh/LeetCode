@@ -63,6 +63,32 @@ class Solution:
             else:
                 low = mid + 1
         return high + 1
+    
+    def smallestDistancePair_short(self, nums: List[int], k: int) -> int:
+        nums.sort()
+        def _helper(distance):
+            """
+            counts the total num of pairs 
+            with a diff <= distance 
+            """
+            l, res = 0, 0
+            for r in range(len(nums)):
+                while nums[r] - nums[l] > distance: # when below should work
+                    l += 1 # move the left pointer, make the possible diff smaller 
+                res += r - l 
+            return res 
+
+        l, r = 0, max(nums)
+        while l < r: 
+            m = l + (r-l) // 2
+            pairs = _helper(m)
+            # how many pairs have a diff < m 
+            if pairs >= k: # too many, let's look for smaller differences 
+                r = m
+            else:
+                l = m + 1 
+        return l
+    
     def smallestDistancePair_two_pointers(self, nums: List[int], k: int) -> int:
         """
         The minimum possible distance is 0 (if there are duplicates),
