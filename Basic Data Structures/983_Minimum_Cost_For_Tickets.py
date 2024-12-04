@@ -14,19 +14,28 @@ def mincostTickets(days, cost):
     return dp[-1]
 
 
-def mincostTickets_alt(days, costs):
-    dp_cost = [None] * 366
-    dp_cost[0] = 0
+def mincostTickets_optimal(days, costs):
+    """
+    O(n) both
+    dp is the length of all the days we need to travel (last value in days) plus one
+    each cell shows the smallest cost it takes to travel up to this day 
+    for each day we make a decision whether it's better 
+    1. pick what we've incurred yesterday and buy a pass for a day
+    2. go back seven days and buy a 7-day pass
+    3. go back 30 days and buy a 30-day pass
+    Max handles cases when we're at index 5 and cannot look 7 or 30 days back 
+    Also on the days we don't travel, we don't update anything, thus, we do this None thing
+    """
+    dp = [None] * (days[-1] + 1)
+    dp[0] = 0
     for day in days:
-        dp_cost[day] = 0
-    for day_i in range(1, 366):
-        if dp_cost[day_i] == None:
-            dp_cost[day_i] = dp_cost[day_i - 1]      
-        else:  
-            dp_cost[day_i] = min(dp_cost[day_i - 1]  + costs[0],\
-                                 dp_cost[max(day_i - 7, 0)]  + costs[1],\
-                                 dp_cost[max(day_i - 30, 0)] + costs[2])
-    return dp_cost[-1]
+        dp[day] = 0
+        for i in range(1, len(dp)):
+            if dp[i] == None:
+                dp[i] = dp[i-1]
+            else:
+                dp[i] = min(dp[i-1] + costs[0], dp[max(0, i-7)] + costs[1], dp[max(0, i-30)] + costs[2])
+    return dp[-1]
 
 
 if __name__ == '__main__':
