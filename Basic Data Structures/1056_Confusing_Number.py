@@ -1,3 +1,27 @@
+def confusingNumber_string_manipulation(self, n: int) -> bool:
+        mapping = {
+            '0': '0',
+            '1': '1',
+            '6': '9',
+            '8': '8',
+            '9': '6'
+        }
+        if n in (0, 1, 2, 3, 4, 5, 7, 8): return False
+        if n in (6, 9): return True
+        n_str = str(n)
+        l = 0
+        while n_str[l] == '0':
+            l += 1
+        n_str = n_str[l:]
+        new_n = ''
+        for ch in n_str:
+            if ch not in mapping:
+                return False 
+            else: 
+                new_n += mapping[ch]
+        if int(new_n[::-1]) == n: return False
+        return True
+
 def confusingNumber(N):
     nums = []
     d = {0: 0, 1: 1, 6: 9, 9: 6, 8: 8}
