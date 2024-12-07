@@ -1,13 +1,18 @@
 from collections import defaultdict, Counter, deque
-def alienOrder(words):  # O(C) where C the total length of all the words together, space O(1) or O(U + min(U^2, N)), U total # of letters in the alphabet, N -- edges
+def alienOrder(words):  # O(C) where C the total length of all the words together,
+     space O(1) or O(U + min(U^2, N)), U total # of letters in the alphabet, N -- edges
      # Step 0: create data structures + the in_degree of each unique letter to 0.
     adj_list = defaultdict(set)
-    in_degree = Counter({c : 0 for word in words for c in word})
+    in_degree = Counter({c : 0 for word in words for c in word}) # each letter: 0
     # Step 1: We need to populate adj_list and in_degree.
     # For each pair of adjacent words...
     for first_word, second_word in zip(words, words[1:]):
-        for c, d in zip(first_word, second_word):
+        for c, d in zip(first_word, second_word): # for first letter first word, first letter second word; second letter second word, second letter third word
             if c != d:
+                 """
+                 processing
+                 right letter: (set of letters that can go before it)
+                 """
                 if d not in adj_list[c]:
                     adj_list[c].add(d)
                     in_degree[d] += 1
@@ -17,7 +22,7 @@ def alienOrder(words):  # O(C) where C the total length of all the words togethe
 
     # Step 2: We need to repeatedly pick off nodes with an indegree of 0.
     output = []
-    queue = deque([c for c in in_degree if in_degree[c] == 0])
+    queue = deque([c for c in in_degree if in_degree[c] == 0]) # letters that for sure are the first ones (nothing before them)
     while queue:
         c = queue.popleft()
         output.append(c)
