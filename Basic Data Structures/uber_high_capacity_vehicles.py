@@ -30,28 +30,53 @@ Constraints:
 1<=Length of each road<=100
 
 """
-def hcv(N: int, C: list, M: int, roads, S: int, D: int):
-    n = len(credits)
-    roads = [[0, 1, 2], [0, 3, 5], [0, 2, 1], [1, 3, 10], [1, 4, 15], [2, 3, 7], [2, 4, 90], [3, 4, 80]]
-    adj_list = defaultdict(list)
-    d = deque()
-    for road in roads:
-        adj_list[road[0]].append((road[1], road[2]))
-        adj_list[road[1]].append((road[0], road[2]))
-    d.append((S, 0, C[S]))
-    min_distances = [None] * 101
-    min_distances[S][C[S]] = 0 
-    while d: 
-        curr_stop = d.popleft()
-        if curr_stop[id] == D: 
-            return curr_stop[distance]
-        for neighbor in curr_stop:
-            next_stop = neighbor[0]
-            road_length = neighbor[1]
-            next_credits = curr_stop[credits] + C[next_stop] - next_stop
-            if next_credits >= 0 and next_credits <= 100 and min_distances[next_stop][next_credits] >curr_stop[distance] + road_length:
-                min_distances[next_stop][next_credits] = curr_stop[distance] + road_length
-                d.append((next_stop, min_distances[next_stop][next_credits], next_credits))
-    return -1
+
+from heapq import heappush, heappop
+
+class Stop:
+  def __init__(self, id, distance, credits):
+    self.id = id
+    self.distance = distance
+    self.credits = credits
+
+  def __lt__(self, other):
+    return self.distance < other.distance
+
+
+min_distances = [[float('inf')] * 101 for _ in range(N)]  # Considering max credits as 100
+  min_distances[S][C[S]] = 0
+
+  d = []
+  heappush(d, Stop(S, 0, C[S]))
+
+  while d:
+    current = heappop(d)
+
+    if current.id == D:
+      return current.distance
+
+    for neighbor in graph[current.id]:
+      next_stop, road_length = neighbor
+      next_credits = current.credits + C[next_stop] - road_length
+
+      if 0 <= next_credits <= 100 and min_distances[next_stop][next_credits] > current.distance + road_length:
+        min_distances[next_stop][next_credits] = current.distance + road_length
+        heappush(d, Stop(next_stop, min_distances[next_stop][next_credits], next_credits))
+
+  return -1
+
+# Example usage
+N = 5  # Number of cities
+C = [2, 3, 1, 4, 2]  # Credits at each city
+M = 3  # Number of roads
+roads = [[0, 1, 1], [1, 2, 2], [2, 4, 1]]  # Roads (city1, city2, road_length)
+S = 0  # Starting city
+D = 4  # Destination city
+
+min_distance = find_minimum_distance(N, C, M, roads, S, D)
+if min_distance == -1:
+  print("No path found")
+else:
+  print(f"Minimum distance: {min_distance}")
 
 
