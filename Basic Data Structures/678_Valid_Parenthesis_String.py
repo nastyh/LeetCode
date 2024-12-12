@@ -1,3 +1,30 @@
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        """
+        O(n) and O(1)
+        * will always increment open_any as it doesn't require closing parentheses
+        * will increment close_any more open brackets are present
+        ) will decrement close_any if its value is < open brackets' 
+        """
+        open_any, open_specific, close_any = 0, 0, 0
+        for ix, ch in enumerate(s):
+            if ch == '(':
+                open_specific += 1
+            elif ch == '*':
+                open_any += 1
+                if close_any < open_specific:
+                    close_any += 1
+            elif ch == ')':
+                if open_specific > 0: 
+                    open_specific -= 1
+                    if close_any > open_specific:
+                        close_any -= 1
+                elif open_any > 0: 
+                    open_any -= 1
+                else:
+                    return False
+        return open_specific <= close_any
+
 def checkValidString_optimal(s):  # O(n) and O(1)
     """
     We track the fewest and most open (left - "(" ) parentheses that we can potentially have
