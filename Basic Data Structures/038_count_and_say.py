@@ -34,6 +34,33 @@ class Solution:
             curr = _helper(curr)
         return curr
 
+    def countAndSay_recursively(self, n: int) -> str:
+        """
+         O(2^n) both
+        The code iterates through the prev_say string.
+        It counts the consecutive occurrences of each character.
+        When a different character is encountered, it appends the count and the character to
+        the curr_say string and resets the count.
+        After the loop, it appends the count of the last character and the character
+        itself to the curr_say string.
+        """
+        if n == 1:
+            return "1"
+
+        prev_say = self.countAndSay(n - 1)
+        curr_say = ""
+        count = 1
+
+        for i in range(1, len(prev_say)):
+            if prev_say[i] == prev_say[i - 1]:
+                count += 1
+            else:
+                curr_say += str(count) + prev_say[i - 1]
+                count = 1
+
+        curr_say += str(count) + prev_say[-1]
+        return curr_say
+    
     def countAndSay_no_helper(self, n: int) -> str:
         """
         Same but in one place 
