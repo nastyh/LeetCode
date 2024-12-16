@@ -2,7 +2,7 @@ class Solution:
     def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:
         """
         O(nlogn) for the heap
-        O(n) for res (not necessarily, can update nums on the go)
+        O(n) for res and the heap (not necessarily, can update nums on the go)
         res is the copy of nums first
         key is throw both the values and the indices into the heap
         Take out the smallest element and its index in nums
@@ -29,3 +29,15 @@ class Solution:
             nums[ix_of_curr_smallest_value] *= multiplier 
             heapq.heappush(h, (nums[ix_of_curr_smallest_value], ix_of_curr_smallest_value))
         return nums 
+
+
+    def getFinalState_bruteforce(self, nums: List[int], k: int, multiplier: int) -> List[int]:
+        """
+        O(kn)
+        O(1)
+        just use min and index
+        """
+        for _ in range(k):
+            smallest_element_ix = nums.index(min(nums))
+            nums[smallest_element_ix] *= multiplier
+        return nums
