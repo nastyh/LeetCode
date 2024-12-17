@@ -33,6 +33,33 @@ class LinearRegression:
     def predict(self, X):
         y_approximated = np.dot(X, self.weights) + self.bias
         return y_approximated
+
+
+## ANALYTICAL APPROACH
+
+import numpy as np
+
+class LinearRegression:
+    """
+    add a column of ones to the feature matrix X to account for the bias term.
+    The weights w and bias b 
+    w = (X^T * X)^-1 * X^T * y
+    To make predictions, we multiply the input features (with the added bias term) by the calculated weights.
+    """
+    def __init__(self):
+        self.weights = None
+        self.bias = None
+
+    def fit(self, X, y):
+        # Add a column of ones to X for the bias term
+        X = np.hstack((X, np.ones((X.shape[0], 1))))
+
+        # Calculate the weights and bias using the analytical solution
+        self.weights = np.linalg.inv(X.T @ X) @ X.T @ y # linalg for matrix inversion
+
+    def predict(self, X):
+        X = np.hstack((X, np.ones((X.shape[0], 1))))
+        return X @ self.weights
     
 
     
