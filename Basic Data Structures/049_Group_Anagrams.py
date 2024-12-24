@@ -21,13 +21,16 @@ def groupAnagrams_easy_to_understand(strs):
     Iterate over and either create a new key-value pair or append to the existing one
     """
     d = defaultdict(list)
+    res = []
     for s in strs:
         temp = ''.join(sorted(s))
         if temp not in d:
             d[temp] = [s]
         else:
             d[temp].append(s)
-    return d.values()
+    for v in d.values():
+        res.append(v)
+    return res
 
 
 def groupAnagrams_another(strs):  # same as above but slightly different implementation
