@@ -20,6 +20,13 @@ class MedianFinder: # easy way: using bisect
 
 
 class MedianFinder_heap:
+    """
+    We need to have quick access to the smallest 
+    self.rh: A min-heap (represented as a list) to store the smaller half of the numbers
+    to have quick/cheap access to the smallest element in the right half of the list
+    self.lh: A max-heap (represented as a list, but with elements negated to simulate a max-heap)
+    to have quick/cheap access to the largest element in the left half of the list
+    """
     def __init__(self):
         self.lh = []
         self.rh = []
@@ -27,6 +34,14 @@ class MedianFinder_heap:
         heapq.heapify(self.rh)
 
     def addNum(self, num: int) -> None:
+        """
+        heapq.heappush(self.lh, num) attempts to insert the new number into the min-heap.
+        heapq.heappushpop(self.lh, num) efficiently inserts the number and then pops
+        the smallest element (if necessary) to maintain heap order.
+        If the number of elements in rh exceeds that in lh, move the top element of
+        rh to lh:
+        heapq.heappush(self.lh, -heapq.heappop(self.rh))
+        """
         heapq.heappush(self.rh, -heapq.heappushpop(self.lh, num))
         if len(self.rh) > len(self.lh):
             heapq.heappush(self.lh, -heapq.heappop(self.rh))
