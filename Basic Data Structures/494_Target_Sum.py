@@ -48,6 +48,23 @@ def findTargetSumWays_dp_space_optimized(self, nums: List[int], target: int) -> 
         d = dp
     return d[target]
 
+def findTargetSumWays_recursive(self, nums: List[int], target: int) -> int:
+    """
+    O(2^n) times out 
+    helper goes through the numbers in nums, key here is to have two self calls
+    with adding nums[curr_ix] and subtracting
+    """
+    self.res = 0
+    def _helper(nums, curr_ix, curr_sum, target):
+        if curr_ix == len(nums):
+            if curr_sum == target:
+                self.res += 1
+        else:
+            _helper(nums, curr_ix + 1, curr_sum + nums[curr_ix], target)
+            _helper(nums, curr_ix + 1, curr_sum - nums[curr_ix], target)
+    _helper(nums, 0, 0, target)
+    return self.res
+
 def findTargetSumWays(nums, S):
     memo = {}
     def findSum(nums, s):
