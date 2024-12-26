@@ -31,6 +31,22 @@ def maxVacationDays(flights, days):
             dp[row][col] = curMax
     return dp[0][0]
 
+def maxVacationDays_shorter_dp(flights, days):
+    """
+    O(n^2*k) where n -- num of cities, k is num of weeks
+    O(n) for the dp, space win, just the cities 
+    """
+    n, k = len(days), len(days[0]) # n cities, k weeks
+    max_vacation = [0] + [float('-inf') for _ in range(n-1)]
+    for week in range(k):
+        curr = [float('-inf') for _ in range(n)]
+        for dep_city in range(n):
+            for arr_city, flight_exists in enumerate(flights[dep_city]):
+                if flight_exists or dep_city == arr_city:
+                    curr[arr_city] = max(curr[arr_city], max_vacation[dep_city] + days[arr_city][week])
+        max_vacation = curr
+    return max(max_vacation)
+
 
 if __name__ == '__main__':
     print(maxVacationDays([[0, 1, 1], [1, 0, 1], [1, 1, 0]], [[1, 3, 1], [6, 0, 3], [3, 3, 3]]))
