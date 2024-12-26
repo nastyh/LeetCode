@@ -1,3 +1,53 @@
+def findTargetSumWays_dp(self, nums: List[int], target: int) -> int:
+    """
+    O(n * total_sum) both
+    2D dp array with dimensions [nums.length][2 * totalSum + 1]
+    to represent possible sums shifted by totalSum (to handle negative indices).
+    Add 1 to dp[0][nums[0] + totalSum] to account for adding the first number.
+    Add 1 to dp[0][-nums[0] + totalSum] to account for subtracting the first number (handle duplicate cases).
+    For each possible sum sum in the range -totalSum to totalSum:
+    If dp[index - 1][sum + totalSum] > 0 (i.e., the sum is achievable from previous numbers):
+    Add its value to dp[index][sum + nums[index] + totalSum] (sum achieved by adding the current number).
+    Add its value to dp[index][sum - nums[index] + totalSum] (sum achieved by subtracting the current number).
+    Check if the absolute value of the target exceeds totalSum:
+    If yes, return 0 (the target is unachievable).
+    Otherwise, return dp[nums.length - 1][target + totalSum], which contains the number of ways to achieve the target.
+    """
+    total_sum = sum(nums)
+    dp = [[0] * (2 * total_sum + 1) for _ in range(len(nums))]
+    dp[0][nums[0] + total_sum] = 1
+    dp[0][-nums[0] + total_sum] += 1
+
+    for index in range(1, len(nums)):
+        for sum_val in range(-total_sum, total_sum + 1):
+            if dp[index - 1][sum_val + total_sum] > 0:
+                dp[index][sum_val + nums[index] + total_sum] += dp[
+                    index - 1
+                ][sum_val + total_sum]
+                dp[index][sum_val - nums[index] + total_sum] += dp[
+                    index - 1
+                ][sum_val + total_sum]
+
+    # Return the result if the target is within the valid range
+    return (
+        0
+        if abs(target) > total_sum
+        else dp[len(nums) - 1][target + total_sum]
+    )
+def findTargetSumWays_dp_space_optimized(self, nums: List[int], target: int) -> int:
+    """
+    like dp but using the dictionary instead
+    """
+    d = defaultdict(int)
+    d[0] = 1
+    for num in nums:
+        dp = defaultdict(int)
+        for k, v in d.items():
+            dp[k + num] += v
+            dp[k - num] += v
+        d = dp
+    return d[target]
+
 def findTargetSumWays(nums, S):
     memo = {}
     def findSum(nums, s):
