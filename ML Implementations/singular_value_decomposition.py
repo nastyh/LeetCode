@@ -52,3 +52,33 @@ def svd(A):
     Sigma = np.diag(singular_values)
 
     return U, Sigma, V.T
+
+
+ # HOW TO RECOMMEND TOP10 UNSEEN ITEMS FOR USER 352 AFTER DOING ALL OF THAT
+    import numpy as np
+
+    # Assume U and V are numpy arrays
+    # U: m x k matrix (User latent factors)
+    # V: k x n matrix (Item latent factors)
+    # R: m x n matrix (Original user-item interactions)
+    
+    def recommend_top_n(user_id, U, V, R, n=10):
+        # Step 1: Extract user latent factors
+        user_vector = U[user_id]  # Shape: (1, k)
+        
+        # Step 2: Compute predicted scores for all items
+        predicted_scores = np.dot(user_vector, V)  # Shape: (1, n)
+        
+        # Step 3: Filter out seen items
+        seen_items = np.where(R[user_id] > 0)[0]  # Indices of items the user has interacted with
+        unseen_scores = np.copy(predicted_scores)
+        unseen_scores[seen_items] = -np.inf  # Set scores of seen items to -inf to exclude them
+        
+        # Step 4: Get top N items
+        top_n_indices = np.argsort(unseen_scores)[-n:][::-1]  # Indices of top N items
+        return top_n_indices
+    
+    # Example Usage
+    user_id = 352
+    top_10_items = recommend_top_n(user_id, U, V, R, n=10)
+    print("Top 10 recommended items for User 352:", top_10_items)
