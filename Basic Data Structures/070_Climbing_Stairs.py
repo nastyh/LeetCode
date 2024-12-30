@@ -1,3 +1,20 @@
+def stairs_easy(n):  # O(n) and O(1)
+      	"""
+       	it's dp but we don't need to maintain the whole list. 
+	Just two previous numbers are enough.
+ 	Base cases: for n=1, there is one way to go one step up
+  	n=2, there are two ways (1, 1) and (2). 
+        From there, the next value is the sum of the two previous ones
+	n=3 is answer for n=1 + answer for n=2 (thus, 3)
+ 	have l, r, res, initialize, and update them accordingly moving to n
+ 	"""
+	if n <=2: return n
+        l, r, res = 1, 2, 0
+        for _ in range(2, n):
+            res = l + r
+            l = r
+            r = res
+        return res
 def stairs_optimal(n):  # O(n) and O(1)
 	"""
 	Don't need the whole dp list. 2 variables are enough
