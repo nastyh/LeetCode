@@ -4,6 +4,29 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 
 # RECS SYSTEM
+"""
+The RecSysModel returns the predicted interaction score (e.g., rating) between a user and an item.
+
+Breakdown:
+Input:
+
+User IDs: Encoded embeddings for users.
+Item IDs: Encoded embeddings for items.
+User Features: Additional user-specific features (e.g., age, activity).
+Item Features: Additional item-specific features (e.g., price, ratings).
+Process:
+
+Combines user embeddings with their features (user_embeds + user_feature_embeds).
+Combines item embeddings with their features (item_embeds + item_feature_embeds).
+Concatenates user and item combined representations.
+Feeds the concatenated vector into a dense layer (output_layer) to predict the interaction score.
+Output:
+
+A single score (e.g., predicted rating or interaction likelihood) for each user-item pair.
+
+If you input a user and an item with their respective features, the model will output a predicted rating,
+which can be compared with the ground truth to compute loss during training or evaluation.
+"""
 # Sample Data
 user_data = pd.DataFrame({
     'user_id': [1, 2, 3, 4],
