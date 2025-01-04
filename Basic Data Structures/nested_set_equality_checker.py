@@ -28,6 +28,9 @@ def areSetsEqual(list1, list2):
         """
         normalized = []
         for item in s:
+            """
+            checks whether an object is an instance of a specified class or a subclass thereof.
+            """
             if isinstance(item, list): # used to check if an object is an instance of a specified class or a tuple of classes
                 normalized.append(normalize_set(item))  # Recursively normalize nested sets
             else:
