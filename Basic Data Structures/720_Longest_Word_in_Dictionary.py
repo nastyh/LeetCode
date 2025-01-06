@@ -1,3 +1,21 @@
+def longestWord_set(words): 
+    """
+    O(nlogn) for sorting
+    O(n) for the set 
+    """
+    words.sort()  # Sort words lexicographically
+    word_set = set()  # To keep track of buildable words
+    res = ""  # To store the result
+
+    for word in words:
+        # A word is buildable if it's of length 1 or if its prefix exists in word_set
+        if len(word) == 1 or word[:-1] in word_set:
+            word_set.add(word)
+            # Update longest word if conditions are met
+            if len(word) > len(res):
+                res = word
+
+    return res
 def longestWord(words):  # brute force
     ans = ""
     wordset = set(words)
