@@ -1,4 +1,5 @@
 def numSubarrayProductLessThanK(nums, k):  # O(N) both
+    if k <=1: return 0 # edge case, required
     l, r, res, prods = 0, 0, 0, 1
     while r < len(nums):
         prods *= nums[r]
