@@ -1,4 +1,6 @@
 class Solution:
+    def findDifference_pythonic(self, nums1: List[int], nums2: List[int]) -> List[List[int]]:
+        return [list(set(nums1) - set(nums2)), list(set(nums2) - set(nums1))]
     def findDifference(self, nums1: List[int], nums2: List[int]) -> List[List[int]]: # O(n) both
         # two passes, sets to make sure we don't readd the elements we've seen
         res, d1, d2 = [[], []], set(), set()
