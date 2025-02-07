@@ -75,6 +75,44 @@ class DecisionTree:
 
         return mse_left, mse_right
 
+    def entropy(self, y):  # New: Entropy calculation
+        unique, counts = np.unique(y, return_counts=True)
+        probabilities = counts / len(y)
+        entropy = -np.sum(probabilities * np.log2(probabilities))
+        return entropy
+
+    def gini_index(self, y):  # New: Gini calculation
+        unique, counts = np.unique(y, return_counts=True)
+        probabilities = counts / len(y)
+        gini = 1 - np.sum(probabilities**2)
+        return gini
+
+    def information_gain(self, y, y_left, y_right):  # New: Information Gain
+        n = len(y)
+        n_left = len(y_left)
+        n_right = len(y_right)
+
+        if n_left == 0 or n_right == 0:
+            return 0  # Handle empty subsets
+
+        parent_entropy = self.entropy(y)
+        weighted_child_entropy = (n_left / n) * self.entropy(y_left) + (n_right / n) * self.entropy(y_right)
+        information_gain = parent_entropy - weighted_child_entropy
+        return information_gain
+
+    def gini_gain(self, y, y_left, y_right):  # New: Gini Gain
+        n = len(y)
+        n_left = len(y_left)
+        n_right = len(y_right)
+
+        if n_left == 0 or n_right == 0:
+            return 0  # Handle empty subsets
+
+        parent_gini = self.gini_index(y)
+        weighted_child_gini = (n_left / n) * self.gini_index(y_left) + (n_right / n) * self.gini_index(y_right)
+        gini_gain = parent_gini - weighted_child_gini
+        return gini_gain
+
     def get_cost(self, splits):
         """
         Computes cost of a split given the MSE of the left
