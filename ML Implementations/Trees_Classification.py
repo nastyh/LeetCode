@@ -90,6 +90,49 @@ class DecisionTree:
 
         return gini_left, gini_right
 
+    def entropy(y):
+        """Calculates the entropy of a label array."""
+        unique, counts = np.unique(y, return_counts=True)
+        probabilities = counts / len(y)
+        entropy = -np.sum(probabilities * np.log2(probabilities))
+        return entropy
+    
+    def information_gain(y, y_left, y_right):
+        """Calculates the information gain of a split."""
+        n = len(y)
+        n_left = len(y_left)
+        n_right = len(y_right)
+    
+        if n_left == 0 or n_right == 0:  # Handle edge case where a split results in empty subset
+          return 0
+    
+        parent_entropy = entropy(y)
+        weighted_child_entropy = (n_left / n) * entropy(y_left) + (n_right / n) * entropy(y_right)
+        information_gain = parent_entropy - weighted_child_entropy
+        return information_gain
+    
+    
+    def gini_index(y):
+        """Calculates the Gini impurity of a label array."""
+        unique, counts = np.unique(y, return_counts=True)
+        probabilities = counts / len(y)
+        gini = 1 - np.sum(probabilities**2)
+        return gini
+    
+    def gini_gain(y, y_left, y_right):
+        """Calculates the Gini gain of a split."""
+        n = len(y)
+        n_left = len(y_left)
+        n_right = len(y_right)
+    
+        if n_left == 0 or n_right == 0: # Handle edge case where a split results in empty subset
+          return 0
+        
+        parent_gini = gini_index(y)
+        weighted_child_gini = (n_left / n) * gini_index(y_left) + (n_right / n) * gini_index(y_right)
+        gini_gain = parent_gini - weighted_child_gini
+        return gini_gain
+
     def get_cost(self, splits):
         """
         Computes cost of a split given the Gini impurity of
