@@ -14,7 +14,7 @@ def addBinary(a, b):  # O(M + N)
         return ''.join(str(i) for i in res[::-1])
     def decToBin(n): # n is an integer
         if n == 0:
-            return 0
+            return '0'
         result = ''
         while n != 0:
             remainder = n % 2  # gives the exact remainder
