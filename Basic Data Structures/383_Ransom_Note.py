@@ -21,15 +21,15 @@ def canConstruct(ransomNote, magazine):  # O(m) where m is the length of magazin
     return sum([v for v in d_magazine.values()]) >= 0
 
 
-def canConstruct_brute_force(ransomNote, magazine):
+def canConstruct_two_dicts(ransomNote, magazine):
     """
     Just compare dictionaries' values
     """
-     d_ransom, d_magazine = Counter(ransomNote), Counter(magazine)
-    for candidate in d_ransom:
-        if d_magazine[candidate] < d_ransom[candidate]:
-            return False
-    return True 
+     d_mag, d_note = Counter(magazine), Counter(ransomNote)
+        for k, v in d_note.items():
+            if k not in d_mag: return False
+            if d_mag[k] < d_note[k]: return False
+        return True
 
 
 def canConstruct_sorting(ransomNote, magazine):  # O(mlogm) and O(m)
