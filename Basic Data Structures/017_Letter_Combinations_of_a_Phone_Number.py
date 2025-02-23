@@ -28,6 +28,19 @@ def letterCombinations_recur(digits):
     _recur(digits, d, '', 0)
     return res
 
+def letterCombinations_deque(digits):
+    d = {1: '', 2: 'abc',3: 'def',4: 'ghi',5: 'jkl',6: 'mno',7: 'pqrs',8: 'tuv',9: 'wxyz'}
+    if digits == '':
+        return []
+    q = deque(d[int(digits[0])])
+    for i in range(1, len(digits)):
+        l = len(q)
+        while l:
+            t = q.popleft()
+            for j in d[int(digits[i])]:
+                q.append(t + j)
+            l -= 1
+    return list(q)
 
 def letterCombinations(digits):
     res, l = '', []
