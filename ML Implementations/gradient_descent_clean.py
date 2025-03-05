@@ -110,3 +110,29 @@ predictions = gd_logistic.predict(X)
 print("Logistic Regression Weights:", gd_logistic.weights)
 print("Logistic Regression Final Cost:", gd_logistic.costs[-1])
 gd_logistic.plot_cost()
+
+
+"""
+Very easy iteration over the convex function
+f(x) = (x-3)^2
+"""
+def gradient_descent(learning_rate, iterations, initial_x):
+    """
+    learning_rate: The step size for each iteration.
+    iterations: The number of iterations.
+    initial_x: The initial value of x.
+    return x at which the function's value is minimized 
+
+    Finding an optimal learning rate often involves experimentation. Common techniques include:
+    Trying different values and observing the convergence behavior.
+    Using adaptive learning rate methods (e.g., Adam, AdaGrad), which automatically adjust the learning rate during training.
+
+    Maximum number of iterations: Stop after a fixed number of iterations.
+    Tolerance: Stop when the change in the cost function or the parameters falls below a certain threshold.
+    Early stopping: In machine learning, monitoring the performance on a validation set and stopping when the performance starts to degrade.
+    """
+    x = initial_x
+    for i in range(iterations):
+        gradient = 2 * (x - 3)  # Derivative of (x - 3)^2
+        x = x - learning_rate * gradient
+    return x
