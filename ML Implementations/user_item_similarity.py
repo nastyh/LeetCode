@@ -3,6 +3,7 @@ Question: “Given a dataset of user-item ratings, implement a collaborative fil
 rating for an unseen item using user-to-user cosine similarity.”
 Follow-up: “How do you handle users with no common rated items?”
 """
+import math
 import numpy as np
 
 def user_user_collaborative_filtering(ratings, user_id, item_id, k=3):
@@ -35,11 +36,15 @@ def user_user_collaborative_filtering(ratings, user_id, item_id, k=3):
     If, after calculating similarities, there are neighbors,
     but all of their similarities are zero, it means that while
     they've rated the target item, they have no overlapping ratings with the user.
-    
+
     In this edge case, and in the case where no users have rated the item:
     If the target user has any ratings, the mean of the target users ratings is returned.
     If the target user has no ratings, the mean of all ratings in the ratings matrix is returned.
     If the ratings matrix is empty, 0 is returned.
+
+    Performs well with sparse data, as it only considers co-rated items.
+    nsensitive to differences in rating scale or magnitude. It focuses on the angle between vectors.
+    Captures the overall preference pattern between users.
     """
     if not similar_users:
         return np.mean(ratings[user_id, ratings[user_id,:]!=0]) if np.any(ratings[user_id, ratings[user_id,:]!=0]) else np.mean(ratings[ratings!=0]) if np.any(ratings[ratings!=0]) else 0 #Handle case where no users have rated the item, or the active user has no ratings.
@@ -76,7 +81,17 @@ def user_user_collaborative_filtering(ratings, user_id, item_id, k=3):
     return numerator / denominator
 
 def cosine_similarity(vec1, vec2):
-    """Calculates the cosine similarity between two vectors."""
+    """
+    Calculates the cosine similarity between two vectors.
+    can implement linalg norm (denominator)
+    and dot product manually
+    see below 
+    Pearson correlation accounts for differences in rating scale by centering the data around the mean rating of each user.
+    Users have consistent rating biases
+    Measures the linear relationship between two variables.
+    Only uses co-rated items, and requires at least 2 co-rated items to function.
+    When the dataset is not extremely sparse, and there are many co-rated items.
+    """
     magnitude_vec1 = np.linalg.norm(vec1)
     magnitude_vec2 = np.linalg.norm(vec2)
 
@@ -85,6 +100,33 @@ def cosine_similarity(vec1, vec2):
 
     dot_product = np.dot(vec1, vec2)
     return dot_product / (magnitude_vec1 * magnitude_vec2)
+
+# can do the dot product manually
+def dot_product(vec1, vec2):
+    if len(vec1) != len(vec2):
+        return None 
+    result = 0
+    for i in range(len(vec1)):
+        result += vec1[i] * vec2[i]
+    return result
+
+# we can do magnitude manually
+def linalg_norm(vector, ord=None):
+    if ord is None or ord == 2:  # Euclidean norm (L2 norm)
+        squared_sum = sum(x**2 for x in vector)
+        return math.sqrt(squared_sum)
+
+    elif ord == 1:  # L1 norm (Manhattan norm)
+        return sum(abs(x) for x in vector)
+
+    elif ord == float('inf'):  # L-infinity norm (max norm)
+        return max(abs(x) for x in vector)
+
+    elif ord == float('-inf'): # negative infinity norm (min abs norm)
+        return min(abs(x) for x in vector)
+
+    else:
+        raise ValueError("Unsupported norm order.")
 
 # Example usage:
 ratings = np.array([
