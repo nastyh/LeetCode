@@ -9,32 +9,25 @@ class TreeNode:
 
     def isCousins_BFS(self, root, x, y): # bfs
 
-        def _parent(root, value_to_find, parent, level): # returns [level, parent as integer]
-            if not root:
-                return None, parent_val
-            res = []
-
-            q = deque()
-            q.append([root, value_to_find, None, 0]) # order is root, value_to_find, parent, level
-            while q:
-                t, curr_val, curr_parent, curr_level = q.popleft()
-                if t.val == curr_val:
-                    res.append(curr_level)
-                    res.append(curr_parent.val)
-                if t.left:
-                    q.append([t.left, value_to_find, t, curr_level + 1])
-                if t.right:
-                    q.append([t.right, value_to_find, t, curr_level + 1])
-
-            return res
-
-        x_info = _parent(root, x, None, 0)
-        y_info = _parent(root, y, None, 0)
-
-        if x_info[1] != y_info[1] and x_info[1] != y_info[1]:
-            return True
-        else:
-            return False
+        q = deque([(root, 0, None)])
+        x_info = y_info = None  # Will store (level, parent) for x and y
+        
+        while q:
+            node, level, parent = q.popleft()
+            if node.val == x:
+                x_info = (level, parent)
+            if node.val == y:
+                y_info = (level, parent)
+            # If we've found both, we can break early
+            if x_info and y_info:
+                break
+            if node.left:
+                q.append((node.left, level + 1, node))
+            if node.right:
+                q.append((node.right, level + 1, node))
+                
+        # Two nodes are cousins if they are on the same level but have different parents.
+        return x_info is not None and y_info is not None and (x_info[0] == y_info[0]) and (x_info[1] != y_info[1])
 
     def isCousins_DFS_alt(self, root, x, y):
         if not root: return
