@@ -23,6 +23,17 @@ def uniquePath_another_dp(m, n):
             dp[r][c] = dp[r - 1][c] + dp[r][c - 1]
     return dp[-1][-1]
 
+def uniquePath_improved_dp(m, n):
+	"""
+ 	Keep one previous row instead of the whole dp
+ 	"""
+	if m > n:
+	    m, n = n, m
+	r = [1] * m
+	for _ in range(1, n):
+	    for i in range(1, m):
+		r[i] += r[i - 1]
+	return r[-1]
 
 if __name__ == '__main__':
     # print(uniquePaths(3,2))
