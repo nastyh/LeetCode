@@ -2,6 +2,30 @@ from collections import deque
 from typing import List
 
 class Solution:
+    def highestPeak_inplace(self, isWater: List[List[int]]) -> List[List[int]]:
+        """
+        Update visited cells:
+          if it was 1, set to 0, add to the deque
+          if it was 0, mark as -1 so it hasn't been processed 
+          return the updated isWater
+        """
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        d = deque()
+        for r in range(len(isWater)):
+            for c in range(len(isWater[0])):
+                if isWater[r][c] == 1:
+                    isWater[r][c] = 0
+                    d.append((r, c))
+                else:
+                    isWater[r][c] = -1 
+        while d:
+            row, col = d.popleft()
+            for r_offset, c_offset in directions:
+                n_row, n_col = row + r_offset, col + c_offset
+                if 0 <= n_row < len(isWater) and 0 <= n_col < len(isWater[0]) and isWater[n_row][n_col] == -1:
+                    isWater[n_row][n_col] = isWater[row][col] + 1
+                    d.append((n_row, n_col))
+        return isWater
     def highestPeak(self, isWater: List[List[int]]) -> List[List[int]]:
         """
         O(mn), sizes of isWater, to go over
