@@ -1,4 +1,32 @@
 from collections import deque
+def shortestPathBinaryMatrix_inplace(grid):
+    """
+    O(MN)
+    O(1) since we update in place
+    visited become -1
+    """
+    if grid[0][0] == 1 or grid[-1][-1] == 1:
+            return -1
+        
+    d = deque()
+    d.append((0,0))
+    res = 1
+    grid[0][0] = - 1
+    directions = [(-1, -1), (-1, 0), (-1, 1),
+                  (0, 1), (1, 1), (1, 0),
+                  (1, -1), (0, -1)]
+    while d:
+        for _ in range(len(d)):
+            r, c = d.popleft()
+            if r == len(grid) - 1 and c == len(grid[0]) - 1:
+                return res
+            for r_offset, c_offset in directions:
+                if 0 <= r + r_offset < len(grid) and 0 <= c + c_offset < len(grid[0])\
+                    and grid[r+r_offset][c+c_offset] ==0:
+                        grid[r+r_offset][c+c_offset] = -1  # mark cell as visited
+                        d.append((r+r_offset, c+c_offset))
+        res += 1
+    return -1
 def shortestPathBinaryMatrix(grid):  # O(MN) and O(MN)
     """
     Check edge cases
