@@ -28,6 +28,35 @@ class Solution:
                     res.append(recipe)
                     d.append(recipe)
         return res 
+
+
+    def findAllRecipes_dfs(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
+        recipe_map = {recipe: ing for recipe, ing in zip(recipes, ingredients)}
+        supply_set = set(supplies)
+        memo = {}
+        visiting = set()
+        def _helper(recipe):
+            if recipe in supply_set:
+                return True
+            if recipe not in recipe_map:
+                return False
+            if recipe in memo:
+                return memo[recipe]
+            if recipe in visiting:
+                return False  # cycle detected
+            
+            visiting.add(recipe)
+            for ing in recipe_map[recipe]:
+                if not _helper(ing):
+                    visiting.remove(recipe)
+                    memo[recipe] = False
+                    return False
+            visiting.remove(recipe)
+            memo[recipe] = True
+            supply_set.add(recipe)  # once made, it's available
+            return True
+        
+        return [r for r in recipes if _helper(r)]
             
 
         
