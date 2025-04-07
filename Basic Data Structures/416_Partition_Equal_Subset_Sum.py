@@ -73,10 +73,27 @@ def canPartition_dp_alt(nums):
 
 
 def canPartition_optimized_dp(nums): # O(NS) and O(N) N is the total numbers and S is the sum
+     """
+    O(NS) N is the total number of numbers and S is the sum, subset_sum
+    O(N)
+    For any element i, we need the results of the prev (i-1) iteration. 
+    If total_sum is odd, we cannot cut it into two equal subsets
+    Construct a dp list 
+    dp[j] is True if a subset with sum j can be formed from the elements in nums 
+    dp[0] is 0 b/c it's always possible to create a subset with the sum of 0 by
+    not taking any elements 
+
+    Iterate through each number
+    for each curr, iterate backwards from subset_sum down to curr.
+    The backward iteration prevents  reusing the same element within the same pass
+    For each possible sum j, we update dp[j]
+    if dp[j] is already True, or dp[j-curr] is True, then setrting dp[j] to True
+    means that by adding curr we can achieve a subset sum of j
+    """
     total_sum = sum(nums)
-    if total_sum % 2 != 0:
+    if total_sum % 2 != 0:  # edge case: cannot be cut into two parts 
         return False
-    subset_sum = total_sum // 2
+    subset_sum = total_sum // 2  # goal 
     dp = [False] * (subset_sum + 1)
     dp[0] = True
     for curr in nums:
