@@ -3,6 +3,10 @@ from math import factorial
 
 class Solution:
     def countGoodIntegers(self, n: int, k: int) -> int:
+        """
+        O(10^((n-1)/2) * (nlogn + constant factors))
+        O(10^((n-2)/2))
+        """
         dictionary = set()
         base = 10 ** ((n - 1) // 2)
         # skip = n & 1 # shorthand (using bitwise and) for checking if n is odd.
