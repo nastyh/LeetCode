@@ -1,3 +1,76 @@
+"""
+Linked list with next and prev pointers
+"""
+class Node: 
+    def __init__(self, key, value):
+        """
+        double linked list: points to the next node
+        and to the previous node 
+        """
+        self.key = key
+        self.value = value
+        self.prev = None 
+        self.next = None
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.d = {}
+        self.head = Node(0, 0) # dummy head
+        self.tail = Node(0, 0) # dummy tail
+        self.head.next = self.tail # head points to tail 
+        self.tail.prev = self.head # dummy points back to head
+
+    def _remove(self, node):
+        # removing an existing node
+        # basically we need to repoint the prev node to the node after
+        # the node we want to remove 
+        prev = node.prev # node to the left 
+        nxt = node.next  # node to the right 
+        prev.next = nxt  # point the left node to the right node
+        nxt.prev = prev  # point the right node to the left node
+
+    def _add_to_head(self, node): 
+        # add a new node to the right from the head 
+        node.next = self.head.next 
+        node.prev = self.head
+        self.head.next.prev = node # new node points back to the head
+        self.head.next = node # head points to the newly added node 
+
+
+    def get(self, key: int) -> int:
+        if key in self.d: 
+            node = self.d[key]
+            # the key is being used, it should become the head
+            self._remove(node) # need to get it out from the linked list
+            self._add_to_head(node) # and readd from scratch 
+            return node.value
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.d: 
+            node = self.d[key]
+            node.value = value 
+            # need the below so that we can evict the least recently used (put)
+            # key if needed later on 
+            self._remove(node) # need to get it out from the linked list
+            self._add_to_head(node) # and readd from scratch 
+        else:
+            new_node = Node(key, value)
+            self.d[key] = new_node 
+            self._add_to_head(new_node)
+            if len(self.d) > self.capacity:
+                tail_node = self.tail.prev
+                self._remove(tail_node)
+                del self.d[tail_node.key]
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+
+
+
 from collections import OrderedDict
 """
 Time complexity: O(1)O(1)O(1) for both get and put.
