@@ -1,4 +1,28 @@
 class Solution:
+    def countAndSay_short(self, n: int) -> str:
+        """
+        O(2^n) 
+        O(2^n) to store the final string 
+        """
+        def _helper1(our_str):
+            res = []
+            i = 0
+            while i < len(our_str):
+                count = 1
+                # count how many times s[i] repeats
+                while i + 1 < len(our_str) and s[i] == s[i + 1]:
+                    i += 1
+                    count += 1
+                res.append(str(count))
+                res.append(our_str[i])
+                i += 1
+            return "".join(res)
+        s = "1"
+        # apply n - 1 times 
+        for _ in range(1, n):
+            s = _helper1(s)
+        return s
+    
     def countAndSay_helper(self, n: int) -> str:
         """
         st to build a structure 
