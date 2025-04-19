@@ -1,4 +1,36 @@
 from collections import deque, defaultdict
+def findOrder_best(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        """
+        O(m+n), edges (lists) + elements in total 
+        O(m+n) for storage 
+        degrees_count: dictionary where a class(es) that don't need any
+        prereq will have a value of 0 
+        adj_list: just a dict in a shape:
+        class: what you can take after taking this class 
+        Like Leetcode 207 but we explicitly build the list res to return it at the end 
+        One edge case: we cannot finish all classes but res will still one entry
+        In this case, return [] (see the last line)
+        """
+        degrees_count, adj_list = {}, defaultdict(list)
+        res = [] 
+        for c in range(numCourses):
+            degrees_count[c] = 0
+        for preq in prerequisites:
+            adj_list[preq[1]].append(preq[0]) # shape is parent: [what you can take after this class]
+            degrees_count[preq[0]] += 1 # never saw a class that is in the first position in the list. Means it doesn't need a prereq
+        # print(f"this is adj_list: {adj_list}")
+        d = deque()
+        for k, v in degrees_count.items():
+            if v == 0: # found a class that doesn't need a prereq
+                d.append(k)
+        while d:
+            t = d.popleft()
+            res.append(t) # here we will do res += 1
+            for child in adj_list[t]:
+                degrees_count[child] -= 1
+                if degrees_count[child] == 0:
+                    d.append(child)
+        return res if len(res) == numCourses else [] # means we can finish all classes and should return res 
 def findOrder(numCourses, prerequisites):  # O(V + E) both, where V is the number of vertices and E are edges
     adj_list = defaultdict(list)
     degree_count = {i : 0 for i in range(numCourses)}
