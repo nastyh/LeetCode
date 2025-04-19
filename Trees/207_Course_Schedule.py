@@ -1,4 +1,35 @@
 from collections import deque, defaultdict
+
+def canFinish_best(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    """
+    O(m+n), edges (lists) + elements in total 
+    O(m+n) for storage 
+    degrees_count: dictionary where a class(es) that don't need any
+    prereq will have a value of 0 
+    adj_list: just a dict in a shape:
+    class: what you can take after taking this class 
+    """
+    degrees_count, adj_list = {}, defaultdict(list)
+    res = [] # we can do res = 0
+    for c in range(numCourses):
+        degrees_count[c] = 0
+    for preq in prerequisites:
+        adj_list[preq[1]].append(preq[0]) # shape is parent: [what you can take after this class]
+        degrees_count[preq[0]] += 1 # never saw a class that is in the first position in the list. Means it doesn't need a prereq
+
+    d = deque()
+    for k, v in degrees_count.items():
+        if v == 0: # found a class that doesn't need a prereq
+            d.append(k)
+    while d:
+        t = d.popleft()
+        res.append(t) # here we will do res += 1
+        for child in adj_list[t]:
+            degrees_count[child] -= 1
+            if degrees_count[child] == 0:
+                d.append(child)
+    return len(res) == numCourses # res == numCourses 
+
 def canFinish(numCourses, prerequisites):  # O(E + V) both where V is the number of courses and E is the number of dependencies 
     """
     This is topological sort
