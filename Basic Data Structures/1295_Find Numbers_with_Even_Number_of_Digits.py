@@ -30,6 +30,14 @@ def findNumbers_one_liner(nums):
     """
     return sum(len(str(num)) % 2 == 0 for num in nums)
 
+def findNumbers_log(self, nums: List[int]) -> int:
+    res = 0
+    for num in nums:
+        digit_count = int(math.floor(math.log10(num))) + 1
+        if digit_count % 2 == 0: 
+            res += 1
+    return res 
+
 if __name__ == '__main__':
     print(findNumbers([12, 345, 2, 6, 7896]))
     print(findNumbers([555, 901, 482, 1771]))
