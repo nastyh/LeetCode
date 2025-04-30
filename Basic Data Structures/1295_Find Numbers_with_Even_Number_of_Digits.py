@@ -1,4 +1,4 @@
-def findNumbers(nums):
+def findNumbers_python_sugar(nums):
     """
     Pythonic
     go elemement by element, turn each into string, calculate string's length
@@ -24,6 +24,11 @@ def findNumbers_math(nums):
             res += 1
     return res
 
+def findNumbers_one_liner(nums):
+    """
+    As the first solution 
+    """
+    return sum(len(str(num)) % 2 == 0 for num in nums)
 
 if __name__ == '__main__':
     print(findNumbers([12, 345, 2, 6, 7896]))
