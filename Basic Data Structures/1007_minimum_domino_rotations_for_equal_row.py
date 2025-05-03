@@ -36,7 +36,7 @@ class Solution:
                     rotate_bottom += 1
             return min(rotate_bottom, rotate_top)
         
-        candidates = {tops[0], bottoms[0]}
+        candidates = {tops[0], bottoms[0]}  # these are the only possible candidates actually
         # we initialized candidates but we loop through the both lists
         res = min(_helper(candidate) for candidate in candidates)
         return -1 if res == math.inf else res 
