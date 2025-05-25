@@ -50,6 +50,30 @@ class Solution:
                 return word_ix + 1
         return -1
 
+    def isPrefixOfWord_one_by_one(self, sentence: str, searchWord: str) -> int:
+        """
+        O(nm), n number of words in sentence, m is length of searchWord
+        O(n) space to create the list words
+
+        Split into the list of words 
+        go over this list 
+        if a current word's length < searchWord, it isn't good, searchWord cannot be a prefix
+        Move to the next candidate in words
+        compare char by char. If doesn't match, break
+        If it didn't break, means we found a perfect match
+        Return the index of the word 
+        """
+        words = [w for w in sentence.split()] 
+        for ix, word in enumerate(words):
+            if len(word) < len(searchWord):
+                continue 
+            for j in range(len(searchWord)):
+                if word[j] != searchWord[j]:
+                    break 
+            else:
+                return ix + 1
+        return -1
+
 
 
 
