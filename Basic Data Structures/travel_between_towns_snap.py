@@ -109,3 +109,38 @@ def find_all_paths_dfs(trips):
     return res
 
 
+def find_all_paths_stack(trips):
+    graph = defaultdict(list)
+    edge_count = Counter()
+
+    # Build graph (reverse sort for deterministic stack pops)
+    for u, v in sorted(trips, reverse=True):
+        graph[u].append(v)
+        edge_count[(u, v)] += 1
+
+    path = []
+    stack = ['A']
+
+    def has_unused_edge(u):
+        for v in graph[u]:
+            if edge_count[(u, v)] > 0:
+                return True
+        return False
+
+    while stack:
+        curr = stack[-1]
+        if has_unused_edge(curr):
+            for i in range(len(graph[curr]) - 1, -1, -1):
+                nxt = graph[curr][i]
+                if edge_count[(curr, nxt)] > 0:
+                    edge_count[(curr, nxt)] -= 1
+                    stack.append(nxt)
+                    break
+        else:
+            path.append(stack.pop())
+
+    return path[::-1]  # reverse because it’s built backwards
+
+
+
+
