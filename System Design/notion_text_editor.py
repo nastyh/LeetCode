@@ -184,14 +184,14 @@ class TextDocument:
         if not self.undo_st:
             return 
         last_op = self.undo_st.pop()
-        self._reverse_action(last_op, to_undo = True)
+        self._reverse_action(last_op, to_redo = True)
         
 
     def redo_last(self) -> None:
         if not self.redo_st:
             return 
         last_op = self.redo_st.pop()
-        self._reverse_action(last_op, to_redo = True)
+        self._reverse_action(last_op, to_undo = True)
 
     def get_current_content(self) -> str:
         return "".join(self.content) 
