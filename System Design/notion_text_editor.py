@@ -178,7 +178,7 @@ class TextDocument:
             deleted = self.content[-n:] if n <= len(self.content) else self.content[:]
             self.content = self.content[:-n] if n <= len(self.content) else []
             self.undo_st.append(InsertAtEndOperation("".join(deleted)))
-            self.undo_st.clear()
+            self.redo_st.clear()
 
     def undo_last(self) -> None:
         if not self.undo_st:
