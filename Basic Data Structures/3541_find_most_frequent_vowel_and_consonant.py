@@ -36,4 +36,7 @@ class Solution:
         return (max(d_c.values()) if d_c else 0) + (max(d_v.values()) if d_v else 0)
     
     def maxFreqSum_one_liner(self, s: str) -> int:
+       """
+       Same idea but short 
+       """
        return sum(max([*Counter(c for c in s if (c in 'aeiou')^q).values(),0]) for q in (0,1)) 
